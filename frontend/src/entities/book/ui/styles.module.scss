@@ -1,0 +1,42 @@
+@import "../../../shared/utils/index.scss";
+
+.book {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 15rem;
+    height: 28rem;
+}
+
+.container{
+    position: relative;
+    width: 100%;
+    height: 23rem;
+}
+
+.img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 15rem;
+}
+
+.title{
+    @include t-title();
+    font-size: 1rem !important;
+}
+
+.author{
+    @include t-main();
+    font-size: 1rem !important;
+}
+
+.info{
+    font-size: 0.7rem !important;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+    height: 4rem;
+}

@@ -1,0 +1,5 @@
+@import "../../../shared/utils/index.scss";
+
+.title{
+    @include t-title();
+}

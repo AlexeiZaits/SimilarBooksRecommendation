@@ -1,0 +1,27 @@
+@mixin t-title(){
+    color: $text-primary;
+    // font-family: $secondary-font;
+    font-size: 1.875rem;
+    line-height: 1rem;
+    @media (min-width: $tablet) {
+        font-size: 1.875rem;
+    }
+    
+}
+
+@mixin t-main(){
+    color: $text-primary;
+    // font-family: $main-font;
+    line-height: 1rem;
+    font-size: 1.875rem;
+
+    @media (min-width: $tablet) {
+        font-size: 1.875rem;
+    }
+}
+
+@mixin t-button(){
+    color: $text-secondary;
+    font-family: $table-font-main;
+    font-size: 1rem;
+}
