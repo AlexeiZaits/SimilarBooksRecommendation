@@ -1,0 +1,146 @@
+[tool.poetry]
+name = "businessguarantees"
+version = "0.1.0"
+description = ""
+authors = ["Боринских Семен Денисович <ph.borinskikh@mail.ru>"]
+readme = "README.md"
+packages = [
+    { include = "src" }
+]
+
+# Основные зависимости
+[tool.poetry.dependencies]
+python = "^3.10.8"
+pandas = "^2.2.2"
+scikit-learn = "^1.4.2"
+optuna = "^3.6.1"
+minio = "^7.2.7"
+joblib = "^1.4.2"
+openpyxl = "^3.1.2"
+matplotlib = "^3.9.0"
+requests = "^2.31.0"
+scipy = "^1.13.0"
+tqdm = "^4.66.4"
+seaborn = "^0.13.2"
+dvc = {extras = ["s3"], version = "^3.50.2"}
+pymorphy2 = "^0.9.1"
+python-dotenv = "^1.0.1"
+pydantic = "^2.7.1"
+pydantic-settings = "^2.2.1"
+pyarrow = "15.0.0"
+fastparquet = "^2024.5.0"
+faiss-cpu = "^1.8.0.post1"
+langchain = "0.0.271"
+sentence-transformers = "^3.0.1"
+transformers = "^4.42.3"
+uvicorn = "^0.30.1"
+fastapi = "^0.111.0"
+
+
+[tool.poetry.group.dev.dependencies] # Зависимости для DEV версии
+ruamel-yaml = "0.18.5"
+pylint = "^3.2.0"
+pre-commit = "^3.7.1"
+flake8 = "^7.0.0"
+ruff = "^0.4.4"
+pre-commit-hooks = "^4.6.0"
+pyproject-flake8 = "^7.0.0"
+ipykernel = "^6.29.4"
+ipywidgets = "^8.1.2"
+jupyter = "^1.0.0"
+mypy = "^1.10.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+# MYPY CONFIG
+[tool.mypy]
+ignore_missing_imports = true
+exclude = [
+    "^.git/",
+    "^__pycache__/",
+    "^venv/",
+    "^models/",
+    "^data/",
+    "^notebooks/",
+    "^config/",
+    "^mlflow/",
+    "^.dvc/"
+]
+[[tool.mypy.overrides]]
+module = "tqdm"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = "selenium"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = "catboost"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = "pymorphy2"
+ignore_errors = true
+
+# RUFF CONFIG
+[tool.ruff]  # RUFF CONFIG:
+line-length = 120
+
+[tool.ruff.lint]
+ignore = ["F841", "E722"]
+
+# PYLINT CONFIG
+[tool.pylint."MESSAGES CONTROL"]  # PYLINT CONFIG:
+disable = [
+    "C0114",  # missing module docstring
+    "C0103",  # Constant name doesn't conform to UPPER_CASE naming style
+    "W0612",  # Unused import
+    "W0613",  # Unused argument
+    "R0801",  # simillar 2 lines
+    "R0903",  # Too few public methods (1/2)
+]
+
+[tool.pylint.FORMAT]
+max-line-length = 120
+
+[tool.pylint.BASIC]
+max-args = 8
+max-attributes = 15
+good-names = ["i", "j", "k", "ex", "Run", "_"]
+bad-names = ["foo", "bar", "baz", "toto", "tutu", "tata", "bebra", "lebra", "aboba"]
+
+[tool.pylint.MISCELLANEOUS]
+notes = ["FIXME", "XXX", "TODO"]
+
+[tool.pylint.SIMILARITIES]
+min-similarity-lines = 4
+ignore-comments = true
+ignore-docstrings = true
+ignore-imports = false
+
+# FLAKE 8 CONFIG:
+[tool.flake8]  
+exclude = [
+    ".git",
+    "__pycache__",
+    "venv",
+    "__init__.py",
+    "models",
+    "data",
+    "notebooks",
+    "config",
+    "mlflow",
+    ".dvc"
+]
+max-line-length = 120
+ignore = [
+    "E203",
+    "F401",
+    "F541",
+    "F841",
+    "E722",
+    "E241",
+    "W503"
+]
