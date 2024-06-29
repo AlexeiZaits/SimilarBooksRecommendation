@@ -5,6 +5,7 @@
 4. Активироавть виртуальное окружение: ``venv\Scripts\activate`` (для windows)
 5. Заполните ``.env`` файл:
 6. Соберите проект: ``python setup.py``
+7. Запустите fastapi сервер: ``poetry run uvicorn app:app --reload``
 
 ```
 # Описание .env:
@@ -54,3 +55,12 @@ DVC_REMOTE_NAME=minio
 6. ``dvc remote list`` - показать список доступных хранилищ
 7. ``dvc diff`` - показать разницу между предыдущими версиями
 8. ``dvc checkout`` - восстановить данные из предыдущего коммита
+
+## Полезные команды Docker:
+1. ``docker-compose down -v`` - (удалить контейнеры, включая volumes)
+2. ``docker-compose down`` - (удалить контейнеры)
+3. ``docker-compose build --no-cache`` - пересобрать, не используя кэш
+4. ``docker-compose build`` - пересобрать
+5. ``docker-compose up -d`` - запустить в detouch моде (логи не отображаются в консоли)
+6. ``docker-compose up -d --build`` - запустить в detouch моде и пересобрать
+7. ``docker ps`` - вывести список запущенных контейнеров
