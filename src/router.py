@@ -3,8 +3,8 @@ from http import HTTPStatus
 import joblib
 from fastapi import APIRouter
 
-from app.src.faiss_scripts import inference, load_df
-from app.src.schemas import BooksResponse
+from src.faiss_scripts import inference, load_df
+from src.schemas import BooksResponse
 
 router = APIRouter(tags=["ML API"])
 df = load_df()
