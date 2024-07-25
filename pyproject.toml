@@ -100,6 +100,8 @@ disable = [
     "W0613",  # Unused argument
     "R0801",  # simillar 2 lines
     "R0903",  # Too few public methods (1/2)
+    "W0603",  # Using the global statement
+    "W0511",  # TODO
 ]
 
 [tool.pylint.FORMAT]
@@ -121,7 +123,7 @@ ignore-docstrings = true
 ignore-imports = false
 
 # FLAKE 8 CONFIG:
-[tool.flake8]  
+[tool.flake8]
 exclude = [
     ".git",
     "__pycache__",
