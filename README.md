@@ -9,13 +9,10 @@
 
 ```
 # Описание .env:
-S3_API_HOST=your_api_host
-S3_BUCKET_NAME=your_bucket_name
-S3_ACCESS_KEY=your_access_key
-S3_SECRET_KEY=your_secret_key
-DVC_USE_SSL=True
-DVC_REMOTE_URL=s3://your_bucket_name
-DVC_REMOTE_NAME=minio
+QDRANT_URL=
+QDRANT_API_KEY=
+QDRANT_COLLECTION_NAME=
+QDRANT_EMBEDDER=
 ```
 
 ## Принцип ведения git:
