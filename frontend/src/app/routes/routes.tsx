@@ -21,6 +21,9 @@ export const router = createBrowserRouter([
         path: "authorization",
         element: <AuthForm/>,
       },
+      {
+        path: "book/*"
+      },
     ]
   },
 ]);
