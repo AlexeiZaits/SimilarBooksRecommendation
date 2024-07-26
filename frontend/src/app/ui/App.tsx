@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import './App.scss'
 import { store } from '../store/store';
 import { Provider } from 'react-redux';
+import { Header } from 'widjets/header';
 
 interface IAPP {
   children: ReactNode
@@ -11,9 +12,8 @@ const App = ({children}: IAPP) => {
   
   return (
     <Provider store={store}>
-      <header className='header'></header>
+      <Header/>
       <main className='main'>{children}</main>
-      <footer className='footer'></footer>
     </Provider>
   );
 };
