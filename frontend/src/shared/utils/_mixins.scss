@@ -1,8 +1,8 @@
 @mixin t-title(){
     color: $text-primary;
-    // font-family: $secondary-font;
+    font-family: $secondary-font;
+    font-weight: 700;
     font-size: 1.875rem;
-    line-height: 1rem;
     @media (min-width: $tablet) {
         font-size: 1.875rem;
     }
@@ -11,10 +11,9 @@
 
 @mixin t-main(){
     color: $text-primary;
-    // font-family: $main-font;
-    line-height: 1rem;
+    font-family: $main-font;
     font-size: 1.875rem;
-
+    font-weight: 500;
     @media (min-width: $tablet) {
         font-size: 1.875rem;
     }
