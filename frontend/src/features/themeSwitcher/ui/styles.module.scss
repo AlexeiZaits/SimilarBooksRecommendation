@@ -1,0 +1,8 @@
+@import "../../../shared/utils/index.scss";
+
+.text{
+    @include t-main();
+    font-size: 1rem !important;
+    margin-left: 0.75rem;
+    
+}

@@ -1,10 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 @font-face {
-    font-family: "montReg";
-    src: url(../assets/fonts/Montserrat-Regular.ttf);
+    font-family: "Montserrat", sans-serif;
+    src: url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap") format("truetype");
+    font-weight: 400;
+    font-style: normal;
 }
 
 @font-face {
     font-family: "montSemiBold";
-    src: url(../assets/fonts/Montserrat-SemiBold.ttf);
+    src: url("../assets/fonts/Montserrat-SemiBold.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
 }
 

@@ -23,7 +23,6 @@ export const AuthForm = () => {
     return <div className={styles.container}>
         {status === "loading" && <PreloaderModal/>}
         <div className={styles.form}>
-            <p>Logo</p>
             <p className={styles.signin}>Авторизация</p>
             <div className={styles.authForm}>
                 <Input error={error ? true : false} value={login} placeholder="Логин" type="login" onChange={e => setLogin(e.target.value)}/>

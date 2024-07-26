@@ -1,8 +1,8 @@
-import { RecommendedCompose } from "features/recommendList/compose/RecommendCompose"
+import { RecommendList } from "features/recommendList/ui/RecommendList"
 import { Wrapper } from "shared/ui"
 
 export const RecommendPage = () => {
     return <Wrapper>
-        <RecommendedCompose/>
+        <RecommendList/>
     </Wrapper>
 }

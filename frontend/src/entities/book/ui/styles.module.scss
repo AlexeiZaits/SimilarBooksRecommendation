@@ -4,22 +4,45 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
     width: 15rem;
     height: 28rem;
+    margin-bottom: 1rem;
+}
+
+.like{
+    position: absolute;
+    width: 2.5rem;
+    height: 2.5rem;
+    z-index: 2;
+    right: 1rem;
+    top: 1rem;
+    cursor: pointer;
 }
 
 .container{
     position: relative;
     width: 100%;
     height: 23rem;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    &:hover{
+        cursor: pointer;
+        .img{
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+    }
 }
 
 .img{
+    
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 15rem;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease, width 0.3s ease;
 }
 
 .title{
@@ -29,7 +52,7 @@
 
 .author{
     @include t-main();
-    font-size: 1rem !important;
+    font-size: 0.8rem !important;
 }
 
 .info{

@@ -13,5 +13,5 @@ export default defineConfig({
       widjets: "/src/widjets",
       pages: "/src/pages",
     }
-  }
+  },
 })

@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 //text
 
-$text-primary: black;
+$text-primary: var(--colors-text);
 $text-secondary: #323A47;
 $text-treinary-light_theme: #818387;
 $text-link: green;
@@ -8,18 +10,16 @@ $text-error: #D5393C;
 
 //background
 
-$main-back: #172339;
+$main-back: var(--colors-bg);
 $bg-block-first: #FFFFFF;
 $bg-block-secodary: #EDEDED;
 $button-back: #F3FFF9;
 
 //border
 
-$border-table: 1px solid #DBDBDB;
-
 // fonts
-$main-font: "montReg";
-$secondary-font: "montSemiBold";
+$main-font: "Montserrat", sans-serif;
+$secondary-font: "Montserrat", sans-serif;
 
 // radius
 

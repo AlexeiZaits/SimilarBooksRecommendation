@@ -6,6 +6,7 @@
     top: 0;
     left: 0;
     overflow: auto;
+    z-index: 1000;
 }
 
 .form {
@@ -20,7 +21,7 @@
     left: 0;
     margin: auto;
     display: flex;
-    padding: 2rem 4rem;
+    padding: 3rem 4rem;
     flex-direction: column;
     justify-content: space-between;
     color: white;
@@ -52,7 +53,8 @@
 }
 
 .sign{
-    margin-top: 0.9rem;
+    margin-top: 0.7rem;
+    margin-left: 0.5rem;
     width: 100%;
 }
 
@@ -63,4 +65,13 @@
 .forgot{
     color: #78797d;
     
+}
+
+.logo{
+    display: flex;
+    text-align: center;
+    flex-direction: row;
+    width: 20rem;
+    height: 3rem;
+
 }
