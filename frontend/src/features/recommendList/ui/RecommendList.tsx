@@ -10,23 +10,31 @@ export const RecommendList = () => {
     const [maxScroll, setMaxScroll] = useState(0)
     const booksRef = useRef<HTMLDivElement>(null)
 
-
     useEffect(() => {
-        if (booksRef !== null && booksRef.current)
-        setMaxScroll(booksRef.current.scrollHeight-booksRef.current.clientHeight)
-    }, [booksRef])
+        const handleScroll = () => {
+            const scrollTop = window.scrollY;
+            const documentHeight = document.documentElement.scrollHeight;
+            const windowHeight = window.innerHeight;
+            const currentMaxScroll = documentHeight - windowHeight;
 
-    const handleScroll = (e: UIEvent<HTMLDivElement>) => {
-        console.log("scroll")
-        if (e.currentTarget.scrollTop+100 > maxScroll) {
-            if (booksRef !== null && booksRef.current) setMaxScroll(booksRef.current.scrollHeight-booksRef.current.clientHeight)
+            console.log(scrollTop, currentMaxScroll);
+            if (scrollTop + 100 > currentMaxScroll) {
+                console.log("Near bottom of document");
+                setMaxScroll(currentMaxScroll);
+            }
         }
-    }
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+    }, [])
 
     return <div  className={styles.container}>
         {status === "loading" && <PreloaderModal/>}
 
-        <div onScroll={handleScroll} ref={booksRef} className={styles.books}>
+        <div  ref={booksRef} className={styles.books}>
             {qty !== 0 && books.map((item) => {
                 return <Book style={{marginLeft: "3rem"}} key={item.uid} {...item}  children={<Like id={item.uid}/>}/>
             })}
