@@ -5,8 +5,8 @@ from typing import Annotated
 from dotenv import load_dotenv
 from fastapi import APIRouter, Body, Depends
 
-from src.models import get_embedder, get_qdrant_connection
-from src.schemas import BooksResponse, DescriptionInput
+from backend.src.models import get_embedder, get_qdrant_connection
+from backend.src.schemas import BooksResponse, DescriptionInput
 
 load_dotenv()
 
@@ -37,7 +37,6 @@ def predict(
         collection_name=data.collection_name, query_vector=query_vector, limit=data.n_chunks, offset=data.offset
     )
 
-    # TODO: Реализовать поиск по датасету с книгами. Например Redis
     result = [dict(recommendation.payload, score=recommendation.score) for recommendation in message_content]
     # # Отлавливаем ошибки и возвращаем их на бэк
     # except Exception as err:
