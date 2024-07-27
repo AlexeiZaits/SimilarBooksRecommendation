@@ -1,8 +1,5 @@
 import subprocess
 
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 def run_command(command: str) -> None:

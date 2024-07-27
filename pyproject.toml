@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "businessguarantees"
+name = "simillarbookservice"
 version = "0.1.0"
 description = ""
 authors = ["Боринских Семен Денисович <ph.borinskikh@mail.ru>"]
@@ -12,39 +12,28 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.10.8"
 pandas = "^2.2.2"
-scikit-learn = "^1.4.2"
-optuna = "^3.6.1"
-minio = "^7.2.7"
 joblib = "^1.4.2"
 openpyxl = "^3.1.2"
-matplotlib = "^3.9.0"
 requests = "^2.31.0"
 scipy = "^1.13.0"
 tqdm = "^4.66.4"
-seaborn = "^0.13.2"
-dvc = {extras = ["s3"], version = "^3.50.2"}
-pymorphy2 = "^0.9.1"
 python-dotenv = "^1.0.1"
 pydantic = "^2.7.1"
 pydantic-settings = "^2.2.1"
 pyarrow = "15.0.0"
 fastparquet = "^2024.5.0"
-faiss-cpu = "^1.8.0.post1"
-langchain = "0.0.271"
 sentence-transformers = "^3.0.1"
-transformers = "^4.42.3"
 uvicorn = "^0.30.1"
 fastapi = "^0.111.0"
+qdrant-client = "^1.10.1"
 
 
 [tool.poetry.group.dev.dependencies] # Зависимости для DEV версии
 ruamel-yaml = "0.18.5"
 pylint = "^3.2.0"
 pre-commit = "^3.7.1"
-flake8 = "^7.0.0"
 ruff = "^0.4.4"
 pre-commit-hooks = "^4.6.0"
-pyproject-flake8 = "^7.0.0"
 ipykernel = "^6.29.4"
 ipywidgets = "^8.1.2"
 jupyter = "^1.0.0"
