@@ -34,8 +34,7 @@ def fetch_data_and_metadata(redis_connection: redis.StrictRedis, name: str) -> O
     metadata = responses[1]
 
     # Декодирование данных, если они существуют
-    if description is not None:
-        description = description.decode("utf-8")  # Декодирование байтов в строку
+    description = description.decode("utf-8")  # Декодирование байтов в строку
 
     # Декодирование метаданных, если они существуют
     if metadata is not None:
@@ -43,7 +42,4 @@ def fetch_data_and_metadata(redis_connection: redis.StrictRedis, name: str) -> O
     else:
         metadata = {}
 
-    # Формирование итогового результата
-    result = {"description": description, "metadata": metadata}
-
-    return result
+    return {"description": description, "metadata": metadata}
