@@ -8,7 +8,6 @@ __pycache__/
 
 # ! My paths and files
 qdrant_data/
-models/
 *.pkl
 
 # Distribution / packaging
