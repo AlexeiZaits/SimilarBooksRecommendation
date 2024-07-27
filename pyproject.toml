@@ -92,6 +92,7 @@ disable = [
     "R0903",  # Too few public methods (1/2)
     "W0603",  # Using the global statement
     "W0511",  # TODO
+    "R0402",  # consider-using-from-import
 ]
 
 [tool.pylint.FORMAT]
