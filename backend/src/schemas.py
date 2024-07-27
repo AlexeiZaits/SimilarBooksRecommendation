@@ -6,6 +6,7 @@ from typing_extensions import TypedDict
 
 class BookRecommendationInfo(TypedDict):
     """Класс данных для отдельной рекомендации по книге"""
+
     category: str
     author: str
     title: str

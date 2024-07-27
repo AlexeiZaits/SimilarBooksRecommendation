@@ -5,7 +5,7 @@
 4. Активироавть виртуальное окружение: ``venv\Scripts\activate`` (для windows)
 5. Заполните ``.env`` файл:
 6. Соберите проект: ``python setup.py``
-7. Запустите fastapi сервер: ``poetry run uvicorn app:app --reload``
+7. Запустите fastapi сервер: ``poetry run uvicorn backend.app:app --reload``
 
 ```
 # Описание .env:
