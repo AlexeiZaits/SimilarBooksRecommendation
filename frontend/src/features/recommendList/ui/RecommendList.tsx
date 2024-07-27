@@ -4,7 +4,6 @@ import { Book } from "entities/index"
 import styles from "./styles.module.scss";
 import { useRef } from "react";
 import { Like } from "features/like/ui/Like";
-import { imgBook } from "entities/book/lib/imgBase64";
 
 export const RecommendList = () => {
     const [{status, books},] = useRecommendList()
@@ -26,15 +25,12 @@ export const RecommendList = () => {
 
     return <div className={styles.container}>
         {status === "loading" && <PreloaderModal/>}
-        {/* {qty && books.map((item) => {
-            return <Book {...item}/>
-        })} */}
-        {status === "received" && books.map((item, index) => {
-            return <Book style={{marginLeft: "3rem"}} key={index} author={item.author} title={item.title}/>
-        })}
+
         {/* //onScroll={handleScroll} */}
         <div ref={booksRef} className={styles.books}>
-            <Book style={{marginLeft: "3rem"}} author="LEAH PRICE" title="THE ANTHOLOGY AND THE RISE OF THE NOVEL"><Like author="LEAH PRICE" title="THE ANTHOLOGY AND THE RISE OF THE NOVEL" id={1} image={imgBook}/></Book>
+            {status === "received" && books.map((item, index) => {
+                return <Book style={{marginLeft: "3rem"}} key={index} {...item}  children={<Like id={index}/>}/>
+            })}
         </div>
     </div>
 }

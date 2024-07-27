@@ -1,11 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Extra } from "shared/types";
-// import $client from "shared/api";
-import { IBook } from "shared/types/book";
+import { BooksResponse, Extra } from "shared/types";
 import axios from "axios";
 
 export const actionSearchBooks = createAsyncThunk<
-    Omit<IBook, "description">[],
+    BooksResponse,
     string,
 {
     extra: Extra,
