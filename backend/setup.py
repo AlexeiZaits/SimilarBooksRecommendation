@@ -24,7 +24,7 @@ def setup() -> None:
     # # 5. Подгрузить актуальные модели и датасеты из s3
     # run_command("dvc pull")
 
-    # 6. Подгрузить актуальные модели и датасеты из s3
+    # 6. Активировать pre-commits
     run_command("poetry run pre-commit install")
 
 
