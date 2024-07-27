@@ -16,8 +16,8 @@ export const actionSearchBooks = createAsyncThunk<
     }) => {
         try {
             return axios.post(api.searchBooks, {
-              "book_desc": search,
-              "n_chunks": 6,
+              "description": search,
+              "limit": 24,
               "offset": 0,
               "collection_name": "SimilarBooksService"
             });
