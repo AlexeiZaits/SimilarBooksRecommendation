@@ -12,7 +12,8 @@ from backend.src.router import router
 async def lifespan(App: FastAPI):
     """Запуск загрузки модели и эмбеддера в фоновом режиме при старте приложения"""
     backend.src.models.embedder = backend.src.models.get_embedder()
-    backend.src.models.qdrant = backend.src.models.get_qdrant_connection()
+    backend.src.models.qdrant_connection = backend.src.models.get_qdrant_connection()
+    backend.src.models.redis_connection = backend.src.models.get_redis_connection()
     yield
     # Здесь можно добавить действия при завершении работы приложения
 

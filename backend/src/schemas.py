@@ -25,7 +25,7 @@ class BooksResponse(BaseModel):
 class DescriptionInput(BaseModel):
     """Шаблон входных данных от api /predict"""
 
-    description: str = Field(..., title="boot_description")
+    query: str = Field(..., title="boot_description")
     limit: int = Field(default=6, title="number_chunks")
     offset: int = Field(default=0, title="offset")
     collection_name: str = Field(default="SimilarBooksService", title="collection_name")
