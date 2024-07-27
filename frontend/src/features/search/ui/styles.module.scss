@@ -1,6 +1,17 @@
-.search{
+.container{
     width: 30rem;
     display: flex;
     flex-direction: row;
 }
 
+.search{
+    width: 90%;
+    position: relative;
+}
+
+.clear{
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    cursor: pointer;
+}
