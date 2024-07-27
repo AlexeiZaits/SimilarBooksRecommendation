@@ -12,20 +12,17 @@ export const RecommendList = () => {
 
 
     useEffect(() => {
-        console.log(booksRef.current.scrollHeight, booksRef.current.clientHeight)
         if (booksRef !== null && booksRef.current)
         setMaxScroll(booksRef.current.scrollHeight-booksRef.current.clientHeight)
     }, [booksRef])
 
     const handleScroll = (e: UIEvent<HTMLDivElement>) => {
-        console.log(e.currentTarget.scrollTop, maxScroll)
+        console.log("scroll")
         if (e.currentTarget.scrollTop+100 > maxScroll) {
-            console.log("max scroll")
             if (booksRef !== null && booksRef.current) setMaxScroll(booksRef.current.scrollHeight-booksRef.current.clientHeight)
         }
     }
 
-    console.log(maxScroll)
     return <div  className={styles.container}>
         {status === "loading" && <PreloaderModal/>}
 
