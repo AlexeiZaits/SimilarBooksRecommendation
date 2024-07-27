@@ -35,6 +35,7 @@ sentence-transformers = "^3.0.1"
 transformers = "^4.42.3"
 uvicorn = "^0.30.1"
 fastapi = "^0.111.0"
+qdrant-client = "^1.10.1"
 
 
 [tool.poetry.group.dev.dependencies] # Зависимости для DEV версии
