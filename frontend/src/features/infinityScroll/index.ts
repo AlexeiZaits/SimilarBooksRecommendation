@@ -1,1 +1,1 @@
-export * from "./ui/Scroll"
+export * from "./ui/InfinityScroll"
