@@ -5,14 +5,19 @@
 4. Активироавть виртуальное окружение: ``venv\Scripts\activate`` (для windows)
 5. Заполните ``.env`` файл:
 6. Соберите проект: ``python setup.py``
-7. Запустите fastapi сервер: ``poetry run uvicorn backend.app:app --reload``
+7. Запустите fastapi сервер: ``poetry run uvicorn backend.app:app``
 
 ```
 # Описание .env:
 QDRANT_URL=
 QDRANT_API_KEY=
-QDRANT_COLLECTION_NAME=
+QDRANT_COLLECTION_DESCRIPTION=
+QDRANT_COLLECTION_TITLES=
 QDRANT_EMBEDDER=
+
+REDIS_HOST=
+REDIS_PORT=
+RESID_PASSWORD=
 ```
 
 ## Принцип ведения git:

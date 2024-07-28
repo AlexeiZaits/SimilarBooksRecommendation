@@ -1,7 +1,6 @@
 import subprocess
 
 
-
 def run_command(command: str) -> None:
     """Выполняет указанную команду"""
     subprocess.run(command, shell=True, check=True)
