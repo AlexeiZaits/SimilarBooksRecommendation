@@ -6,8 +6,6 @@ from fastapi.middleware.cors import CORSMiddleware
 import backend.src.models.models as models
 from backend.config.app_config import origins
 from backend.src.routers.api_general import router as router_general
-from backend.src.routers.api_qdrant import router as router_qdrant
-from backend.src.routers.api_redis import router as router_redis
 
 
 @asynccontextmanager
@@ -31,8 +29,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(router_qdrant, prefix="/api")
-app.include_router(router_redis, prefix="/api")
 app.include_router(router_general, prefix="/api")
 
 

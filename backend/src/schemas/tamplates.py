@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel, Field
 from typing_extensions import TypedDict
@@ -18,8 +18,8 @@ class BookRecommendationInfo(TypedDict):
 class BooksResponse(BaseModel):
     """Шаблон ответа от api /predict"""
 
-    data: List[BookRecommendationInfo]
-    status: int = Field(..., title="status")
+    data: Optional[List[BookRecommendationInfo]]
+    status: Optional[int] = Field(..., title="status")
 
 
 class DescriptionInput(BaseModel):
@@ -28,7 +28,6 @@ class DescriptionInput(BaseModel):
     query: str = Field(..., title="boot_description")
     limit: int = Field(default=6, title="number_chunks")
     offset: int = Field(default=0, title="offset")
-    collection_name: str = Field(default="SimilarBooksService", title="collection_name")
 
 
 class RedisMetadata(BaseModel):
@@ -43,3 +42,11 @@ class RedisResponse(BaseModel):
 
     metadata: RedisMetadata
     description: str
+    status: int = Field(..., title="status")
+
+
+class UpdatedQueryResponse(BaseModel):
+    """Шаблон Обновленных названий книг"""
+
+    titles: List[str]
+    status: int = Field(..., title="status")
