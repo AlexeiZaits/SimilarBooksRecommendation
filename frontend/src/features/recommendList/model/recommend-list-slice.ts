@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ErrorType, Status } from "shared/types";
 import { IBook } from "shared/types/book";
-import { actionSearchBooks } from "./recommend-list-actions";
+import { actionFindMore, actionSearchBooks } from "./recommend-list-actions";
 
 export interface IRecommendBooks{
     status: Status,
@@ -18,7 +18,9 @@ const initialState: IRecommendBooks = {
 export const recommendListSlice = createSlice({
     name: "@recommendList",
     initialState: initialState,
-    reducers: {},
+    reducers: {
+        clearRecommendBooks : () => initialState
+    },
     extraReducers: (builder) => {
         builder.addCase(actionSearchBooks.pending, (state) => {
             state.status = "loading"
@@ -30,8 +32,22 @@ export const recommendListSlice = createSlice({
         })
         builder.addCase(actionSearchBooks.fulfilled, (state, action) => {
             state.status = "received"
-            console.log(action.payload.data)
             state.books = action.payload.data.data
+            console.log(state.books)
+        })
+        builder.addCase(actionFindMore.pending, (state) => {
+            state.status = "loading"
+            state.error = null
+        })
+        builder.addCase(actionFindMore.rejected, (state, action) => {
+            state.status = "rejected"
+            state.error = action.payload || "cannot load books"
+        })
+        builder.addCase(actionFindMore.fulfilled, (state, action) => {
+            state.status = "received"
+            state.books = [...state.books, ...action.payload.data.data]
         })
     }
 })
+
+export const {clearRecommendBooks} = recommendListSlice.actions

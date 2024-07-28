@@ -1,8 +1,10 @@
-import { RecommendList } from "features/recommendList/ui/RecommendList"
+import { RecommendList, InfinityScroll } from "features/index"
 import { Wrapper } from "shared/ui"
 
 export const RecommendPage = () => {
     return <Wrapper>
-        <RecommendList/>
+        <InfinityScroll>
+            <RecommendList/>
+        </InfinityScroll>
     </Wrapper>
 }
