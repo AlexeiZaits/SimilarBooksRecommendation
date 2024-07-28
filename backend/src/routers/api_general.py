@@ -55,7 +55,7 @@ def get_book_recommendations(
     # Получение описания книги по ее названию. Поиск в Redis + Qdrant
     redis_response = get_description_by_title(redis_client=redis_client, title=data.query)
 
-    # TODO: Достаточно костыльно. Надо убрать когда данные будут валиды + реализована динамическая поисковая строка
+    # TODO: Достаточно костыльно. Надо убрать когда данные будут валидны + реализована динамическая поисковая строка
     # Если в Redis нет, то начинаем искать похожие на query названия
     if redis_response.status == CustomHTTPStatus.RedisDataNotFouldStatus.value:
         # Делаем запрос в Qdrant, чтобы найти похожие название

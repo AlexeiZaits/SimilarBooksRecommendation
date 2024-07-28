@@ -23,8 +23,7 @@ def ranking_titles(content: List[str], query: str) -> List[str]:
     # Добавляем косинусное сходство в DataFrame и сортируем по нему
     df["similarity"] = cosine_similarity(tfidf_matrix[-1], tfidf_matrix[:-1]).flatten()
     df = df.sort_values(by="similarity", ascending=False)
-    print(content)
-    print(df)
+
     df = df[df["similarity"] != 0.0].iloc[:10]
     # Выводим отсортированный DataFrame
     if df.empty:
