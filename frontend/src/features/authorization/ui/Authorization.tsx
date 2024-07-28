@@ -12,7 +12,7 @@ export const Authorization = ({children}:IAuth) => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {status, isAuth} = useAppSelector(state => state.authorization)
-    
+
     useEffect(()=> {
         status === "rejected" && navigate("/authorization")
     }, [navigate, status])
@@ -22,7 +22,7 @@ export const Authorization = ({children}:IAuth) => {
             dispatch(refreshUser())
         }
     }, [dispatch])
-    
+
     return <>
         {status === "loading" && <PreloaderModal/>}
         {isAuth && children}
