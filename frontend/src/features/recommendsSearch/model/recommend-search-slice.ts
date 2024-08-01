@@ -1,13 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IBook } from "shared/types/book";
 import { actionGetTitles } from "./recommend-search-actions";
 import { ErrorType, Status } from "shared/types";
-
 
 export interface IRecommendSearch{
     status: Status,
     error: ErrorType,
-    titles: Pick<IBook, "title">[],
+    titles: string[],
 }
 
 const initialState: IRecommendSearch = {
