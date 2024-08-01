@@ -1,9 +1,13 @@
-
 export interface BooksRequest{
-    description: string,
+    query: string,
     limit: number,
     offset: number,
-    collection_name: string,
+}
+
+export interface TitlesRequest{
+    query: string,
+    limit: number,
+    offset: number,
 }
 
 // {

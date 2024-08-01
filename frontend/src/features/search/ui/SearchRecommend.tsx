@@ -8,13 +8,17 @@ import { useSearch } from "../hooks/use-search";
 import { useClearSearch } from "../hooks/use-search-clear";
 import { smoothScrollHigh } from "../lib/smoothScrollHigh";
 import { useClearInfinityScroll } from "features/infinityScroll/hooks/use-clear-infinity-scroll";
+import { useSearchRecommend } from "features/recommendsSearch/hooks/use-recommend-search";
+import { useClearReommendSearch } from "features/recommendsSearch/hooks/use-clear-recommend-search";
 
 export const SearchRecommend = () => {
     const [search, setSearch] = useSearch()
     const clearSearch = useClearSearch()
     const clearInfinityScroll = useClearInfinityScroll()
     const [{error}, searchBooks] = useRecommendList()
-    const [placeholder, setPlaceholder] = useState("Enter request")
+    const [placeholder, setPlaceholder] = useState("Введите запрос")
+    const [, searchRecommend] = useSearchRecommend()
+    const clearRecommendList = useClearReommendSearch()
 
     useEffect(() => {
         if (error) {
@@ -28,32 +32,36 @@ export const SearchRecommend = () => {
         smoothScrollHigh()
         clearInfinityScroll()
         searchBooks({
-                "description": search,
-                "limit": 24,
-                "offset": 0,
-                "collection_name": "SimilarBooksService"
+                query: search,
+                limit: 24,
+                offset: 0,
         })
     }
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         if (event.key === "Enter"){
-            clearInfinityScroll()
             smoothScrollHigh()
+            clearInfinityScroll()
             searchBooks({
-                "description": search,
-                "limit": 24,
-                "offset": 0,
-                "collection_name": "SimilarBooksService"
+                query: search,
+                limit: 24,
+                offset: 0,
             })
         }
     }
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value)
+        e.target.value.length > 0 && searchRecommend({
+            query: e.target.value,
+            limit: 9,
+            offset: 0,
+        })
     }
 
     const handleClear = () => {
         clearSearch()
+        clearRecommendList()
     }
 
     return <div onKeyDown={handleKeyDown} className={styles.container}>

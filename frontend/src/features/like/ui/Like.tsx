@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import styles from "./styles.module.scss";
 import { LikeImg } from "shared/assets/icons/LikeImg";
 import { IBook } from "shared/types/book";
+import { useLikeLocal } from "../hooks/use-like-local";
 
-export const Like = ({ id }: Pick<IBook, "id">) => {
+export const Like = ({ uid }: Pick<IBook, "uid">) => {
     const [like, setLike] = useState(false)
 
-    useEffect(()=> {
-        like ? localStorage.setItem(`book?${id}`, JSON.stringify({id: id})) : localStorage.removeItem(`book?${id}`)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [like])
+    useLikeLocal({like: like, uid: uid})
 
     return <div className={styles.like} onClick={() => setLike((prevState) => !prevState)}>
         <LikeImg like={like}/>

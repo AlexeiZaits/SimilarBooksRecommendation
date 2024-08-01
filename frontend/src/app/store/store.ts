@@ -6,6 +6,7 @@ import * as api from "../../config"
 import { recommendListSlice } from 'features/recommendList/model/recommend-list-slice';
 import { searchSlice } from 'features/search/model/search-slice';
 import { infinityScrollSlice } from 'features/infinityScroll/model/infinity-scroll-slice';
+import { recommendSearchSlice } from 'features/recommendsSearch/model/recommend-search-slice';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     recommendList: recommendListSlice.reducer,
     searchRecommend: searchSlice.reducer,
     infinityScroll: infinityScrollSlice.reducer,
+    recommendSearch: recommendSearchSlice.reducer,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({

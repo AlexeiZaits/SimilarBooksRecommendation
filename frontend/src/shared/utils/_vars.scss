@@ -14,15 +14,16 @@ $main-back: var(--colors-bg);
 $bg-block-first: #FFFFFF;
 $bg-block-secodary: #EDEDED;
 $button-back: #F3FFF9;
+$bg-transparant: var(--transparent-bg);
 
 //border
+$border-main: var(--colors-border);
 
 // fonts
 $main-font: "Montserrat", sans-serif;
 $secondary-font: "Montserrat", sans-serif;
 
 // radius
-
 $main-radius: 0.75rem;
 
 // size
