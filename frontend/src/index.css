@@ -5,7 +5,7 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-  
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -29,8 +29,12 @@
 body[data-theme='dark'] {
   --colors-text: #f1f1f1;
   --colors-bg: #0f0f0f;
+  --colors-border: #f1f1f1;
+  --transparent-bg: rgba(255, 255, 255, 0.57);
 }
 body[data-theme='light'] {
   --colors-text: hsl(0, 0%, 0%);
   --colors-bg: #f1f1f1;
+  --colors-border: #0f0f0f;
+  --transparent-bg: rgba(102, 102, 102, 0.932);
 }
