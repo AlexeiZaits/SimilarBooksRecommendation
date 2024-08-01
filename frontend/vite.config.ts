@@ -14,4 +14,12 @@ export default defineConfig({
       pages: "/src/pages",
     }
   },
+  server: {
+    watch: {
+      usePolling: true,
+    },
+    host: true,
+    strictPort: true,
+    port: 5173,
+  }
 })

@@ -17,7 +17,7 @@ export interface BooksResponse {
 
 export interface TitlesResponse{
     data: {
-        titles: Pick<IBook, "title">[],
+        titles: string[],
         status: number,
     }
 }
