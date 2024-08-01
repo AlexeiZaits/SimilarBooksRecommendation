@@ -14,3 +14,10 @@ export interface BooksResponse {
         status: number,
     }
 }
+
+export interface TitlesResponse{
+    data: {
+        titles: Pick<IBook, "title">[],
+        status: number,
+    }
+}
