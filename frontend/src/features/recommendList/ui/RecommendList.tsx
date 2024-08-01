@@ -12,7 +12,7 @@ export const RecommendList = () => {
         {status === "loading" && <PreloaderModal/>}
         <div className={styles.books}>
             {qty !== 0 && books.map((item) => {
-                return <Book style={{marginLeft: "3rem"}} key={item.uid} {...item}  children={<Like id={item.uid}/>}/>
+                return <Book style={{marginLeft: "3rem"}} key={item.uid} {...item}  children={<Like uid={item.uid}/>}/>
             })}
         </div>
     </div>
