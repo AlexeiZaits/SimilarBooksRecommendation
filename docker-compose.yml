@@ -12,3 +12,28 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+    networks:
+      - ml_network
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    volumes:
+      - ./backend:/app/backend
+    ports:
+      - ${BACKEND_PORT}:8000
+    environment:
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - RESID_PASSWORD=${RESID_PASSWORD}
+      - QDRANT_URL=${QDRANT_URL}
+      - QDRANT_API_KEY=${QDRANT_API_KEY}
+      - QDRANT_COLLECTION_DESCRIPTION=${QDRANT_COLLECTION_DESCRIPTION}
+      - QDRANT_COLLECTION_TITLES=${QDRANT_COLLECTION_TITLES}
+      - QDRANT_EMBEDDER=${QDRANT_EMBEDDER}
+    networks:
+      - ml_network
+
+networks:
+  ml_network:

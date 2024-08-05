@@ -9,7 +9,7 @@ from backend.src.schemas.tamplates import RedisMetadata, RedisResponse
 
 
 def get_book_info_redis(name: str, redis_connection: redis.StrictRedis) -> Optional[RedisResponse]:
-    """Получает данные и метаданные из Redis по ключу `name`"""
+    """Получает описание книги и метаданные из Redis по ключу `name`"""
 
     # Формирование ключа для метаданных
     metadata_key = f"{name}:metadata"
@@ -39,7 +39,9 @@ def get_book_info_redis(name: str, redis_connection: redis.StrictRedis) -> Optio
 
 
 def get_description_by_title(title: str, redis_client: redis.StrictRedis) -> Optional[RedisResponse]:
-    """Метод для получения данных и метаданных из Redis"""
+    """Метод для получения данных и метаданных из Redis для FastApi"""
+    if redis_client is None:
+        raise ConnectionError("Redis подключения нет")
 
     # Получаем описание по текущей книжке
     try:
