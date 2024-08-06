@@ -8,11 +8,11 @@ export interface BooKProps extends Pick<IBook, "author" | "title" | "image_link"
 }
 
 export const Book = ({author, title, image_link, children, ...otherProps}: BooKProps ) => {
-
+    // TODO: onError="this.style.display='none'; this.parentNode.style.backgroundImage='url(fallback.jpg)';"
     return <div {...otherProps} className={styles.book}>
         {children}
         <div className={styles.container}>
-            <img className={styles.img} src={"https://www.podpisnie.ru/" + image_link} alt="img"/>
+            <img className={styles.img} src={"https://www.podpisnie.ru/" + image_link}  alt="img"/>
         </div>
         <div className={styles.info}>
             <span className={styles.title}>{title.length > 19 ? title.slice(0,20) + "...": title}</span>

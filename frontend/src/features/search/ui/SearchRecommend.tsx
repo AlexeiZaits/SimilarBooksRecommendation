@@ -10,6 +10,7 @@ import { smoothScrollHigh } from "../lib/smoothScrollHigh";
 import { useClearInfinityScroll } from "features/infinityScroll/hooks/use-clear-infinity-scroll";
 import { useSearchRecommend } from "features/recommendsSearch/hooks/use-recommend-search";
 import { useClearReommendSearch } from "features/recommendsSearch/hooks/use-clear-recommend-search";
+import { useFocusRecommendSearch } from "features/recommendsSearch/hooks/use-focus-recommend-search";
 
 export const SearchRecommend = () => {
     const [search, setSearch] = useSearch()
@@ -19,6 +20,7 @@ export const SearchRecommend = () => {
     const [placeholder, setPlaceholder] = useState("Введите запрос")
     const [, searchRecommend] = useSearchRecommend()
     const clearRecommendList = useClearReommendSearch()
+    const [, setFocus] = useFocusRecommendSearch()
 
     useEffect(() => {
         if (error) {
@@ -39,6 +41,12 @@ export const SearchRecommend = () => {
     }
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+
+        if(event.key === "ArrowDown"){
+            event.preventDefault()
+            console.log("arrowDown")
+            setFocus(true)
+        }
         if (event.key === "Enter"){
             smoothScrollHigh()
             clearInfinityScroll()

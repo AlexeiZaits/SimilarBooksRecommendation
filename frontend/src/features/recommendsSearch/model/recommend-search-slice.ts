@@ -6,18 +6,30 @@ export interface IRecommendSearch{
     status: Status,
     error: ErrorType,
     titles: string[],
+    focusElement: number|null,
 }
 
 const initialState: IRecommendSearch = {
     titles: [],
     error: null,
     status: "idle",
+    focusElement: null,
 }
 
 export const recommendSearchSlice = createSlice({
     name: "@recommendSearchSlice",
     initialState: initialState,
     reducers: {
+        incrementFocusElement: (state) => {
+            if (state.focusElement === null){
+                state.focusElement = 0
+            } else{
+                state.focusElement = state.focusElement + 1
+            }
+        },
+        decrementFocusElement: (state) => {
+            if (state.focusElement) state.focusElement = state.focusElement - 1
+        },
         clearRecommendSearch: () => initialState
     },
     extraReducers(builder) {
@@ -34,4 +46,4 @@ export const recommendSearchSlice = createSlice({
     },
 })
 
-export const {clearRecommendSearch } = recommendSearchSlice.actions
+export const {clearRecommendSearch, decrementFocusElement} = recommendSearchSlice.actions
