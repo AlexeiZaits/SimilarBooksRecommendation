@@ -32,7 +32,6 @@ export const recommendListSlice = createSlice({
         })
         builder.addCase(actionSearchBooks.fulfilled, (state, action) => {
             state.status = "received"
-            console.log(action.payload.data.data)
             state.books = action.payload.data.data
         })
         builder.addCase(actionFindMore.pending, (state) => {

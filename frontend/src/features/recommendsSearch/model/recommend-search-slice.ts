@@ -7,6 +7,7 @@ export interface IRecommendSearch{
     error: ErrorType,
     titles: string[],
     focusElement: number|null,
+    view: boolean,
 }
 
 const initialState: IRecommendSearch = {
@@ -14,6 +15,7 @@ const initialState: IRecommendSearch = {
     error: null,
     status: "idle",
     focusElement: null,
+    view: false,
 }
 
 export const recommendSearchSlice = createSlice({
@@ -21,14 +23,30 @@ export const recommendSearchSlice = createSlice({
     initialState: initialState,
     reducers: {
         incrementFocusElement: (state) => {
-            if (state.focusElement === null){
+            if (state.focusElement === null || state.focusElement + 1 === state.titles.length){
                 state.focusElement = 0
-            } else{
+            }
+            else{
                 state.focusElement = state.focusElement + 1
             }
         },
         decrementFocusElement: (state) => {
-            if (state.focusElement) state.focusElement = state.focusElement - 1
+            if (state.focusElement !== null && state.focusElement - 1 < 0) {
+                state.focusElement = state.titles.length-1
+            }
+            else if (state.focusElement)
+                {
+                state.focusElement = state.focusElement - 1
+            }
+        },
+        setTitlesRecommendSearch: (state, action) => {
+            state.titles = action.payload
+        },
+        setViewRecommendSearch: (state, action) => {
+            state.view = action.payload
+        },
+        clearFocusElementRecommendSearch: (state) => {
+            state.focusElement = null
         },
         clearRecommendSearch: () => initialState
     },
@@ -46,4 +64,4 @@ export const recommendSearchSlice = createSlice({
     },
 })
 
-export const {clearRecommendSearch, decrementFocusElement} = recommendSearchSlice.actions
+export const {clearRecommendSearch, incrementFocusElement, decrementFocusElement, setViewRecommendSearch, clearFocusElementRecommendSearch, setTitlesRecommendSearch} = recommendSearchSlice.actions
