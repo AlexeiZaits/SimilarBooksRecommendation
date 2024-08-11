@@ -3,7 +3,8 @@ import './App.scss'
 import { store } from '../store/store';
 import { Provider } from 'react-redux';
 import { Header } from 'widjets/header';
-import { ModalRecommendsSearch } from 'widjets/modalRecommendsSearch';
+import { AutoCompleteSearch } from 'widjets/autoCompleteSearch';
+import { ScrollTop } from 'features/index';
 
 interface IAPP {
   children: ReactNode
@@ -14,7 +15,8 @@ const App = ({children}: IAPP) => {
   return (
     <Provider store={store}>
       <Header>
-        <ModalRecommendsSearch/>
+        <AutoCompleteSearch/>
+        <ScrollTop/>
       </Header>
       <main className='main'>{children}</main>
     </Provider>

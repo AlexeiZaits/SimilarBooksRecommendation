@@ -11,4 +11,11 @@
         cursor: pointer;
         background-color: $bg-transparant;
     }
+    &:focus{
+        background-color: $bg-transparant;
+    }
+}
+
+.active{
+    background-color: $bg-transparant;
 }

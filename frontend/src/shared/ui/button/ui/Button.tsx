@@ -5,14 +5,16 @@ import classNames from "classnames"
 interface IButton {
     text?: string,
     svg?: ReactNode,
-    onClick?: () => void,
     style?: CSSProperties,
     secondary?: boolean,
+    onClick?: () => void,
+    onMouseEnter?: () => void,
+    onMouseLeave?: () => void,
     children?: ReactNode,
 }
 
 export const Button = ({text, svg, secondary, children, onClick, ...otherProps}:IButton) => {
-    
+
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         onClick && onClick()
@@ -21,8 +23,8 @@ export const Button = ({text, svg, secondary, children, onClick, ...otherProps}:
     return <button className={classNames(
         styles.button,
         {[styles.secondary]: secondary},
-    )} 
-    onClick={handleClick} 
+    )}
+    onClick={handleClick}
     {...otherProps}>
         {svg}
         {text}

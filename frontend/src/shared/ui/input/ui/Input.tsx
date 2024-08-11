@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { CSSProperties, RefObject } from "react";
 import styles from "./styles.module.scss"
 import classNames from "classnames";
 
@@ -11,17 +11,21 @@ export interface IInput {
     style?: CSSProperties,
     secondary?: boolean,
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    onClick?: () => void
+    onClick?: () => void,
+    onBlur?: () => void,
+    onFocus?: () => void,
+    ref?: RefObject<HTMLInputElement>,
+    tabIndex?: number,
 }
 
 export const Input = ({value, error=false, secondary, ...otherProps}:IInput) => {
-    
-    return <input 
+
+    return <input
     className={classNames(
         styles.input,
-        { [styles.secondary]: secondary}    
+        { [styles.secondary]: secondary}
     )}
     style={{ borderColor: error ? "red": "" }}
-    value={String(value)} 
+    value={String(value)}
     {...otherProps}  />
 }

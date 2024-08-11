@@ -1,6 +1,5 @@
 import img from "shared/assets/icons/logo.png";
 import styles from "./styles.module.scss";
-import { SearchRecommend } from "features/search/ui/SearchRecommend";
 import { ThemeSwitcher } from "features/themeSwitcher/ui/ThemeSwitcher";
 import { LikeImg } from "shared/assets/icons/LikeImg";
 import { ReactNode } from "react";
@@ -17,7 +16,6 @@ export const Header = ({children}:IHeader) => {
             <span className={styles.text}>Similar Books Recommend</span>
         </div>
         <div className={styles.search}>
-            <SearchRecommend/>
             {children}
         </div>
         <div className={styles.rigth}>
