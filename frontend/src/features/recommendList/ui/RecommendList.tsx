@@ -3,10 +3,11 @@ import { useRecommendList } from "../hooks/use-recommend-list"
 import { Book } from "entities/index"
 import styles from "./styles.module.scss";
 import { Like } from "features/like/ui/Like";
+import { useInitialRecommends } from "../hooks/use-initial-recommends";
 
 export const RecommendList = () => {
     const [{status, books, qty},] = useRecommendList()
-
+    useInitialRecommends()
 
     return <div  className={styles.container}>
         {status === "loading" && <PreloaderModal/>}

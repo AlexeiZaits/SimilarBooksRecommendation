@@ -10,7 +10,7 @@ import { useSetTitles } from "../hooks/use-set-titles.ts"
 import { setLocalTitle } from "../lib/setLocalTitle.ts"
 
 export const RecommendListSearch = () => {
-    const [{titles, qty}] = useSearchRecommend()
+    const [{titles, qty}, searchRecommend] = useSearchRecommend()
     const [, searchBooks] = useRecommendList()
     const [, setSearch] = useSearch()
     const [focusedIndex] = useFocusElement()
@@ -23,6 +23,7 @@ export const RecommendListSearch = () => {
     }, [qty, setTitles])
 
     const handleClick = (title : string) => {
+        searchRecommend(title)
         searchBooks({
             query: title,
             limit: 24,

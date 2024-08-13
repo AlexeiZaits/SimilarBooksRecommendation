@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 
-export default function useDebounce(value:string, delay:number): [string, () => void] {
-  const [debouncedValue, setDebouncedValue] = useState(value);
+export default function useDebounce(callback:(value: string) => void,delay:number): [string, (value: string) => void] {
+  const [debouncedValue, setDebouncedValue] = useState("");
 
   useEffect(() => {
       const handler = setTimeout(() => {
-        setDebouncedValue(value);
+        setDebouncedValue(debouncedValue);
+        callback(debouncedValue)
       }, delay);
 
       return () => {
@@ -13,10 +14,8 @@ export default function useDebounce(value:string, delay:number): [string, () => 
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [value]
+    [debouncedValue]
   );
 
-  const clearDebounce = () => setDebouncedValue("")
-
-  return [debouncedValue, clearDebounce];
+  return [debouncedValue, setDebouncedValue];
 }
