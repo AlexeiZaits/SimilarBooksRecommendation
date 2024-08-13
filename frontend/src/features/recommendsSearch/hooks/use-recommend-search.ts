@@ -10,6 +10,7 @@ export const useSearchRecommend = (): [
     const dispatch = useAppDispatch()
     const searchRecommendInfo = useAppSelector(selectRecommendSearch)
 
+
     const searchRecommend = (query: string) => {
         if (query) {
             dispatch(actionGetTitles({query: query,

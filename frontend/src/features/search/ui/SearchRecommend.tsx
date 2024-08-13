@@ -17,10 +17,8 @@ import { useClearFocusRecommends } from "features/recommendsSearch/hooks/use-cle
 import { setLocalTitle } from "features/recommendsSearch/lib/setLocalTitle";
 
 export const SearchRecommend = () => {
-    const [requestSearch, setRequestSearch] = useState("")
     const [viewHint, setViewHint] = useState(false)
     const [viewLupa, setViewLupa] = useState(false)
-    const [debounceValue, clearDebounce] = useDebounce(requestSearch, 400)
     const [placeholder, setPlaceholder] = useState("Введите запрос")
     const formRef = useRef<HTMLDivElement>(null)
     const clearSearch = useClearSearch()
@@ -28,16 +26,11 @@ export const SearchRecommend = () => {
     const clearFocus = useClearFocusRecommends()
     const clearRecommendList = useClearReommendSearch()
     const [search, setSearch] = useSearch()
-    // TODO: не делать запрос
     const [, searchRecommend] = useSearchRecommend()
+    const [, setDebounceValue] = useDebounce(searchRecommend, 400)
     const [, calcFocus] = useFocusElement()
     const [, setView] = useSetViewRecommendSearch()
     const [{error}, searchBooks] = useRecommendList()
-
-    useEffect(() => {
-        searchRecommend(debounceValue)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debounceValue])
 
     useEffect(() => {
         if (error) {
@@ -50,6 +43,7 @@ export const SearchRecommend = () => {
     const handleClick = () => {
         smoothScrollHigh()
         clearInfinityScroll()
+        searchRecommend(search)
         searchBooks({
                 query: search,
                 limit: 24,
@@ -76,6 +70,7 @@ export const SearchRecommend = () => {
                     limit: 24,
                     offset: 0,
                 })
+                searchRecommend(search)
                 setLocalTitle(search)
                 clearFocus()
                 break;
@@ -86,7 +81,7 @@ export const SearchRecommend = () => {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value)
-        setRequestSearch(e.target.value)
+        setDebounceValue(e.target.value)
         if (!e.target.value){
             clearRecommendList()
         }
@@ -96,22 +91,18 @@ export const SearchRecommend = () => {
     const handleClear = () => {
         clearSearch()
         clearRecommendList()
-        clearDebounce()
+        setDebounceValue("")
         setView(false)
     }
 
     const handleFocus = () => {
         setViewLupa(true)
         setView(true)
-        searchRecommend(search)
     }
 
     const handleOnBlur = () => {
         setViewLupa(false)
-        setTimeout(() => {
-            setView(false)
-        }
-        ,0)
+        setView(false)
     }
 
     return <div ref={formRef} tabIndex={0} onKeyDown={handleKeyDown} className={styles.container}>
