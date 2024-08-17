@@ -14,6 +14,7 @@ async def lifespan(App: FastAPI):
     models.embedder = models.get_embedder()
     models.qdrant_connection = models.get_qdrant_connection()
     models.redis_connection = models.get_redis_connection()
+    models.trie = models.get_trie()
     yield
     models.redis_connection.close()
     models.qdrant_connection.close()

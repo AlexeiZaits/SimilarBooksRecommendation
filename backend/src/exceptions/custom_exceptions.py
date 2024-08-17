@@ -12,8 +12,17 @@ class RedisDataNotFoundException(CustomException):
         self.errors = errors
 
 
-# Определение конкретного пользовательского исключения
 class RankingErrorException(CustomException):
+    """По запросу в Redis ничего не найдено"""
+
+    default_message = "Ошибка ранжирование"
+
+    def __init__(self, message: str = default_message, errors=None):
+        super().__init__(message)
+        self.errors = errors
+
+
+class AutocompliteIsEmptyException(CustomException):
     """По запросу в Redis ничего не найдено"""
 
     default_message = "Не найдено актуальных названий книг"

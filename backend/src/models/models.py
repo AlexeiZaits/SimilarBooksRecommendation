@@ -1,4 +1,5 @@
 import os
+import pickle
 from typing import Optional
 
 import redis
@@ -6,12 +7,39 @@ from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
 
+from backend.src.models.trie import Trie
+
 load_dotenv()
 
 
 qdrant_connection: Optional[QdrantClient] = None
 embedder: Optional[SentenceTransformer] = None
 redis_connection: Optional[redis.StrictRedis] = None
+trie: Optional[Trie] = None
+
+
+class CustomUnpickler(pickle.Unpickler):
+    """Кастомный поисковик. Нужен, т.к базовый для fastapi не работает"""
+
+    def find_class(self, module, name):
+        """Искать класс"""
+        if module == "__main__":
+            module = "backend.src.models.trie"
+        return super().find_class(module, name)
+
+
+def custom_load(file_path):
+    """Кастомная загрузка, которая ищет класс внутри своих модулей"""
+    with open(file_path, "rb") as f:
+        return CustomUnpickler(f).load()
+
+
+def get_trie():
+    """Метод для объекта для автокомплита"""
+    global trie
+    if trie is None:
+        trie = custom_load(os.path.join(os.getcwd(), "data", "trie.pkl"))
+    return trie
 
 
 def get_qdrant_connection() -> QdrantClient:
@@ -30,7 +58,7 @@ def get_embedder() -> SentenceTransformer:
     return embedder
 
 
-def get_redis_connection() -> SentenceTransformer:
+def get_redis_connection() -> redis.Redis:
     """Метод для получения подключения к Redis"""
     global redis_connection
     if redis_connection is None:
