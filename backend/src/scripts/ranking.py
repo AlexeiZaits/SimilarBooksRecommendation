@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from backend.src.exceptions.custom_exceptions import RankingErrorException
+from backend.src.exceptions.custom_exceptions import AutocompliteIsEmptyException, RankingErrorException
 
 
 def ranking_titles(content: List[str], query: str) -> List[str]:
@@ -31,3 +31,12 @@ def ranking_titles(content: List[str], query: str) -> List[str]:
     df = df.sort_values(by="similarity", ascending=False).head(10)
 
     return df["values"].to_list()
+
+
+def autocomplete_books_trie(prefix, trie, limit=5):
+    """Функция автокомплита"""
+    suggestions = trie.search_prefix(prefix.lower())
+
+    if not suggestions:  # Если ничего не получено
+        raise AutocompliteIsEmptyException
+    return suggestions[:limit]

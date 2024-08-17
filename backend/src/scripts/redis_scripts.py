@@ -3,12 +3,11 @@ from typing import Optional
 
 import redis
 
-from backend.config.custom_status import CustomHTTPStatus
 from backend.src.exceptions.custom_exceptions import RedisDataNotFoundException
-from backend.src.schemas.tamplates import RedisMetadata, RedisResponse
+from backend.src.schemas.tamplates import RedisResponse
 
 
-def get_book_info_redis(name: str, redis_connection: redis.StrictRedis) -> Optional[RedisResponse]:
+def get_book(name: str, redis_connection: Optional[redis.StrictRedis]) -> Optional[RedisResponse]:
     """Получает описание книги и метаданные из Redis по ключу `name`"""
 
     # Формирование ключа для метаданных
@@ -34,27 +33,5 @@ def get_book_info_redis(name: str, redis_connection: redis.StrictRedis) -> Optio
         metadata = {key.decode("utf-8"): value.decode("utf-8") for key, value in metadata.items()}
     else:
         metadata = {}
-
-    return RedisResponse(description=description, metadata=metadata, status=HTTPStatus.OK)
-
-
-def get_description_by_title(title: str, redis_client: redis.StrictRedis) -> Optional[RedisResponse]:
-    """Метод для получения данных и метаданных из Redis для FastApi"""
-    if redis_client is None:
-        raise ConnectionError("Redis подключения нет")
-
-    # Получаем описание по текущей книжке
-    try:
-        book_info = get_book_info_redis(redis_connection=redis_client, name=title)
-        description = book_info.description
-        metadata = RedisMetadata(category=book_info.metadata.category, author=book_info.metadata.author)
-    # Если книжка не найдена
-    except RedisDataNotFoundException:
-        # TODO: логирование
-        return RedisResponse(
-            description="",
-            metadata=RedisMetadata(category="", author=""),
-            status=CustomHTTPStatus.RedisDataNotFouldStatus.value,
-        )
 
     return RedisResponse(description=description, metadata=metadata, status=HTTPStatus.OK)
