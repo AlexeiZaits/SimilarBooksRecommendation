@@ -8,6 +8,7 @@ import { useClearFocusRecommends } from "../hooks/use-clear-focus-recommend.ts"
 import { useEffect } from "react"
 import { useSetTitles } from "../hooks/use-set-titles.ts"
 import { setLocalTitle } from "../lib/setLocalTitle.ts"
+import { useNavigate } from "react-router-dom"
 
 export const RecommendListSearch = () => {
     const [{titles, qty}, searchRecommend] = useSearchRecommend()
@@ -16,6 +17,7 @@ export const RecommendListSearch = () => {
     const [focusedIndex] = useFocusElement()
     const clearFocus = useClearFocusRecommends()
     const setTitles = useSetTitles()
+    const navigate = useNavigate();
 
     useEffect(() => {
         (qty === 0 && localStorage.getItem("recommends")) && setTitles(JSON.parse(localStorage.getItem("recommends") || "[]").slice(0,9))
@@ -24,6 +26,7 @@ export const RecommendListSearch = () => {
 
     const handleClick = (title : string) => {
         searchRecommend(title)
+        navigate("")
         searchBooks({
             query: title,
             limit: 24,

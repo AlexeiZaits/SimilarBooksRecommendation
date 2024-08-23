@@ -7,6 +7,7 @@ import { recommendListSlice } from 'features/recommendList/model/recommend-list-
 import { searchSlice } from 'features/search/model/search-slice';
 import { infinityScrollSlice } from 'features/infinityScroll/model/infinity-scroll-slice';
 import { recommendSearchSlice } from 'features/recommendsSearch/model/recommend-search-slice';
+import { likeListSlice } from 'features/likeList/modal/like-list-slice';
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     searchRecommend: searchSlice.reducer,
     infinityScroll: infinityScrollSlice.reducer,
     recommendSearch: recommendSearchSlice.reducer,
+    likeList: likeListSlice.reducer,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({

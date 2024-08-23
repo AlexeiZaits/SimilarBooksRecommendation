@@ -3,10 +3,8 @@ import {
   Outlet,
 } from "react-router-dom";
 import App from "../ui/App";
-import { ErrorPage } from "pages/ErrorPage/ui/ErrorPage";
-import { AuthForm } from "widjets/authForm";
-import { RecommendPage } from "pages/RecommendPage/ui/RecommenPage";
-import { BookPage } from "pages/index";
+import { AuthPage, BookPage, ErrorPage, LikePage, RecommendPage } from "pages/index";
+
 
 
 export const router = createBrowserRouter([
@@ -20,10 +18,14 @@ export const router = createBrowserRouter([
       },
       {
         path: "authorization",
-        element: <AuthForm/>,
+        element: <AuthPage/>,
       },
       {
-        path: "book/*",
+        path: "likes",
+        element: <LikePage/>,
+      },
+      {
+        path: "book/:title",
         element: <BookPage/>
       },
     ]

@@ -3,12 +3,16 @@ import styles from "./styles.module.scss";
 import { ThemeSwitcher } from "features/themeSwitcher/ui/ThemeSwitcher";
 import { LikeImg } from "shared/assets/icons/LikeImg";
 import { ReactNode } from "react";
+import { Link } from "react-router-dom";
+import { useAppSelector } from "app/store/store";
+import { selectQtyLikeBooks } from "features/likeList/modal/like-list-selectors";
 
 interface IHeader{
     children: ReactNode,
 }
 
 export const Header = ({children}:IHeader) => {
+    const qtyLikes = useAppSelector(selectQtyLikeBooks)
 
     return <div className={styles.header}>
         <div className={styles.logo}>
@@ -19,7 +23,7 @@ export const Header = ({children}:IHeader) => {
             {children}
         </div>
         <div className={styles.rigth}>
-            <div className={styles.like}><LikeImg like={true}/><span className={styles.like_text}>0</span></div>
+            <Link to={"likes"} className={styles.like}><LikeImg like={true}/><span className={styles.like_text}>{qtyLikes}</span></Link>
             <div className={styles.theme}><ThemeSwitcher/></div>
         </div>
     </div>
