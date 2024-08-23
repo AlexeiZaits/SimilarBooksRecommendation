@@ -15,9 +15,11 @@ import { useFocusElement } from "features/recommendsSearch/hooks/use-focus-eleme
 import { useSetViewRecommendSearch } from "features/recommendsSearch/hooks/use-set-recommend-search";
 import { useClearFocusRecommends } from "features/recommendsSearch/hooks/use-clear-focus-recommend.ts";
 import { setLocalTitle } from "features/recommendsSearch/lib/setLocalTitle";
+import { useNavigate } from "react-router-dom";
 
 export const SearchRecommend = () => {
     const [viewHint, setViewHint] = useState(false)
+    // под вовросом
     const [viewLupa, setViewLupa] = useState(false)
     const [placeholder, setPlaceholder] = useState("Введите запрос")
     const formRef = useRef<HTMLDivElement>(null)
@@ -31,6 +33,7 @@ export const SearchRecommend = () => {
     const [, calcFocus] = useFocusElement()
     const [, setView] = useSetViewRecommendSearch()
     const [{error}, searchBooks] = useRecommendList()
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (error) {
@@ -41,6 +44,7 @@ export const SearchRecommend = () => {
     }, [error])
 
     const handleClick = () => {
+        navigate("")
         smoothScrollHigh()
         clearInfinityScroll()
         searchRecommend(search)
@@ -63,6 +67,7 @@ export const SearchRecommend = () => {
                 break;
             case "Enter":
                 formRef.current && formRef.current.focus()
+                navigate("")
                 smoothScrollHigh()
                 clearInfinityScroll()
                 searchBooks({
