@@ -2,10 +2,12 @@ import img from "shared/assets/icons/logo.png";
 import styles from "./styles.module.scss";
 import { ThemeSwitcher } from "features/themeSwitcher/ui/ThemeSwitcher";
 import { LikeImg } from "shared/assets/icons/LikeImg";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "app/store/store";
 import { selectQtyLikeBooks } from "features/likeList/modal/like-list-selectors";
+import { useRecommendList } from "features/recommendList/hooks/use-recommend-list";
+import { useSetLikeList } from "features/likeList/hooks/use-set-like-list";
 
 interface IHeader{
     children: ReactNode,
@@ -13,6 +15,16 @@ interface IHeader{
 
 export const Header = ({children}:IHeader) => {
     const qtyLikes = useAppSelector(selectQtyLikeBooks)
+    const [{qty},] = useRecommendList()
+    const setLikeList = useSetLikeList()
+
+    useEffect(() => {
+        const localBooks = JSON.parse(localStorage.getItem("likesBook") || "[]" );
+        if (qty === 0 && localBooks.length !== 0) {
+            console.log("localBook get")
+            setLikeList(localBooks)
+        }
+    }, [])
 
     return <div className={styles.header}>
         <div className={styles.logo}>

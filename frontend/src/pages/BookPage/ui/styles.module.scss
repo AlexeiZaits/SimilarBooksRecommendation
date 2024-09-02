@@ -1,0 +1,65 @@
+@import "../../../shared/utils/index.scss";
+
+.mainTitle{
+    @include t-title();
+    margin: 0;
+}
+
+.secondaryTitle{
+    @include t-title();
+    margin-top: 3rem;
+}
+
+.recommendTitle{
+    @include t-title();
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    text-align: center;
+
+}
+
+.text{
+    @include t-main();
+    margin-top: 1rem;
+}
+
+.container{
+    padding: 1rem 1rem;
+    max-width: 70rem;
+    margin: 0 auto;
+}
+
+.book{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.info{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 40rem;
+    height: 10rem;
+}
+
+.description{
+    margin-top: 2rem;
+}
+
+.img{
+    border-radius: $main-radius;
+    border: 3px solid;
+    border-color: green;
+    height: 590px;
+    width: 410px;
+    position: relative;
+    overflow: hidden;
+}
+
+.like{
+    position: relative;
+    height: 3rem;
+
+}

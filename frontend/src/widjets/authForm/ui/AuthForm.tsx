@@ -1,11 +1,13 @@
 import { useState } from "react"
 import { Input } from "../../../shared/ui/input/ui/Input"
 import styles from "./styles.module.scss"
-import { Button } from "shared/ui"
+import { Button, Preloader, withModal } from "shared/ui"
 import { IUserForm } from "shared/types"
 import { useAppDispatch, useAppSelector } from "app/store/store"
-import { PreloaderModal } from "shared/ui/preloaderModal/ui/Preloader"
 import { authUser } from "features/authorization/model/auth-actions"
+
+const PreloaderWithModal = withModal(Preloader)
+
 
 export const AuthForm = () => {
     const [login, setLogin] = useState<string>("")
@@ -13,15 +15,15 @@ export const AuthForm = () => {
     const [staySign, setStaySign] = useState(false)
     const dispatch = useAppDispatch()
     const {error, status} = useAppSelector(state => state.authorization)
-    
+
     function handleClick(user: IUserForm) {
         dispatch(authUser(user))
         setLogin("")
         setPassword("")
     }
-    
+
     return <div className={styles.container}>
-        {status === "loading" && <PreloaderModal/>}
+        {status === "loading" && <PreloaderWithModal/>}
         <div className={styles.form}>
             <p className={styles.signin}>Авторизация</p>
             <div className={styles.authForm}>

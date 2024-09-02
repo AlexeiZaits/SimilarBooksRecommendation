@@ -13,10 +13,10 @@ export const actionSearchBooks = createAsyncThunk<
 >(
     '@@recommendListSlice/search',
     async(searchRequest,
-        { extra: {api}, rejectWithValue,
+        { extra: {api, client}, rejectWithValue,
     }) => {
         try {
-            return axios.post(api.searchBooks, searchRequest);
+            return client.post(api.searchBooks, searchRequest);
           } catch (error) {
             if (error instanceof Error)
               return rejectWithValue(error.message);

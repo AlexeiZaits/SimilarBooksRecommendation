@@ -8,11 +8,10 @@ export interface AuthResponse {
 }
 
 export interface BooksResponse {
-    data: {
-        data: Omit<IBook, "description">[],
-        error: string,
-        status: number,
-    }
+    data: Omit<IBook, "description">[],
+    error: string,
+    status: number,
+
 }
 
 export interface TitlesResponse{
@@ -20,4 +19,17 @@ export interface TitlesResponse{
         titles: string[],
         status: number,
     }
+}
+
+export interface BookResponse{
+    metadata: {
+        "category": string,
+        "author": string,
+        "image": string,
+        "info": string,
+        "uid": string
+    },
+    "description": string,
+    "status": number
+
 }

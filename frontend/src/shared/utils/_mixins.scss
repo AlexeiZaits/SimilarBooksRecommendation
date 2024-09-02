@@ -2,20 +2,20 @@
     color: $text-primary;
     font-family: $secondary-font;
     font-weight: 700;
-    font-size: 1.875rem;
+    font-size: 1.2rem;
     @media (min-width: $tablet) {
-        font-size: 1.875rem;
+        font-size: 1.5rem;
     }
-    
+
 }
 
 @mixin t-main(){
     color: $text-primary;
     font-family: $main-font;
-    font-size: 1.875rem;
+    font-size: 0.8rem;
     font-weight: 500;
     @media (min-width: $tablet) {
-        font-size: 1.875rem;
+        font-size: 1rem;
     }
 }
 
