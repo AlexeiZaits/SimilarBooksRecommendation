@@ -5,3 +5,4 @@ export const logout = API_URL + `logout`;
 export const resresh = API_URL + `resresh`;
 export const searchBooks = API_URL + `get_book_recommendations`;
 export const get_titles_books = API_URL + `update_query`;
+export const get_book = API_URL + `book`;
