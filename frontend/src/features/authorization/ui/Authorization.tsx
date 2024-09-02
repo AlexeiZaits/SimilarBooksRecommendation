@@ -1,8 +1,10 @@
 import { useAppDispatch, useAppSelector } from "app/store/store"
 import { ReactNode, useEffect } from "react"
 import { refreshUser } from "../model/auth-actions"
-import { PreloaderModal } from "shared/ui/preloaderModal/ui/Preloader"
 import { useNavigate } from "react-router-dom"
+import { Preloader, withModal } from "shared/ui"
+
+const PreloaderWithModal = withModal(Preloader)
 
 interface IAuth {
     children: ReactNode
@@ -24,7 +26,7 @@ export const Authorization = ({children}:IAuth) => {
     }, [dispatch])
 
     return <>
-        {status === "loading" && <PreloaderModal/>}
+        {status === "loading" && <PreloaderWithModal/>}
         {isAuth && children}
     </>
 }
