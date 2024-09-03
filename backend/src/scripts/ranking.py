@@ -35,7 +35,7 @@ def ranking_titles(content: List[str], query: str) -> List[str]:
 
 def autocomplete_books_trie(prefix, trie, limit=5):
     """Функция автокомплита"""
-    suggestions = trie.search_prefix(prefix.lower())
+    suggestions = trie.search_prefix(prefix)
 
     if not suggestions:  # Если ничего не получено
         raise AutocompliteIsEmptyException
