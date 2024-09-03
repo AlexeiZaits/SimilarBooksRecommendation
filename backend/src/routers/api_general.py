@@ -52,10 +52,10 @@ def update_query(
 
     # Пытаемся найти похожую книгу. Если не выходит, то возвращает соответствующий статус ошибки
     try:
-        suggestions = autocomplete_books_trie(data.query, trie, limit=data.limit)
+        content = autocomplete_books_trie(data.query, trie, limit=data.limit)
+        print(content)
     except AutocompliteIsEmptyException:
         return UpdatedQueryResponse(titles=None, status=CustomHTTPStatus.AutocompliteIsEmptyStatus.value)
-    content = list(map(str.capitalize, suggestions))
 
     # Реренжируем названия по косинусной близости
     try:
