@@ -1,6 +1,6 @@
 # default_stages: [commit, push]
 # Список файлов, которые необходимо игнорировать при проверке pre-commit hooks
-exclude: '^(models/|data/|notebooks/|config/|mlflow/|.dvc/)'
+exclude: '^(backend/models/|data/|notebooks/|backend/config/|.dvc/)'
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
