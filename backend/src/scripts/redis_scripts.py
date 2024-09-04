@@ -4,7 +4,7 @@ from typing import Optional
 import redis
 
 from backend.src.exceptions.custom_exceptions import RedisDataNotFoundException
-from backend.src.schemas.tamplates import RedisResponse
+from backend.src.schemas.tamplates_app import RedisResponse
 
 
 def get_book(name: str, redis_connection: Optional[redis.StrictRedis]) -> Optional[RedisResponse]:

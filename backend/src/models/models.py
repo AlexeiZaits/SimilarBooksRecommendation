@@ -6,7 +6,10 @@ import redis
 from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
+from sqlalchemy import create_engine
+from sqlalchemy.engine import Engine
 
+from backend.config.app_config import pgsql_connection_string
 from backend.src.models.trie import Trie
 
 load_dotenv()
@@ -15,6 +18,7 @@ load_dotenv()
 qdrant_connection: Optional[QdrantClient] = None
 embedder: Optional[SentenceTransformer] = None
 redis_connection: Optional[redis.StrictRedis] = None
+db_connection: Optional[Engine] = None
 trie: Optional[Trie] = None
 
 
@@ -66,3 +70,12 @@ def get_redis_connection() -> redis.Redis:
             host=os.getenv("REDIS_HOST"), port=os.getenv("REDIS_PORT"), password=os.getenv("RESID_PASSWORD")
         )
     return redis_connection
+
+
+def get_db_connection() -> Engine:
+    """Метод для получения подключения к pgsql"""
+    global db_connection
+    if db_connection is None:
+        db_connection = create_engine(pgsql_connection_string)
+
+    return db_connection

@@ -7,6 +7,7 @@ WORKDIR /app
 # Копируем файл requirements.txt из корневой директории в текущую рабочую директорию в контейнере
 COPY ../requirements_prod.txt .
 # Устанавливаем зависимости
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements_prod.txt
 
 
