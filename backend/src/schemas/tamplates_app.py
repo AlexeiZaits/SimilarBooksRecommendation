@@ -1,35 +1,9 @@
 from typing import List, Optional
 
 from pydantic import BaseModel, Field
-from typing_extensions import TypedDict
 
 
-class BookRecommendationInfo(TypedDict):
-    """Класс данных для отдельной рекомендации по книге"""
-
-    uid: str
-    image_link: str
-    category: str
-    author: str
-    title: str
-    score: float
-
-
-class RecomendationResponse(BaseModel):
-    """Шаблон ответа от api /predict"""
-
-    data: Optional[List[BookRecommendationInfo]]
-    status: Optional[int] = Field(..., title="status")
-
-
-class RecomendationInput(BaseModel):
-    """Шаблон входных данных от api /predict"""
-
-    query: str = Field(..., title="boot_description")
-    limit: int = Field(default=6, title="number_chunks")
-    offset: int = Field(default=0, title="offset")
-
-
+# ! Шаблоны для Redis
 class RedisInput(BaseModel):
     """Шаблон входных данных для поиска инфы по книге"""
 
@@ -54,6 +28,35 @@ class RedisResponse(BaseModel):
     status: int = Field(..., title="status")
 
 
+# ! Шаблоны для БД
+class BookInfo(BaseModel):
+    """Информация об одной книжке"""
+
+    category: str = Field(..., title="category", alias="Category")
+    author: str = Field(..., title="author", alias="Author")
+    image: str = Field(..., title="image", alias="Image")
+    info: str = Field(..., title="info", alias="Info")
+    uid: str = Field(..., title="uid", alias="ID")
+    description: str = Field(..., title="description", alias="Description")
+    title: str = Field(..., title="title", alias="Title")
+
+
+class BooksBatchResponse(BaseModel):
+    """Список из книг"""
+
+    books: Optional[List[BookInfo]]
+    status: int = Field(..., title="status")
+
+
+class BooksBatchInput(BaseModel):
+    """Список из книг"""
+
+    category_filter: Optional[str] = Field(default=None, title="category_filter")
+    limit: int = Field(default=5, title="limit")
+    offset: int = Field(default=0, title="offset")
+
+
+# ! Шаблоны для autocomplite
 class UpdateQueryInput(BaseModel):
     """Шаблон входных данных от api/update_query"""
 
@@ -61,7 +64,7 @@ class UpdateQueryInput(BaseModel):
     limit: int = Field(default=10, title="number_chunks")
 
 
-class UpdatedQueryResponse(BaseModel):
+class UpdateQueryResponse(BaseModel):
     """Шаблон Обновленных названий книг"""
 
     titles: Optional[List[str]]
