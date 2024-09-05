@@ -2,7 +2,6 @@ import os
 from http import HTTPStatus
 from typing import Dict, Optional
 
-import pandas as pd
 from dotenv import load_dotenv
 from sqlalchemy import insert, text
 from sqlalchemy.exc import IntegrityError
@@ -12,7 +11,7 @@ from sqlalchemy.future import select
 from backend.src.models.tables import User
 
 # from sqlalchemy.engine import Engine
-from backend.src.schemas.tamplates_app import BookInfo, BooksBatchResponse
+from backend.src.schemas.tamplates_app import BooksBatchResponse
 
 load_dotenv()
 
@@ -22,20 +21,20 @@ async def get_books_batch(
 ) -> BooksBatchResponse:
     """Возвращает из postgresql список книг батчами"""
 
-    # Формируем весь запрос
-    main_query = f"""SELECT * FROM {os.getenv('POSTGRE_BOOK_TABLE')} """
-    filter_query = f"""WHERE "Category" = {category_filter} """ if category_filter else ""
-    limit_query = f"""LIMIT {limit} OFFSET {offset}"""
+    # Формируем запрос
+    table_name = os.getenv("POSTGRE_BOOK_TABLE")
+    query = text(f"SELECT * FROM {table_name} OFFSET :offset LIMIT :limit")
 
-    query = main_query + filter_query + limit_query
+    # Добавляем условие фильтрации, если передан category_filter
+    if category_filter:
+        query = text(f'SELECT * FROM {table_name} WHERE "Category" = :category OFFSET :offset LIMIT :limit')
 
+    # Выполняем запрос с параметрами
     async with db_session() as session:
-        # Выполняем асинхронный запрос к базе данных
-        result = await session.execute(text(query))
+        result = await session.execute(query, {"offset": offset, "limit": limit, "category": category_filter})
 
-        # Преобразуем результат в DataFrame
-        df = pd.DataFrame(result.fetchall(), columns=result.keys()).to_dict(orient="records")
-        books_info_list = [BookInfo(**book) for book in df]
+        # Преобразуем результат в список словарей
+        books_info_list = [dict(row) for row in result.mappings().all()]
 
         return BooksBatchResponse(books=books_info_list, status=HTTPStatus.OK)
 
