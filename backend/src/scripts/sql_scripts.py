@@ -1,17 +1,14 @@
-import os
 from http import HTTPStatus
 from typing import Dict, Optional
 
 from dotenv import load_dotenv
-from sqlalchemy import insert, text
+from sqlalchemy import insert
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from backend.src.models.tables import User
-
-# from sqlalchemy.engine import Engine
-from backend.src.schemas.tamplates_app import BooksBatchResponse
+from backend.src.models.tables import Book, User
+from backend.src.schemas.tamplates_app import BookInfo, BooksBatchResponse
 
 load_dotenv()
 
@@ -22,19 +19,17 @@ async def get_books_batch(
     """Возвращает из postgresql список книг батчами"""
 
     # Формируем запрос
-    table_name = os.getenv("POSTGRE_BOOK_TABLE")
-    query = text(f"SELECT * FROM {table_name} OFFSET :offset LIMIT :limit")
+    query = select(Book).limit(limit).offset(offset)
 
-    # Добавляем условие фильтрации, если передан category_filter
     if category_filter:
-        query = text(f'SELECT * FROM {table_name} WHERE "Category" = :category OFFSET :offset LIMIT :limit')
+        query = select(Book).where(Book.Category == category_filter).limit(limit).offset(offset)
 
-    # Выполняем запрос с параметрами
     async with db_session() as session:
-        result = await session.execute(query, {"offset": offset, "limit": limit, "category": category_filter})
+        # Выполняем асинхронный запрос
+        result = await session.execute(query)
 
-        # Преобразуем результат в список словарей
-        books_info_list = [dict(row) for row in result.mappings().all()]
+        # Получаем все книги из результата запроса и преобразовываем его в нужный вид
+        books_info_list = [BookInfo(**book.to_dict()) for book in result.scalars().all()]
 
         return BooksBatchResponse(books=books_info_list, status=HTTPStatus.OK)
 
@@ -86,6 +81,5 @@ async def create_user(db_session: AsyncSession, user_dict: Dict[str, str]) -> bo
             return True  # Пользователь успешно создан
         except IntegrityError as e:
             await session.rollback()  # Откатываем транзакцию при ошибке
-            print("Габела")
             # Логирование или обработка ошибки, если необходимо
             return False  # Возможно, пользователь с таким login уже существует

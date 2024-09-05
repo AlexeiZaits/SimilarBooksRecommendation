@@ -47,18 +47,14 @@ engine = create_async_engine(DATABASE_URL)
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
 
 # настройка аннотаций
-int_pk = Annotated[int, mapped_column(primary_key=True)]
 created_at = Annotated[datetime, mapped_column(server_default=func.now())]
 updated_at = Annotated[datetime, mapped_column(server_default=func.now(), onupdate=datetime.now)]
-str_uniq = Annotated[str, mapped_column(unique=True, nullable=False)]
-str_null_true = Annotated[str, mapped_column(nullable=True)]
 
 
 class Base(AsyncAttrs, DeclarativeBase):
     """Базовый класс для таблицы"""
 
     __abstract__ = True
-    from_attributes = True
 
     @classmethod
     @declared_attr.directive
@@ -68,5 +64,9 @@ class Base(AsyncAttrs, DeclarativeBase):
     created_at: Mapped[created_at]
     updated_at: Mapped[updated_at]
 
-    class Config:
-        from_attributes = True
+    def to_dict(self):
+        """Преобразует объект в словарь"""
+
+        # Получаем все атрибуты экземпляра, которые являются столбцами
+        columns = {column.name: getattr(self, column.name) for column in self.__table__.columns}
+        return columns

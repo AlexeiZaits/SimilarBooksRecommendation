@@ -52,7 +52,15 @@ async def auth_user(
     return {"access_token": access_token, "refresh_token": None}
 
 
-@router.get("/me/")
+@router.post("/logout")
+async def logout_user(response: Response):
+    """Метод, позволяющий пользователю разлогиниться"""
+
+    response.delete_cookie(key="users_access_token")
+    return {"message": "Пользователь успешно вышел из системы"}
+
+
+@router.get("/user")
 async def get_me(
     token: str = Depends(get_token),
     db_connection: AsyncSession = Depends(get_db_connection),
@@ -60,14 +68,6 @@ async def get_me(
     """Получить данные о пользователе, если он зарегистрирован и имеет JWT токеном"""
 
     return await get_current_user(db_connection=db_connection, token=token)
-
-
-@router.post("/logout")
-async def logout_user(response: Response):
-    """Метод, позволяющий пользователю разлогиниться"""
-
-    response.delete_cookie(key="users_access_token")
-    return {"message": "Пользователь успешно вышел из системы"}
 
 
 @router.get("/admin_test")
