@@ -66,3 +66,7 @@ RESID_PASSWORD=
 5. ``docker-compose up -d`` - запустить в detouch моде (логи не отображаются в консоли)
 6. ``docker-compose up -d --build`` - запустить в detouch моде и пересобрать
 7. ``docker ps`` - вывести список запущенных контейнеров
+
+## Полезные команды Alembic:
+1. ``alembic upgrade head`` - обновить бд
+2. ``alembic revision --autogenerate -m "create books table"`` - создать миграцию

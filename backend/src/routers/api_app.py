@@ -29,7 +29,7 @@ router = APIRouter(tags=["Api for main application"])
 
 
 @router.get("/books", response_model=Optional[BooksBatchResponse])
-def books(
+async def books(
     limit: int = Query(5, description="Limit of books to return"),
     offset: int = Query(0, description="Offset of books to return"),
     category_filter: Optional[str] = Query(None, description="Filter books by category"),
@@ -40,8 +40,11 @@ def books(
     # Переводим все в Pydantic класс для автоматической валидации параметров GET-запроса
     params = BooksBatchInput(limit=limit, offset=offset, category_filter=category_filter)
     try:
-        data = get_books_batch(
-            engine=db_connection, limit=params.limit, offset=params.offset, category_filter=params.category_filter
+        data = await get_books_batch(
+            db_session=db_connection,
+            limit=params.limit,
+            offset=params.offset,
+            category_filter=params.category_filter,
         )
     except DataBaseException:
         return BooksBatchResponse(

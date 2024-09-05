@@ -6,10 +6,9 @@ import redis
 from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from sentence_transformers import SentenceTransformer
-from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 
-from backend.config.app_config import pgsql_connection_string
+from backend.config.database import async_session_maker
 from backend.src.models.trie import Trie
 
 load_dotenv()
@@ -76,6 +75,6 @@ def get_db_connection() -> Engine:
     """Метод для получения подключения к pgsql"""
     global db_connection
     if db_connection is None:
-        db_connection = create_engine(pgsql_connection_string)
+        db_connection = async_session_maker
 
     return db_connection
