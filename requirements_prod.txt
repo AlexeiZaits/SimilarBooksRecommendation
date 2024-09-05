@@ -10,4 +10,8 @@ qdrant-client==1.10.1
 redis==5.0.7
 python-dotenv==1.0.1
 sqlalchemy==2.0.33
-psycopg2-binary==2.9.9
+asyncpg==0.29.0
+python-jose==3.3.0
+bcrypt ==4.0.1
+passlib==1.7.4
+alembic==1.13.2

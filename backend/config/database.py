@@ -36,10 +36,7 @@ def get_auth_data():
 
 def get_db_url():
     """Возвращает строку для подключения к БД"""
-    return (
-        f"postgresql+asyncpg://{os.getenv('POSTGRE_USER')}:{os.getenv('POSTGRE_PASSWORD')}@"
-        "{os.getenv('POSTGRE_HOST')}:{os.getenv('POSTGRE_PORT')}/{os.getenv('POSTGRE_DATABASE')}"
-    )
+    return f"postgresql+asyncpg://{os.getenv('POSTGRE_USER')}:{os.getenv('POSTGRE_PASSWORD')}@{os.getenv('POSTGRE_HOST')}:{os.getenv('POSTGRE_PORT')}/{os.getenv('POSTGRE_DATABASE')}"
 
 
 settings = Settings()
