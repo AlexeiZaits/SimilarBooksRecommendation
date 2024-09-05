@@ -22,7 +22,7 @@ async def lifespan(App: FastAPI):
     # Закрываем соединение
     models.redis_connection.close()
     models.qdrant_connection.close()
-    models.db_connection.dispose()
+    models.db_connection.close()
 
 
 app = FastAPI(lifespan=lifespan)
