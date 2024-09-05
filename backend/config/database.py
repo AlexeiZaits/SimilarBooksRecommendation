@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Annotated
 
 from pydantic_settings import BaseSettings
-from sqlalchemy import func
+from sqlalchemy import DateTime, func
 from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column
 
@@ -36,7 +36,10 @@ def get_auth_data():
 
 def get_db_url():
     """Возвращает строку для подключения к БД"""
-    return f"postgresql+asyncpg://{os.getenv('POSTGRE_USER')}:{os.getenv('POSTGRE_PASSWORD')}@{os.getenv('POSTGRE_HOST')}:{os.getenv('POSTGRE_PORT')}/{os.getenv('POSTGRE_DATABASE')}"
+    return (
+        f"postgresql+asyncpg://{os.getenv('POSTGRE_USER')}:{os.getenv('POSTGRE_PASSWORD')}@"
+        "{os.getenv('POSTGRE_HOST')}:{os.getenv('POSTGRE_PORT')}/{os.getenv('POSTGRE_DATABASE')}"
+    )
 
 
 settings = Settings()
@@ -47,8 +50,8 @@ engine = create_async_engine(DATABASE_URL)
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
 
 # настройка аннотаций
-created_at = Annotated[datetime, mapped_column(server_default=func.now())]
-updated_at = Annotated[datetime, mapped_column(server_default=func.now(), onupdate=datetime.now)]
+created_at = Annotated[datetime, mapped_column(DateTime, server_default=func.now())]
+updated_at = Annotated[datetime, mapped_column(DateTime, server_default=func.now(), onupdate=datetime.now)]
 
 
 class Base(AsyncAttrs, DeclarativeBase):
