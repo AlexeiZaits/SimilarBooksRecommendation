@@ -5,8 +5,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import backend.src.models.models as models
 from backend.config.app_config import origins
-from backend.src.routers.api_recsys import router as router_recsys
 from backend.src.routers.api_app import router as router_app
+from backend.src.routers.api_auth import router as router_auth
+from backend.src.routers.api_recsys import router as router_recsys
 
 
 @asynccontextmanager
@@ -22,7 +23,6 @@ async def lifespan(App: FastAPI):
     # Закрываем соединение
     models.redis_connection.close()
     models.qdrant_connection.close()
-    models.db_connection.close()
 
 
 app = FastAPI(lifespan=lifespan)
@@ -37,6 +37,7 @@ app.add_middleware(
 
 app.include_router(router_recsys, prefix="/recsys")
 app.include_router(router_app, prefix="/app")
+app.include_router(router_auth, prefix="/auth")
 
 
 # create a route

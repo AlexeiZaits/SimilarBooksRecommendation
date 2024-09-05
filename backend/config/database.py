@@ -11,22 +11,32 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column
 
 
 class Settings(BaseSettings):
+    """Настройки БД"""
+
     POSTGRE_HOST: str
     POSTGRE_PORT: int
     POSTGRE_DATABASE: str
     POSTGRE_USER: str
     POSTGRE_PASSWORD: str
 
+    SECRET_KEY: str
+    ALGORITHM: str
+
     class Config:
+        """Конфиг настроек БД"""
+
         extra = "ignore"
         env_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".env")
 
 
+def get_auth_data():
+    return {"secret_key": settings.SECRET_KEY, "algorithm": settings.ALGORITHM}
+
+
 def get_db_url():
+    """Возвращает строку для подключения к БД"""
     return f"postgresql+asyncpg://{os.getenv('POSTGRE_USER')}:{os.getenv('POSTGRE_PASSWORD')}@{os.getenv('POSTGRE_HOST')}:{os.getenv('POSTGRE_PORT')}/{os.getenv('POSTGRE_DATABASE')}"
 
-
-#
 
 settings = Settings()
 

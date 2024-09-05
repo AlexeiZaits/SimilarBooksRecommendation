@@ -11,9 +11,11 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
 from backend.config.database import DATABASE_URL, Base
+from backend.src.models.tables import User, Book
 
 config = context.config
 config.set_main_option("sqlalchemy.url", DATABASE_URL)
+
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 

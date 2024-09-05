@@ -75,6 +75,6 @@ def get_db_connection() -> Engine:
     """Метод для получения подключения к pgsql"""
     global db_connection
     if db_connection is None:
-        db_connection = async_session_maker()
+        db_connection = async_session_maker
 
     return db_connection
