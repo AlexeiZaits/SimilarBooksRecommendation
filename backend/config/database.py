@@ -30,6 +30,7 @@ class Settings(BaseSettings):
 
 
 def get_auth_data():
+    """Возвращает данные для аутентификации пользователя"""
     return {"secret_key": settings.SECRET_KEY, "algorithm": settings.ALGORITHM}
 
 
@@ -54,11 +55,18 @@ str_null_true = Annotated[str, mapped_column(nullable=True)]
 
 
 class Base(AsyncAttrs, DeclarativeBase):
-    __abstract__ = True
+    """Базовый класс для таблицы"""
 
+    __abstract__ = True
+    from_attributes = True
+
+    @classmethod
     @declared_attr.directive
     def __tablename__(cls) -> str:
         return f"{cls.__name__.lower()}s"
 
     created_at: Mapped[created_at]
     updated_at: Mapped[updated_at]
+
+    class Config:
+        from_attributes = True

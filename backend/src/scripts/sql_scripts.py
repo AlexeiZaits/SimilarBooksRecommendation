@@ -56,6 +56,22 @@ async def get_user_by_login(db_session: AsyncSession, login: str) -> Optional[Us
         return user
 
 
+async def get_user_by_uid(db_session: AsyncSession, uid: str) -> Optional[User]:
+    """Возвращает пользователя по полю uid из базы данных."""
+
+    # Формируем запрос
+    query = select(User).where(User.uid == uid)
+
+    async with db_session() as session:
+        # Выполняем асинхронный запрос
+        result = await session.execute(query)
+
+        # Получаем первый результат (если есть)
+        user = result.scalars().first()
+
+        return user
+
+
 async def create_user(db_session: AsyncSession, user_dict: Dict[str, str]) -> bool:
     """Создает нового пользователя в базе данных.
     user_dict ожидает поля: login, password и другие необходимые поля.

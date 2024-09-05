@@ -6,3 +6,10 @@ class UserRegister(BaseModel):
 
     login: str = Field(..., description="Логин")
     password: str = Field(..., min_length=5, max_length=50, description="Пароль, от 5 до 50 знаков")
+
+
+class UserAuth(BaseModel):
+    """Шаблон входных данных для авторизации пользователя"""
+
+    login: str = Field(..., description="Логин")
+    password: str = Field(..., min_length=5, max_length=50, description="Пароль, от 5 до 50 знаков")
