@@ -10,6 +10,8 @@ __pycache__/
 qdrant_data/
 *.pkl
 k8s
+Dockerfile
+
 # Distribution / packaging
 .Python
 build/
