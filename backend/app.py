@@ -45,3 +45,9 @@ app.include_router(router_auth, prefix="/auth")
 def index() -> dict[str, str]:
     """Данный метод запускает по-умолчанию при запуске FASTAPI сервера"""
     return {"STATUS": "200"}
+
+
+@app.get("/health")
+def health() -> dict[str, str]:
+    """Данный метод запускает по-умолчанию при запуске FASTAPI сервера"""
+    return {"STATUS": "200", "MESSAGE": "Здарова, Бандиты! Я готов."}

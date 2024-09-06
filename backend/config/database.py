@@ -2,12 +2,14 @@ import os
 from datetime import datetime
 from typing import Annotated
 
+from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 from sqlalchemy import DateTime, func
 from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column
 
 # from sqlalchemy import create_engine
+load_dotenv()
 
 
 class Settings(BaseSettings):

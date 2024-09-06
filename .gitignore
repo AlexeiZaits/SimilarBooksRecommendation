@@ -9,7 +9,7 @@ __pycache__/
 # ! My paths and files
 qdrant_data/
 *.pkl
-
+k8s
 # Distribution / packaging
 .Python
 build/
