@@ -2,14 +2,10 @@ import os
 from datetime import datetime
 from typing import Annotated
 
-from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 from sqlalchemy import DateTime, func
 from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column
-
-# from sqlalchemy import create_engine
-load_dotenv()
 
 
 class Settings(BaseSettings):
@@ -38,7 +34,7 @@ def get_auth_data():
 
 def get_db_url():
     """Возвращает строку для подключения к БД"""
-    return f"postgresql+asyncpg://{os.getenv('POSTGRE_USER')}:{os.getenv('POSTGRE_PASSWORD')}@{os.getenv('POSTGRE_HOST')}:{os.getenv('POSTGRE_PORT')}/{os.getenv('POSTGRE_DATABASE')}"
+    return f"postgresql+asyncpg://{settings.POSTGRE_USER}:{settings.POSTGRE_PASSWORD}@{settings.POSTGRE_HOST}:{settings.POSTGRE_PORT}/{settings.POSTGRE_DATABASE}"
 
 
 settings = Settings()

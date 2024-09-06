@@ -52,9 +52,9 @@ async def books(
             status=CustomHTTPStatus.DataBaseError.value,
         )
 
-    # Если введене несуществующас категория -> на выходе будет пустой список
-    if len(data.books) == 0:
-        return BooksBatchResponse(books=None, status=CustomHTTPStatus.CategoryFilterIsNotFound.value)
+    # Если введена несуществующас категория -> на выходе будет пустой список
+    if len(data.data) == 0:
+        return BooksBatchResponse(data=None, status=CustomHTTPStatus.CategoryFilterIsNotFound.value)
 
     return data
 

@@ -27,11 +27,21 @@ async def get_books_batch(
     async with db_session() as session:
         # Выполняем асинхронный запрос
         result = await session.execute(query)
+        result = [book.to_dict() for book in result.scalars().all()]
 
         # Получаем все книги из результата запроса и преобразовываем его в нужный вид
-        books_info_list = [BookInfo(**book.to_dict()) for book in result.scalars().all()]
+        books_info_list = [
+            BookInfo(
+                uid=book["ID"],
+                image_link=book["Image"],
+                category=book["Category"],
+                author=book["Author"],
+                title=book["Title"],
+            )
+            for book in result
+        ]
 
-        return BooksBatchResponse(books=books_info_list, status=HTTPStatus.OK)
+        return BooksBatchResponse(data=books_info_list, status=HTTPStatus.OK)
 
 
 async def get_user_by_login(db_session: AsyncSession, login: str) -> Optional[User]:

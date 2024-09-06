@@ -32,19 +32,17 @@ class RedisResponse(BaseModel):
 class BookInfo(BaseModel):
     """Информация об одной книжке"""
 
-    category: str = Field(..., title="category", alias="Category")
-    author: str = Field(..., title="author", alias="Author")
-    image: str = Field(..., title="image", alias="Image")
-    info: str = Field(..., title="info", alias="Info")
-    uid: str = Field(..., title="uid", alias="ID")
-    description: str = Field(..., title="description", alias="Description")
-    title: str = Field(..., title="title", alias="Title")
+    uid: str = Field(..., title="uid")
+    image_link: str = Field(..., title="image")
+    category: str = Field(..., title="category")
+    author: str = Field(..., title="author")
+    title: str = Field(..., title="title")
 
 
 class BooksBatchResponse(BaseModel):
     """Список из книг"""
 
-    books: Optional[List[BookInfo]]
+    data: Optional[List[BookInfo]]
     status: int = Field(..., title="status")
 
 
