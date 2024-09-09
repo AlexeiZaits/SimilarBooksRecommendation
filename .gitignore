@@ -9,8 +9,8 @@ __pycache__/
 # ! My paths and files
 qdrant_data/
 *.pkl
-k8s/backend/manifests/configmap.yaml
-k8s/backend/manifests/secrets.yaml
+k8s/backend-manifests/configmap.yaml
+k8s/backend-manifests/secrets.yaml
 Dockerfile
 
 # Distribution / packaging
