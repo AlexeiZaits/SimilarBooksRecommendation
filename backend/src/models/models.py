@@ -41,7 +41,7 @@ def get_trie():
     """Метод для объекта для автокомплита"""
     global trie
     if trie is None:
-        trie = custom_load(os.path.join(os.getcwd(), "data", "trie.pkl"))
+        trie = custom_load(os.path.join(os.getcwd(), "backend", "models", "trie.pkl"))
     return trie
 
 
@@ -66,7 +66,7 @@ def get_redis_connection() -> redis.Redis:
     global redis_connection
     if redis_connection is None:
         redis_connection = redis.StrictRedis(
-            host=os.getenv("REDIS_HOST"), port=os.getenv("REDIS_PORT"), password=os.getenv("RESID_PASSWORD")
+            host=os.getenv("REDIS_HOST"), port=os.getenv("REDIS_PORT"), password=os.getenv("REDIS_PASSWORD")
         )
     return redis_connection
 
