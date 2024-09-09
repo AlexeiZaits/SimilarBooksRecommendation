@@ -12,7 +12,7 @@ qdrant_data/
 k8s/backend-manifests/configmap.yaml
 k8s/backend-manifests/secrets.yaml
 Dockerfile
-
+poetry.lock
 # Distribution / packaging
 .Python
 build/
