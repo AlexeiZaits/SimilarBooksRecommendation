@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: books-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: books-app
+  template:
+    metadata:
+      labels:
+        app: books-app
+    spec:
+      containers:
+      - name: books-app
+        image: borinskihsd/books-app:latest
+        ports:
+        - containerPort: 8000
+        # envFrom:
+        # - configMapRef:
+        #     name: books-config
+        # - secretRef:
+        #     name: books-secrets
+        env:
+        # ConfigMap variables
+        - name: QDRANT_URL
+          valueFrom:
+            configMapKeyRef:
+              name: books-config
+              key: QDRANT_URL
+        - name: QDRANT_COLLECTION_DESCRIPTION
+          valueFrom:
+            configMapKeyRef:
+              name: books-config
+              key: QDRANT_COLLECTION_DESCRIPTION
+        - name: QDRANT_COLLECTION_TITLES
+          valueFrom:
+            configMapKeyRef:
+              name: books-config
+              key: QDRANT_COLLECTION_TITLES
+        - name: QDRANT_EMBEDDER
+          valueFrom:
+            configMapKeyRef:
+              name: books-config
+              key: QDRANT_EMBEDDER
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: books-config
+              key: REDIS_HOST
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: books-config
+              key: REDIS_PORT
+        - name: BACKEND_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: books-config
+              key: BACKEND_PORT
+        - name: POSTGRE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: books-config
+              key: POSTGRE_HOST
+        - name: POSTGRE_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: books-config
+              key: POSTGRE_PORT
+        - name: POSTGRE_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: books-config
+              key: POSTGRE_DATABASE
+        - name: POSTGRE_BOOK_TABLE
+          valueFrom:
+            configMapKeyRef:
+              name: books-config
+              key: POSTGRE_BOOK_TABLE
+        - name: POSTGRE_USER_TABLE
+          valueFrom:
+            configMapKeyRef:
+              name: books-config
+              key: POSTGRE_USER_TABLE
+        # Secrets variables
+        - name: QDRANT_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: books-secrets
+              key: QDRANT_API_KEY
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: books-secrets
+              key: REDIS_PASSWORD
+        - name: POSTGRE_USER
+          valueFrom:
+            secretKeyRef:
+              name: books-secrets
+              key: POSTGRE_USER
+        - name: POSTGRE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: books-secrets
+              key: POSTGRE_PASSWORD
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: books-secrets
+              key: SECRET_KEY
+        - name: ALGORITHM
+          valueFrom:
+            secretKeyRef:
+              name: books-secrets
+              key: ALGORITHM
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"

@@ -1,4 +1,5 @@
 # from app.exceptions import ForbiddenException, NoJwtException, NoUserIdException, TokenExpiredException
+
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -47,8 +48,17 @@ async def auth_user(
 
     # Создаем JWT токен и записывает его в cookie
     access_token = create_access_token({"sub": str(check.uid)})
-    response.set_cookie(key="users_access_token", value=access_token, httponly=True)
+    response.set_cookie(
+        key="users_access_token",
+        value=access_token,
+        httponly=True,
+        secure=True,
+        samesite="None",
+        # max_age=timedelta(days=7),
+    )
+    # TODO: кидать метод /user
 
+    # Рефреш токен тоже генерировать
     return {"access_token": access_token, "refresh_token": None}
 
 
