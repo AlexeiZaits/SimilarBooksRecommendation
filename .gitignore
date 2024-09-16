@@ -11,6 +11,7 @@ qdrant_data/
 *.pkl
 k8s
 Dockerfile
+.poetry.lock
 
 # Distribution / packaging
 .Python

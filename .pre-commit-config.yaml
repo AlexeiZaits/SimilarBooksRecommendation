@@ -1,6 +1,6 @@
 # default_stages: [commit, push]
 # Список файлов, которые необходимо игнорировать при проверке pre-commit hooks
-exclude: '^(backend/alembic|backend/models/|data/|notebooks/|backend/config/|.dvc/)'
+exclude: '^(backend/alembic|backend/models/|data/|notebooks/|backend/config/|.dvc/|frontend)'
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
