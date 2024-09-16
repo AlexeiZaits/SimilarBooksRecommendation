@@ -1,0 +1,46 @@
+@import "../../../shared/utils/index.scss";
+
+.nav{
+    display: flex;
+    flex-direction: column;
+    width: 15rem;
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    background-color: $main-back;
+}
+
+.link{
+    width: 100%;
+    text-decoration: none;
+    @include t-main();
+    height: 2.5rem;
+    margin-top: 1rem;
+    padding: 0.4rem 1.5rem;
+    transition: all 0.4s;
+    border-radius: $main-radius;
+
+
+    &:hover{
+        background-color: #ffffff52;
+    }
+}
+
+.active{
+    width: 100%;
+    text-decoration: none;
+    @include t-main();
+    height: 2.5rem;
+    margin-top: 1rem;
+    padding: 0.4rem 1.5rem;
+    border-radius: $main-radius;
+    background-color: #ffffff52;
+    transition: all 0.4s;
+
+    &:hover{
+        background-color: #ffffff85;
+    }
+}
