@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export const useGetData = <DataResponse = null, Dependicies = null, BodyRequest = string,>(
+export const useGetData = <DataResponse = null, Dependicies = null>(
 request: string,
 dependicies : Dependicies,
-bodyRequest?: BodyRequest,
 ):{
 data: DataResponse | null,
 loading:boolean,
@@ -16,7 +15,7 @@ error: boolean
 
     useEffect(() => {
         setLoading(true)
-        axios.post(request, bodyRequest)
+        axios.get(request)
         .then((data) => {
             if (data.data.status === 1001){
                 setError(true)

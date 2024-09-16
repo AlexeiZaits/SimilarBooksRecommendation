@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ErrorType, Status } from "shared/types";
 import { IBook } from "shared/types/book";
-import { actionFindMore, actionSearchBooks } from "./recommend-list-actions";
+import { actionFindMore, actionGetBooks, actionSearchBooks } from "./recommend-list-actions";
 
 export interface IRecommendBooks{
     status: Status,
@@ -14,6 +14,8 @@ const initialState: IRecommendBooks = {
     error: null,
     books: []
 }
+
+const messageError = "Произошла ошибка в получение данных";
 
 export const recommendListSlice = createSlice({
     name: "@recommendList",
@@ -28,11 +30,16 @@ export const recommendListSlice = createSlice({
         })
         builder.addCase(actionSearchBooks.rejected, (state, action) => {
             state.status = "rejected"
-            state.error = action.payload || "cannot load books"
+            state.error = action.payload || messageError
         })
         builder.addCase(actionSearchBooks.fulfilled, (state, action) => {
-            state.status = "received"
-            state.books = action.payload.data.data
+            if (action.payload.status === 1001){
+                state.status = "rejected";
+                state.error = messageError
+            } else {
+                state.status = "received"
+                state.books = action.payload.data
+            }
         })
         builder.addCase(actionFindMore.pending, (state) => {
             state.status = "loading"
@@ -40,11 +47,28 @@ export const recommendListSlice = createSlice({
         })
         builder.addCase(actionFindMore.rejected, (state, action) => {
             state.status = "rejected"
-            state.error = action.payload || "cannot load books"
+            state.error = action.payload || messageError
         })
         builder.addCase(actionFindMore.fulfilled, (state, action) => {
             state.status = "received"
-            state.books = [...state.books, ...action.payload.data.data]
+            state.books = [...state.books, ...action.payload.data]
+        })
+        builder.addCase(actionGetBooks.pending, (state) => {
+            state.status = "loading"
+            state.error = null
+        })
+        builder.addCase(actionGetBooks.rejected, (state, action) => {
+            state.status = "rejected"
+            state.error = action.payload || messageError
+        })
+        builder.addCase(actionGetBooks.fulfilled, (state, action) => {
+            if (action.payload.status === 1006){
+                state.status = "rejected";
+                state.error = messageError
+            } else {
+                state.status = "received"
+                state.books = action.payload.data
+            }
         })
     }
 })

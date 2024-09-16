@@ -1,15 +1,18 @@
-import React from "react"
+import React, { ComponentType } from "react"
 import { createPortal } from "react-dom"
 import styles from "./styles.module.scss"
 
-export const withModal = (WrappedComponent) => {
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const withModal = (WrappedComponent: ComponentType, width?: number, height?: number, backgroundColor?: string) => {
     return class extends React.Component{
-        constructor(props){
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        constructor(props: any){
             super(props)
         }
 
         render(): React.ReactNode {
-            return createPortal(<div className={styles.modal}>
+            return createPortal(<div style={{width: width+"px", height: height+"px", backgroundColor: backgroundColor}} className={styles.modal}>
                 <WrappedComponent/>
             </div>, document.body)
         }

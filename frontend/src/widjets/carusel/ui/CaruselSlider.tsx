@@ -14,7 +14,6 @@ import { BooksResponse } from "shared/types";
 import { useGetData } from "pages/BookPage/hook/useGetBook";
 import { Book } from "entities/index";
 import * as API from "../../../config"
-import { BooksRequest } from "shared/types/request";
 import { FaArrowRight } from "react-icons/fa";
 import { Preloader } from "shared/ui";
 import { useParams } from "react-router-dom";
@@ -28,11 +27,7 @@ const CarouselSlider = ({ setSlideCount, setCurrentSlide }: ICarouselSlider) => 
   const screenWidth = useWindowSize();
   const {title} = useParams()
   const {currentSlide, totalSlides, visibleSlides} = useContext(CarouselContext).state;
-  const {data, loading, error} = useGetData<BooksResponse, string ,BooksRequest>(API.searchBooks, title ? title: "", {
-    "query": title ? title : "",
-    "limit": 6,
-    "offset": 0
-  })
+  const {data, loading, error} = useGetData<BooksResponse, string>(API.searchBooks(title? title: "", 12, 0), title ? title: "")
 
   useEffect(() => {
     const updateCarouselSlide = (slideToBeVisible: number) => {
@@ -47,14 +42,16 @@ const CarouselSlider = ({ setSlideCount, setCurrentSlide }: ICarouselSlider) => 
       }
     };
 
-    if (screenWidth < 832) {
+    if (screenWidth < 500) {
       updateCarouselSlide(1);
-    } else if (screenWidth < 1088) {
+    } else if (screenWidth < 730) {
       updateCarouselSlide(2);
+    } else if (screenWidth < 1350){
+      updateCarouselSlide(3);
     }
     //>= 1088
       else {
-        updateCarouselSlide(3);
+        updateCarouselSlide(4);
     }
 
   }, [screenWidth, setSlideCount, setCurrentSlide, currentSlide, totalSlides, visibleSlides]);
@@ -87,6 +84,7 @@ const CarouselSlider = ({ setSlideCount, setCurrentSlide }: ICarouselSlider) => 
 };
 
 const Wrapper = styled.div`
+
   .controls {
     display: flex;
     align-items: center;

@@ -31,7 +31,7 @@ export const RecommendListSearch = () => {
             query: title,
             limit: 24,
             offset: 0,
-        })
+        }, "search")
         setSearch(title)
         setLocalTitle(title)
         clearFocus()
@@ -39,15 +39,15 @@ export const RecommendListSearch = () => {
 
     return <>
         {qty !== 0 &&  titles.map((item, index) => {
-            return <div key={index}
+            return <button key={index}
 
             onMouseDown={() => handleClick(item)}
             className={classNames(
-                styles.container,
+                styles.button,
                 {[styles.active]: index === focusedIndex},
             )}>
-                <p>{item.length > 40 ? item.slice(0,45) + "...": item}</p>
-            </div>
+                {item.length > 50 ? item.slice(0,50) + "...": item}
+            </button>
         })}
     </>
 }
