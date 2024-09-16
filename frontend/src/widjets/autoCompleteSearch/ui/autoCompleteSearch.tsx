@@ -4,7 +4,6 @@ import { useSetViewRecommendSearch } from "features/recommendsSearch/hooks/use-s
 import { SearchRecommend } from "features/search"
 
 export const AutoCompleteSearch = () => {
-    //TODO: сделать в будущем загрузку из прошлы запросов
     const [view] = useSetViewRecommendSearch()
 
     return <>
