@@ -7,23 +7,40 @@
     position: sticky;
     top: 0;
     z-index: 999;
-    padding: 2rem 1rem;
+    padding: 2rem 0.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    @media (min-width: $tablet) {
+        padding: 2rem 1rem;
+    }
 }
 
 .search{
     position: relative;
+    width: 25rem;
+    @media (min-width: $tablet) {
+        width: 34rem;
+    }
 }
 
 .logo{
     display: flex;
     text-align: center;
     flex-direction: row;
-    width: 20rem;
     height: 3rem;
+    width: 3rem;
+    @media (min-width: $tablet) {
+        width: 20rem;
 
+    }
+}
+
+.icon{
+    width: 2rem;
+    height: 2rem;
+    margin-top: 0.5rem;
 }
 
 .text{
@@ -37,7 +54,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 12rem;
+    margin-left: 0.5rem;
+
+    @media (min-width: $tablet) {
+        width: 12rem;
+    }
 }
 
 .theme{

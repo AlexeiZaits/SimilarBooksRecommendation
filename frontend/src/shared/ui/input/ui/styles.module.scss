@@ -14,11 +14,19 @@
 
 .secondary{
     width: 90%;
+    height: 2.5rem;
     float: right;
-    padding-right: 2.2rem;
+    padding-right: 0.5rem;
+    font-size: 0.8rem;
     border-bottom-right-radius:0rem;
     border-top-right-radius:0rem;
     border: 2px solid black;
+
+    @media (min-width: 1024px) {
+        padding-right: 2.2rem;
+        font-size: 0.9rem;
+        height: 3rem;
+    }
 
     &:focus{
         padding-left: 2.5rem;

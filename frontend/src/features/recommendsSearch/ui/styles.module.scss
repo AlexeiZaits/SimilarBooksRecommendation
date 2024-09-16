@@ -1,12 +1,25 @@
 @import "../../../shared/utils/index.scss";
 
-.container{
+.button{
     width: 100%;
-    height: 2rem;
     padding: 0.2rem 1rem;
     @include t-main();
-    font-size: 1rem !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     transition: all 0.3s;
+    background-color: inherit;
+    text-align: left;
+    border-top: 1px solid rgba(255, 255, 255, 0.438);
+
+    &:last-child{
+        border-bottom: 1px solid rgba(255, 255, 255, 0.438);
+    }
+
+    @media (min-width: 500px) {
+        height: 2rem;
+    }
+
     &:hover{
         cursor: pointer;
         background-color: $bg-transparant;

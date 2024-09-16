@@ -27,21 +27,36 @@
     padding: 1rem 1rem;
     max-width: 70rem;
     margin: 0 auto;
+
 }
 
 .book{
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
+    flex-direction: column;
 
+    @media (min-width: 600px) {
+        flex-direction: row;
+    }
 }
 
 .info{
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    width: 40rem;
-    height: 10rem;
+    height: 28rem;
+    margin-top: 1rem;
+
+    @media (min-width: 600px) {
+        margin-left: 0.5rem;
+        margin-top: 0;
+        text-align: right;
+    }
+
+    @media (min-width: $tablet) {
+        text-align: left;
+        width: 40rem;
+    }
 }
 
 .description{
@@ -52,10 +67,15 @@
     border-radius: $main-radius;
     border: 3px solid;
     border-color: green;
-    height: 590px;
-    width: 410px;
     position: relative;
     overflow: hidden;
+    height: 25rem;
+    width: 15rem;
+
+    @media (min-width: $tablet) {
+        height: 590px;
+        width: 410px;
+    }
 }
 
 .like{
