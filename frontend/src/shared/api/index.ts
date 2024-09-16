@@ -21,7 +21,7 @@ $client.interceptors.response.use((config) => {
         originalRequest._isRetry = true;
         try {
             const response = await axios.get<AuthResponse>(api.resresh, {withCredentials: true})
-            localStorage.setItem('token', response.data.accessToken)
+            localStorage.setItem('token', response.data.access_token)
             return $client.request(originalRequest)
         } catch (error) {
             console.log({error: error, massage: "Не авторизован"})
