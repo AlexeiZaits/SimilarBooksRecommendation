@@ -19,9 +19,8 @@ import { useNavigate } from "react-router-dom";
 
 export const SearchRecommend = () => {
     const [viewHint, setViewHint] = useState(false)
-    // под вовросом
     const [viewLupa, setViewLupa] = useState(false)
-    const [placeholder, setPlaceholder] = useState("Введите запрос")
+    const [placeholder, setPlaceholder] = useState("Поиск книг")
     const formRef = useRef<HTMLDivElement>(null)
     const clearSearch = useClearSearch()
     const clearInfinityScroll = useClearInfinityScroll()
@@ -50,9 +49,9 @@ export const SearchRecommend = () => {
         searchRecommend(search)
         searchBooks({
                 query: search,
-                limit: 24,
+                limit: 21,
                 offset: 0,
-        })
+        }, "search")
     }
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -72,9 +71,9 @@ export const SearchRecommend = () => {
                 clearInfinityScroll()
                 searchBooks({
                     query: search,
-                    limit: 24,
+                    limit: 21,
                     offset: 0,
-                })
+                }, "search")
                 searchRecommend(search)
                 setLocalTitle(search)
                 clearFocus()

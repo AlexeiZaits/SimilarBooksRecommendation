@@ -2,7 +2,7 @@
 
 .container{
     position: absolute;
-    width: 30rem;
+    width: 100%;
     height: 20rem;
     top: 3.5rem;
     left: 0.2rem;
@@ -10,4 +10,8 @@
     border: 2px solid $border-main;
     background-color: $main-back;
     padding: 1rem 0;
+
+    @media (min-width: $tablet) {
+        width: 30rem;
+    }
 }

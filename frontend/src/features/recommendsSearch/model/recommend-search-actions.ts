@@ -14,7 +14,7 @@ export const actionGetTitles = createAsyncThunk<
     'recommendSearchSlice/getTitles',
     async(query: TitlesRequest, {extra: {api}, rejectWithValue}) => {
         try {
-            return axios.post(api.get_titles_books, query)
+            return axios.get(api.get_titles_books(query.query, query.limit))
         } catch (error) {
             if (error instanceof Error)
                 return rejectWithValue(error.message);

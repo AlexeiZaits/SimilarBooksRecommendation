@@ -21,12 +21,20 @@ export const router = createBrowserRouter([
         element: <AuthPage/>,
       },
       {
+        path: "registration",
+        element: <AuthPage/>,
+      },
+      {
         path: "likes",
         element: <LikePage/>,
       },
       {
         path: "book/:title",
         element: <BookPage/>
+      },
+      {
+        path: "books/:category",
+        element: <RecommendPage/>,
       },
     ]
   },

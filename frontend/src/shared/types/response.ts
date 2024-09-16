@@ -2,9 +2,13 @@ import { IBook } from "./book";
 import { IUser } from "./user";
 
 export interface AuthResponse {
-    accessToken: string,
-    refreshToken: string,
+    access_token: string,
+    refresh_token: string,
     user: IUser,
+}
+
+export interface RegResponse {
+    message: string,
 }
 
 export interface BooksResponse {

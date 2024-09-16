@@ -13,15 +13,9 @@ export interface BooKProps extends Pick<IBook, "author" | "title" | "image_link"
 
 export const Book = ({author, title, image_link, children, ...otherProps}: BooKProps ) => {
 
-    function transformSlash(str:string) {
-        const newStr = str[0] + str.slice(1,).toLowerCase()
-
-        return newStr.replace(/\//g, '-');
-    }
-
     return <div {...otherProps} className={styles.book}>
         {children}
-        <Link to={`/book/${transformSlash(title)}`} className={styles.container}>
+        <Link to={`/book/${title}`} className={styles.container}>
             <ImgWithSkeleton errorLink={"https://www.podpisnie.ru/upload/no-image.png"}
             link={"https://www.podpisnie.ru/" + fixLink(image_link)}
             width={240} height={448}

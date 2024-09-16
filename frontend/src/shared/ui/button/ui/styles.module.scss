@@ -11,11 +11,21 @@
     }
 }
 
+.noActive{
+    background-color: rgb(92, 91, 91);
+    cursor: default;
+}
+
 .secondary{
-    width: 5rem;
-    height: 3rem;
+    width: 3.5rem;
+    height: 2.5rem;
     border-bottom-left-radius:0rem;
     border-top-left-radius:0rem;
     border: 2px solid #2fbd59 !important;
     font-size: 0;
+
+    @media (min-width: 1024px) {
+        width: 5rem;
+        height: 3rem;
+    }
 }

@@ -1,16 +1,18 @@
 import { useFindMoreRecommend } from "features/recommendList/hooks/use-find-more-recommend";
 import { useRecommendList } from "features/recommendList/hooks/use-recommend-list";
-import { useSearch } from "features/search/hooks/use-search";
 import { useEffect, useState } from "react";
 import { useInfinityScroll } from "./use-infinity-scroll";
+import { useParams, useSearchParams } from "react-router-dom";
 
 export const useWindowScroll = () => {
-    const [search, ] = useSearch()
+    const [searchParams, ] = useSearchParams()
+    const search = searchParams.get("search")
     const [amountOffset, incrementAmountOffset] = useInfinityScroll()
     const findMoreBooks = useFindMoreRecommend()
     const [{status}, ] = useRecommendList()
     const [request, setRequest] = useState(true)
-    const limit = 24;
+    const limit = 21;
+    const {category} = useParams()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -19,12 +21,14 @@ export const useWindowScroll = () => {
             const windowHeight = window.innerHeight;
             const currentMaxScroll = documentHeight - windowHeight;
 
-            if (scrollTop + 240 > currentMaxScroll && !request && status !== "loading") {
+            if (scrollTop + 600 > currentMaxScroll && !request && status !== "loading") {
                 setRequest(true)
                 findMoreBooks({
-                    "query": search,
+                    "query": search ? search: "",
                     "limit": limit,
                     "offset": limit*amountOffset,
+                    "category": category
+
                 })
                 incrementAmountOffset()
             }

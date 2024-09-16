@@ -59,7 +59,11 @@ export const recommendSearchSlice = createSlice({
             state.error = action.payload || "error get titles"
         })
         builder.addCase(actionGetTitles.fulfilled, (state, action) => {
-            state.titles = action.payload.data.titles
+            if (action.payload.data.status === 1003){
+                state.error = "error get titles"
+            } else{
+                state.titles = action.payload.data.titles
+            }
         })
     },
 })
