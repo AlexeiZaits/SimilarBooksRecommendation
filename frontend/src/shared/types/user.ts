@@ -3,7 +3,11 @@ export interface IUser {
     id: string | null,
 }
 
+export interface IFormInput {
+    value: string,
+    view: boolean
+}
+
 export interface IUserForm {
-    login: string,
-    password: string,
+    [key: string]: string | boolean
 }
