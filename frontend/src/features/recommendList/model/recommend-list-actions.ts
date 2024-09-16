@@ -16,7 +16,10 @@ export const actionSearchBooks = createAsyncThunk<
         { extra: {api, client}, rejectWithValue,
     }) => {
         try {
-            return client.post(api.searchBooks, searchRequest);
+            const data = await client.get(api.searchBooks(searchRequest.query, searchRequest.limit, searchRequest.offset));
+
+            return data.data
+
           } catch (error) {
             if (error instanceof Error)
               return rejectWithValue(error.message);
@@ -25,9 +28,13 @@ export const actionSearchBooks = createAsyncThunk<
     }
 );
 
+export interface IActioFindMore extends BooksRequest {
+    category?: string
+}
+
 export const actionFindMore = createAsyncThunk<
     BooksResponse,
-    BooksRequest,
+    IActioFindMore,
 {
     extra: Extra,
     rejectValue: string,
@@ -38,7 +45,38 @@ export const actionFindMore = createAsyncThunk<
         { extra: {api}, rejectWithValue,
     }) => {
         try {
-            return axios.post(api.searchBooks, searchRequest);
+            let data
+            if (searchRequest.category){
+                data = await axios.get(api.get_books(searchRequest.offset, searchRequest.limit, searchRequest.query === "all" ? null: searchRequest.query));
+            } else{
+                data = await axios.get(api.searchBooks(searchRequest.query, searchRequest.limit, searchRequest.offset));
+            }
+            return data.data
+
+          } catch (error) {
+            if (error instanceof Error)
+              return rejectWithValue(error.message);
+            return rejectWithValue('Unknown error');
+          }
+    }
+);
+
+export const actionGetBooks = createAsyncThunk<
+    BooksResponse,
+    BooksRequest,
+{
+    extra: Extra,
+    rejectValue: string,
+}
+>(
+    '@@recommendListSlice/getBooks',
+    async(searchRequest,
+        { extra: {api}, rejectWithValue,
+    }) => {
+        try {
+            const data = await axios.get(api.get_books(searchRequest.offset, searchRequest.limit, searchRequest.query === "all"? null: searchRequest.query));
+            return data.data
+
           } catch (error) {
             if (error instanceof Error)
               return rejectWithValue(error.message);
