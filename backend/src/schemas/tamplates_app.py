@@ -67,3 +67,4 @@ class UpdateQueryResponse(BaseModel):
 
     titles: Optional[List[str]]
     status: int = Field(..., title="status")
+    type: str = Field(default="search", title=type)
