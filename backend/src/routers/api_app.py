@@ -103,4 +103,4 @@ def update_query(
     except RankingErrorException:
         return UpdateQueryResponse(titles=None, status=CustomHTTPStatus.RankingErrorStatus.value)
 
-    return UpdateQueryResponse(titles=titles, status=HTTPStatus.OK)
+    return UpdateQueryResponse(titles=titles, status=HTTPStatus.OK, type="search")
