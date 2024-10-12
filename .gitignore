@@ -8,6 +8,8 @@ __pycache__/
 
 # ! My paths and files
 qdrant_data/
+celery_test.py
+celery_test1.py
 
 k8s/backend-manifests/configmap.yaml
 k8s/backend-manifests/secrets.yaml
