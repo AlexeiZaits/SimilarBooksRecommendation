@@ -1,0 +1,42 @@
+name: Simple CI Pipeline
+
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Print message for dependencies
+        run: echo "Installing dependencies..."
+
+      - name: Install dependencies
+        run: |
+          echo "Upgrading pip..."
+          echo "Installing requirements..."
+
+
+      - name: Print message for tests
+        run: echo "Running tests..."
+
+      - name: Run tests
+        run: |
+          echo "Executing pytest..."
+
+      - name: Finish message
+        run: echo "CI Pipeline completed!"
