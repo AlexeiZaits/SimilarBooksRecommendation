@@ -67,4 +67,4 @@ class AutoCompliteResponse(BaseModel):
 
     titles: Optional[List[str]]
     status: int = Field(..., title="status")
-    type: str = Field(default="search", title=type)
+    type: str = Field(default="search", title="type")
