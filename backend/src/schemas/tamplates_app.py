@@ -55,14 +55,14 @@ class BooksBatchInput(BaseModel):
 
 
 # ! Шаблоны для autocomplite
-class UpdateQueryInput(BaseModel):
+class AutoCompliteInput(BaseModel):
     """Шаблон входных данных от api/update_query"""
 
     query: str = Field(..., title="boot_description")
     limit: int = Field(default=10, title="number_chunks")
 
 
-class UpdateQueryResponse(BaseModel):
+class AutoCompliteResponse(BaseModel):
     """Шаблон Обновленных названий книг"""
 
     titles: Optional[List[str]]
