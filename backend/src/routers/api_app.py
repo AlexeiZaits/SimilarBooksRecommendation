@@ -13,12 +13,12 @@ from backend.src.exceptions.custom_exceptions import (
 )
 from backend.src.models.models import get_db_connection, get_redis_connection, get_trie
 from backend.src.schemas.tamplates_app import (
+    AutoCompliteInput,
+    AutoCompliteResponse,
     BooksBatchInput,
     BooksBatchResponse,
     RedisInput,
     RedisResponse,
-    UpdateQueryInput,
-    UpdateQueryResponse,
 )
 from backend.src.scripts.ranking import autocomplete_books_trie, ranking_titles
 from backend.src.scripts.redis_scripts import get_book
@@ -80,7 +80,7 @@ def book(
     return data
 
 
-@router.get("/update_query", response_model=Optional[UpdateQueryResponse])
+@router.get("/update_query", response_model=Optional[AutoCompliteResponse])
 def update_query(
     query: str = Query("Ведьма", description="The search query"),
     limit: int = Query(10, description="The number of results to return"),
@@ -89,18 +89,18 @@ def update_query(
     """Возвращает реранжированный список с названиями книг"""
 
     # Переводим все в Pydantic класс для автоматической валидации параметров GET-запроса
-    data = UpdateQueryInput(query=query, limit=limit)
+    data = AutoCompliteInput(query=query, limit=limit)
 
     # Пытаемся найти похожую книгу. Если не выходит, то возвращает соответствующий статус ошибки
     try:
         content = autocomplete_books_trie(prefix=data.query, trie=trie, limit=data.limit)
     except AutocompliteIsEmptyException:
-        return UpdateQueryResponse(titles=None, status=CustomHTTPStatus.AutocompliteIsEmptyStatus.value)
+        return AutoCompliteResponse(titles=None, status=CustomHTTPStatus.AutocompliteIsEmptyStatus.value)
 
     # Реренжируем названия по косинусной близости
     try:
         titles = ranking_titles(content=content, query=query)
     except RankingErrorException:
-        return UpdateQueryResponse(titles=None, status=CustomHTTPStatus.RankingErrorStatus.value)
+        return AutoCompliteResponse(titles=None, status=CustomHTTPStatus.RankingErrorStatus.value)
 
-    return UpdateQueryResponse(titles=titles, status=HTTPStatus.OK, type="search")
+    return AutoCompliteResponse(titles=titles, status=HTTPStatus.OK, type="search")
