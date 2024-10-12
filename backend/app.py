@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from prometheus_fastapi_instrumentator import Instrumentator
 
 import backend.src.models.models as models
 from backend.config.app_config import origins
@@ -19,6 +20,7 @@ async def lifespan(App: FastAPI):
     models.redis_connection = models.get_redis_connection()
     models.db_connection = models.get_db_connection()
     models.trie = models.get_trie()
+    instrumentator.expose(app)
     yield
     # Закрываем соединение
     models.redis_connection.close()
@@ -26,6 +28,7 @@ async def lifespan(App: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+instrumentator = Instrumentator().instrument(app)
 
 app.add_middleware(
     CORSMiddleware,
