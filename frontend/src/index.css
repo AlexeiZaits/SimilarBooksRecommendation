@@ -28,6 +28,7 @@
 
 body[data-theme='dark'] {
   --colors-text: #f1f1f1;
+  --inverse-colors-text: hsl(0, 0%, 0%);
   --colors-bg: #0f0f0f;
   --inverse-colors-bg: #f1f1f1;
   --colors-border: #f1f1f1;
@@ -35,6 +36,7 @@ body[data-theme='dark'] {
 }
 body[data-theme='light'] {
   --colors-text: hsl(0, 0%, 0%);
+  --inverse-colors-text: #f1f1f1;
   --colors-bg: #f1f1f1;
   --inverse-colors-bg: #0f0f0f;
   --colors-border: #0f0f0f;
