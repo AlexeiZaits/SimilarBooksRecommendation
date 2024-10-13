@@ -8,12 +8,13 @@ export const useFocusElement = (): [null | number, (increment: boolean) => void]
     const [, setSearch] = useSearch()
     const dispatch = useAppDispatch()
     const {focusElement, titles} = useAppSelector(selectRecommendSearch)
+    const allTitles = titles.slice(0, 9)
 
     const calcFocusElement = (increment: boolean) => increment ? dispatch(incrementFocusElement()) : dispatch(decrementFocusElement())
 
     useEffect(() => {
         if (focusElement !== null)
-        setSearch(titles[focusElement])
+        setSearch(allTitles[focusElement].text)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [focusElement])
 

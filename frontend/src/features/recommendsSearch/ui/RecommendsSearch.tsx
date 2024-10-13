@@ -5,10 +5,12 @@ import styles from "./styles.module.scss"
 import classNames from "classnames"
 import { useFocusElement } from "../hooks/use-focus-element"
 import { useClearFocusRecommends } from "../hooks/use-clear-focus-recommend.ts"
-import { useEffect } from "react"
-import { useSetTitles } from "../hooks/use-set-titles.ts"
 import { setLocalTitle } from "../lib/setLocalTitle.ts"
 import { useNavigate } from "react-router-dom"
+import { LuRefreshCcw } from "react-icons/lu"
+import { FaSearch } from "react-icons/fa"
+import { MdDelete } from "react-icons/md"
+import { useDeleteLocalRecommend } from "../hooks/use-delete-local-recommend.ts"
 
 export const RecommendListSearch = () => {
     const [{titles, qty}, searchRecommend] = useSearchRecommend()
@@ -16,13 +18,8 @@ export const RecommendListSearch = () => {
     const [, setSearch] = useSearch()
     const [focusedIndex] = useFocusElement()
     const clearFocus = useClearFocusRecommends()
-    const setTitles = useSetTitles()
     const navigate = useNavigate();
-
-    useEffect(() => {
-        (qty === 0 && localStorage.getItem("recommends")) && setTitles(JSON.parse(localStorage.getItem("recommends") || "[]").slice(0,9))
-
-    }, [qty, setTitles])
+    const deleteRecommend = useDeleteLocalRecommend()
 
     const handleClick = (title : string) => {
         searchRecommend(title)
@@ -38,16 +35,28 @@ export const RecommendListSearch = () => {
     }
 
     return <>
-        {qty !== 0 &&  titles.map((item, index) => {
-            return <button key={index}
+        {qty !== 0 &&  titles.slice(0, 9).map((item, index) => {
+            const {type, text} = item;
+            const checkType = type === "local"
 
-            onMouseDown={() => handleClick(item)}
-            className={classNames(
-                styles.button,
-                {[styles.active]: index === focusedIndex},
-            )}>
-                {item.length > 50 ? item.slice(0,50) + "...": item}
-            </button>
+            return <button key={index}
+                    onMouseDown={() => handleClick(text)}
+                    className={classNames(
+                        styles.button,
+                        {[styles.active]: index === focusedIndex},
+                    )}>
+                    <i className={styles.icon}>
+                        {checkType && <LuRefreshCcw />}
+                        {!checkType && <FaSearch/>}
+                    </i>
+                    {text.length >= 43 ? text.slice(0,42) + "...": text}
+                    {checkType && <i className={styles.delete}>
+                        {<MdDelete onMouseDown={(e) => {
+                            e.stopPropagation();
+                            deleteRecommend(item)
+                        }}  size={20}/>}
+                    </i> }
+        </button>
         })}
     </>
 }

@@ -1,18 +1,30 @@
-import { useEffect, useState } from "react"
-import { Input } from "../../../shared/ui/input/ui/Input"
-import styles from "./styles.module.scss"
-import { Button, Preloader, ViewEye, withModal } from "shared/ui"
-import { IUserForm } from "shared/types"
-import { useAppDispatch, useAppSelector } from "app/store/store"
-import { authUser, regUser } from "features/authorization/model/auth-actions"
+import { TouchEvent, useEffect, useState, MouseEvent, useRef } from "react"
 import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import classNames from "classnames"
-import { clearErrorAuth } from "features/authorization/model/auth-slice"
+import { Button, Preloader, ViewEye, withModal } from "shared/ui"
 import { FormTips } from "./FormTips"
-import { validateFullForm } from "../lib/validateForm"
-
+import { validateFullForm, validateFullLogin, validateFullPasswords, validatePassword } from "../lib/validateForm"
+import { FaRegQuestionCircle } from "react-icons/fa"
+import { IoCloseCircleOutline } from "react-icons/io5"
+import { getThemeColor } from "shared/lib/getThemeColor"
+import { updateObject } from "../lib/updateObject"
+import { IUserForm } from "shared/types"
+import { Input, TypeInput } from "../../../shared/ui/input/ui/Input"
+import { useAuthorization } from "features/authorization/hooks/use-authorization"
+import { useActionsAuthorization } from "features/authorization/hooks/use-actions-authorization"
+import useWindowSize from "widjets/carusel/hooks/useWindowSize"
+import dataJson from "../../../../data.json"
+import styles from "./styles.module.scss"
 
 const PreloaderWithModal = withModal(Preloader)
+
+type TType = "password" | "error" | "submit"| "text" | "email" | "passwordWithCheck" | "message"| "login";
+
+interface IFormItem {
+    type: TType,
+    text?: string | string[],
+    id: number
+}
 
 const initialState: IUserForm = {
     login: "",
@@ -25,113 +37,108 @@ const initialState: IUserForm = {
     passwordWithCheckView: "password"
 }
 
-const navList = [
-    {link: "/authorization", name: "Авторизация"},
-    {link: "/registration", name: "Регистрация"},
-]
+const navList = dataJson.navList
 
-type TType = "login" | "password" | "error" | "submit"| "text" | "passwordWithCheck";
-type SpecialType = "passwordCheck"
-
-interface IFormItem {
-    type: TType,
-    text: string | string[],
-    scepialType?: SpecialType
-}
-
-
-const formList: IFormItem[] = [
-    {type: "login",text: "Логин"},
-    {type: "password", text: "Пароль"},
-    {type: "passwordWithCheck", text: "Подтвердите пароль"},
-    {type: "error", text: ["Неверный логин или пароль", "Неверный формат логина или пароля"]},
-    {type: "submit", text: ["Вход", "Регистрация"]},
-
-]
-
-const testPassword = (password: string) => {
-    return /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/g.test(password)
-}
-
-const updateObject = (prevObj: IUserForm, key: string, data: string | boolean) => {
-    const newObj = {
-        ...prevObj,
-        [key]: data
-    }
-
-    return newObj
-}
-
+const formList: IFormItem[] = dataJson.formList as IFormItem[]
 
 const newInitialState = () => initialState
 
 export const AuthForm = () => {
     const [user, setUser] = useState<IUserForm>(newInitialState)
-    const dispatch = useAppDispatch()
-    const {error, status, isAuth} = useAppSelector(state => state.authorization)
-    const navigate = useNavigate()
     const {pathname} = useLocation()
+    const navigate = useNavigate()
+    const refFormTips = useRef<HTMLDivElement>(null)
+    const [setAuthorization, {error, status, isAuth, message}] = useAuthorization()
+    const handleActions = useActionsAuthorization()
+    const windowSize = useWindowSize()
 
-    function handleSubmit(user: IUserForm) {
-        if (pathname === navList[0].link){
-            dispatch(authUser(user))
-        } else if (pathname === navList[1].link && validateFullForm([String(user.password), String(user.passwordWithCheck)], String(user.login))){
-            dispatch(regUser(user))
+
+    const handleSubmit = (user: IUserForm) => {
+        if (pathname === "/authorization"){
+            handleActions("login", user)
+        } else if (pathname === "/registration" && !validateForm){
+            handleActions("register", user)
         }
     }
-
-    useEffect(() => {
-        setUser((prevUser)=> updateObject(prevUser, "error", testPassword(String(user.password))))
-
-    }, [user.password])
 
     const handleChange = (data: string, item: IFormItem) => {
-        const check = item.type === "login" ? /^[a-zA-Z0-9]*$/.test(data): true;
+        const check = item.type === "text" ? /^[a-zA-Z0-9]*$/.test(data): true;
         if(check){
-            setUser((prevUser) => {
-                return updateObject(prevUser, item.type, data)
-            })
+            updateUser(item.type, data);
         }
     }
 
-    const handleMouse = (key: string, view: boolean) => {
+    const updateUser = (key: string, data: string | boolean) => {
         setUser((prevUser) => {
-            return updateObject(prevUser, key + "View", !view ? "text": "password")
+            return updateObject(prevUser, key, data)
         })
     }
 
+    const handleMouse = (key: string, view: boolean) => {
+        updateUser(key + "View", !view ? "text": "password")
+    }
+
+    const handleTouch = (e: TouchEvent<HTMLDivElement> | MouseEvent<SVGElement>, key: string, view: boolean) => {
+        e.preventDefault();
+
+        if (key === "password" || key === "passwordWithCheck" || key === "toggleTips"){
+            updateUser(key + "View", view ? "text": "password");
+        }
+    }
+
+    useEffect(() => {
+        updateUser("error", validatePassword(String(user.password)))
+
+    }, [user.password])
+
+    useEffect(() => {
+        setAuthorization("status", "idle")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     useEffect(() => {
         if (status === "rejected"){
-            setUser((prevState) => {
-                return updateObject(prevState, "password", "")
-            })
+            updateUser("password", "");
         }
     },  [status])
 
     useEffect(() => {
-        dispatch(clearErrorAuth())
+        setAuthorization("error", null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathname])
 
     useEffect(() => {
-        if (isAuth){
+        if (isAuth && status === "received"){
             navigate('/')
         }
-    }, [isAuth, navigate])
+    }, [isAuth, status, navigate])
 
-    const handleFocus = (key: TType) => {
+    useEffect(() => {
+        if (windowSize < 1024){
+            refFormTips.current?.focus()
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user.toggleTips])
+
+    const handleView = (key: TType) => {
         setUser((prevState) => {
             const newObj = updateObject(prevState, "toggleTips", true);
-
             return updateObject(newObj, "toggleTipsValidate", key === "login");
         })
     }
 
-    const handleBlur = () => {
-        setUser((prevState) => {
-            return updateObject(prevState, "toggleTips", false)
-        })
+    const handleClose = () => {
+        navigate("/")
     }
+
+    const handleExit = () => {
+        handleActions("logout")
+    }
+
+    const handleBlur = () => {
+        updateUser("toggleTips", false)
+    }
+
 
     const checkPathname = pathname === navList[0].link
     const validateForm = !validateFullForm([String(user.password), String(user.passwordWithCheck)], String(user.login)) && !checkPathname
@@ -146,43 +153,79 @@ export const AuthForm = () => {
                     })}>{item.name}</NavLink>
                 })}
             </nav>
-            <div className={styles.authForm}>
-                {formList.map((item, index) => {
-                    if (item.type === "login" || item.type === "password" || (item.type === "passwordWithCheck"  && !checkPathname) || item.type === "text"){
-                        let type = "";
+           {!isAuth && <div className={styles.authForm}>
+                {formList.map((item) => {
+                    if (item.type === "login" || item.type === "password" || (item.type === "passwordWithCheck"  && !checkPathname) || item.type === "email"){
+                        let type: TypeInput = "text";
+                        let view = false;
+                        const mobileCheck = !checkPathname && windowSize > 1024;
+
                         if (item.type === "password" || item.type === "passwordWithCheck"){
-                            type = item.type === "password" ? String(user.passwordView)  : String(user.passwordWithCheckView)
-                        } else{
-                            type = item.type
+                            type = String(user[item.type + "View"]) as TypeInput;
+                            view = type === "password";
+                        }
+                        else {
+                            type = item.type === "login" ? "text": item.type;
                         }
 
-                        return <div className={styles.input}>
+                        return <div key={item.id} className={styles.input}>
                             <Input
-                            onFocus={!checkPathname ? () => handleFocus(item.type) : () => {}}
-                            onBlur={!checkPathname ? handleBlur : () => {}}
-                            key={index}
+                            onFocus={mobileCheck ? () => handleView(item.type) : () => {}}
+                            onBlur={mobileCheck ? handleBlur : () => {}}
+                            key={item.id}
                             error={error ? true : false}
                             value={user[item.type]}
                             placeholder={String(item.text)}
                             type={type}
-                            onChange={(e) => handleChange(e.target.value, item)}/>
-                            {item.type === "password" || item.type ==="passwordWithCheck" ? <ViewEye onMouseDown={() => handleMouse(item.type, false)} onMouseUp={() => handleMouse(item.type, true)}  view={item.type === "password"? user.passwordView === "password" ?  false : true : user.passwordWithCheckView === "password" ?  false : true}/> : null}
+                            onChange={(e) => handleChange(e.target.value, item)}
+                            style={{fontSize: "14px"}}
+                            />
+                            {
+                            item.type === "password" || item.type === "passwordWithCheck" ?
+                            <ViewEye
+                            onMouseDown={() => handleMouse(item.type, false)}
+                            onMouseUp={() => handleMouse(item.type, true)}
+                            onTouchStart={(e) => handleTouch(e, item.type, type === "password")}
+                            view={!view}
+                            color={getThemeColor()}
+                            />
+                            : null
+
+                            }
+
+                            {windowSize < 1024 && !checkPathname && <div className={styles.question}>
+                                <FaRegQuestionCircle color={item.type === "login" ?
+                                validateFullLogin(String(user.login)) ? "#2fbd59" : "rgba(255, 0, 0, 0.596)" :
+                                validateFullPasswords([String(user.password), String(user.passwordWithCheck)]) ? "#2fbd59": "rgba(255, 0, 0, 0.596)"}
+                                cursor={"pointer"}
+                                onClick={() => handleView(item.type)}
+                                />
+                            </div>}
                         </div>
                     } else if (item.type === "submit"){
                         return <Button
                         noActive={validateForm}
-                        key={index}
-
+                        key={item.id}
                         onClick={() => handleSubmit(user)}
-                        text={checkPathname ? item.text[0] : item.text[1]}
+                        text={checkPathname && item.text ? item.text[0] : item.text && item.text[1]}
                         type={item.type}/>
-                    } else if (item.type === "error") {
-                        return <p key={index} className={styles.errorText}>{error ? checkPathname ? item.text[0]: item.text[1]: ""}</p>
+                    } else if (item.type === "message") {
+                        return <p
+                        key={item.id}
+                        style={{color: `${error === null ? "none": "red"}`}}
+                        className={styles.messageText}>
+                        {message}
+                        </p>
                     }
                 })}
+            </div>}
+            <div className={styles.close}>
+                <IoCloseCircleOutline color="black" onClick={handleClose} cursor={"pointer"} size={30}/>
             </div>
-            {true  && <p className={styles.forgot}>Забыли пароль?</p>}
-            {user.toggleTips && !checkPathname && <div className={styles.modal}>
+            {isAuth && <p>Вы уже авторизованы!</p>}
+            {!isAuth  && <p className={styles.forgot}>Забыли пароль?</p>}
+            {isAuth && <div className={styles.exit}><Button onClick={handleExit} text="Выйти"/></div>}
+            {user.toggleTips && !checkPathname && <div ref={refFormTips} onBlur={windowSize < 1024 ? handleBlur: () => {}} tabIndex={0} className={styles.modal}>
                 <FormTips value={user.toggleTipsValidate ? String(user.login): [String(user.password), String(user.passwordWithCheck)]} keyValidate={user.toggleTipsValidate ? "login": "password"}/>
             </div>}
         </form>}

@@ -11,7 +11,7 @@ export const useWindowScroll = () => {
     const findMoreBooks = useFindMoreRecommend()
     const [{status}, ] = useRecommendList()
     const [request, setRequest] = useState(true)
-    const limit = 21;
+    const limit = 24;
     const {category} = useParams()
 
     useEffect(() => {

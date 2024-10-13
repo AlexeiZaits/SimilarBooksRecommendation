@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from "app/store/store"
 import { actionGetTitles } from "../model/recommend-search-actions"
 import { selectRecommendSearch } from "../model/recommend-search-selectors"
-import { setTitlesRecommendSearch } from "../model/recommend-search-slice"
 
 export const useSearchRecommend = (): [
     ReturnType<typeof selectRecommendSearch>,
@@ -17,8 +16,6 @@ export const useSearchRecommend = (): [
                 limit: 9,
                 offset: 0,
                 }))
-        } else {
-            dispatch(setTitlesRecommendSearch([]))
         }
     }
 

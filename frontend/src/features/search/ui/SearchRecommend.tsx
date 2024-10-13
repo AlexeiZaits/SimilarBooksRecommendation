@@ -3,7 +3,6 @@ import { Button, Input } from "shared/ui"
 import styles from "./styles.module.scss";
 import { useRecommendList } from "../../recommendList/hooks/use-recommend-list";
 import { LupaImg } from "shared/assets/icons/lupa";
-import { ClearImg } from "shared/assets/icons/ClearImg";
 import { useSearch } from "../hooks/use-search";
 import { useClearSearch } from "../hooks/use-search-clear";
 import { smoothScrollHigh } from "../lib/smoothScrollHigh";
@@ -12,15 +11,17 @@ import { useSearchRecommend } from "features/recommendsSearch/hooks/use-recommen
 import { useClearReommendSearch } from "features/recommendsSearch/hooks/use-clear-recommend-search";
 import useDebounce from "../hooks/use-debounce";
 import { useFocusElement } from "features/recommendsSearch/hooks/use-focus-element";
-import { useSetViewRecommendSearch } from "features/recommendsSearch/hooks/use-set-recommend-search";
+import { useSetViewRecommendSearch } from "features/recommendsSearch/hooks/use-set-view-recommend-search";
 import { useClearFocusRecommends } from "features/recommendsSearch/hooks/use-clear-focus-recommend.ts";
 import { setLocalTitle } from "features/recommendsSearch/lib/setLocalTitle";
 import { useNavigate } from "react-router-dom";
+import { getThemeColor } from "shared/lib/getThemeColor";
+import { IoClose } from "react-icons/io5";
+import { usePlaceholder } from "../hooks/use-placeholder";
 
 export const SearchRecommend = () => {
     const [viewHint, setViewHint] = useState(false)
     const [viewLupa, setViewLupa] = useState(false)
-    const [placeholder, setPlaceholder] = useState("Поиск книг")
     const formRef = useRef<HTMLDivElement>(null)
     const clearSearch = useClearSearch()
     const clearInfinityScroll = useClearInfinityScroll()
@@ -28,19 +29,12 @@ export const SearchRecommend = () => {
     const clearRecommendList = useClearReommendSearch()
     const [search, setSearch] = useSearch()
     const [, searchRecommend] = useSearchRecommend()
-    const [, setDebounceValue] = useDebounce(searchRecommend, 400)
+    const [debounceValue, setDebounceValue] = useDebounce(searchRecommend, 400)
     const [, calcFocus] = useFocusElement()
     const [, setView] = useSetViewRecommendSearch()
     const [{error}, searchBooks] = useRecommendList()
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (error) {
-            setPlaceholder(error);
-            clearSearch()
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [error])
+    const [placeholder, ] = usePlaceholder(clearSearch, error)
 
     const handleClick = () => {
         navigate("")
@@ -49,10 +43,15 @@ export const SearchRecommend = () => {
         searchRecommend(search)
         searchBooks({
                 query: search,
-                limit: 21,
+                limit: 24,
                 offset: 0,
         }, "search")
     }
+
+    useEffect(() => {
+        setSearch(debounceValue, "debounce")
+    }, [debounceValue])
+
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         switch (event.key) {
@@ -71,7 +70,7 @@ export const SearchRecommend = () => {
                 clearInfinityScroll()
                 searchBooks({
                     query: search,
-                    limit: 21,
+                    limit: 24,
                     offset: 0,
                 }, "search")
                 searchRecommend(search)
@@ -109,11 +108,16 @@ export const SearchRecommend = () => {
         setView(false)
     }
 
+
     return <div ref={formRef} tabIndex={0} onKeyDown={handleKeyDown} className={styles.container}>
         <div  className={styles.search}>
-            {viewLupa && <i className={styles.icon}><LupaImg size="18px"/></i>}
+            {viewLupa && <i className={styles.icon}>
+                <LupaImg color={getThemeColor()} size="18px"/>
+            </i>}
             <Input error={error === null ? false: true} secondary={true} onBlur={handleOnBlur} placeholder={placeholder} value={search} onChange={handleChange} onFocus={handleFocus}/>
-            {search.length !== 0 && <div onClick={handleClear} className={styles.clear}><ClearImg/></div>}
+            {search.length !== 0 && viewLupa && <div onMouseDown={handleClear} className={styles.clear}>
+                <IoClose size={30} color={getThemeColor()}/>
+            </div>}
         </div>
         <div style={{position: "relative"}}>
             <Button onMouseLeave={() => setViewHint(false)} onMouseEnter={() => setViewHint(true)} onClick={handleClick} svg={<LupaImg/>} secondary={true}/>
