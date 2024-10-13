@@ -40,3 +40,36 @@ jobs:
 
       - name: Finish message
         run: echo "CI Pipeline completed!"
+
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          echo "Installing frontend dependencies..."
+          npm ci
+
+      - name: Run frontend lint
+        run: |
+          cd frontend
+          echo "Running frontend linting..."
+          npm run lint
+
+      - name: Run frontend tests
+        run: |
+          cd frontend
+          echo "Running frontend tests..."
+          npm run test
+
+      - name: Finish message
+        run: echo "Frontend pipeline completed!"
