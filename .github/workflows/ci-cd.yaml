@@ -12,11 +12,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Add SSH known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+
       - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          echo "${{ secrets.SSH_PASSPHRASE }}" | ssh-add private_key.pem
 
       - name: Create file on remote machine
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'абоба' > aboba.txt"
+          ssh -i private_key.pem ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'абоба' > /path/to/your/directory/aboba.txt"
