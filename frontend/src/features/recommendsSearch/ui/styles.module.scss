@@ -1,34 +1,70 @@
 @import "../../../shared/utils/index.scss";
 
 .button{
+    position: relative;
+    display: flex;
+    flex-direction: row;
     width: 100%;
-    padding: 0.2rem 1rem;
+    padding: 0.2rem;
+    padding-left: 1.8rem;
+    border: none;
     @include t-main();
     display: flex;
+    z-index: 1;
     flex-direction: column;
     justify-content: space-between;
     transition: all 0.3s;
     background-color: inherit;
     text-align: left;
-    border-top: 1px solid rgba(255, 255, 255, 0.438);
-
-    &:last-child{
-        border-bottom: 1px solid rgba(255, 255, 255, 0.438);
-    }
-
-    @media (min-width: 500px) {
-        height: 2rem;
-    }
+    margin-top: 0.35rem;
+    height: 1.62rem;
 
     &:hover{
         cursor: pointer;
-        background-color: $bg-transparant;
+        color: $text-inverse-primary !important;
+        background-color: $inverse-main-back;
+        .delete{
+            color: $text-inverse-primary
+        }
+        .icon{
+            color: $text-inverse-primary
+        }
     }
+
     &:focus{
-        background-color: $bg-transparant;
+        color: $text-inverse-primary;
+        background-color: $inverse-main-back;
+        .delete{
+            color: $text-inverse-primary
+        }
+        .icon{
+            color: $text-inverse-primary
+        }
     }
 }
 
 .active{
-    background-color: $bg-transparant;
+    color: $text-inverse-primary;
+    background-color: $inverse-main-back;
+    .delete{
+        z-index: 2;
+        color: $text-inverse-primary
+    }
+    .icon{
+        color: $text-inverse-primary
+    }
+}
+
+.icon{
+    left: 0.5rem;
+    top: 0.25rem;
+    position: absolute;
+    color: $text-primary;
+}
+
+.delete{
+    right: 1rem;
+    top: 0.25rem;
+    position: absolute;
+    color: $text-primary;
 }

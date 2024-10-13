@@ -1,10 +1,10 @@
 import { useAppDispatch } from "app/store/store"
-import { setTitlesRecommendSearch } from "../model/recommend-search-slice"
+import { setTitlesRecommendSearch, titlesRecommend } from "../model/recommend-search-slice"
 
 export const useSetTitles = () => {
     const dispatch = useAppDispatch()
 
-    const setTitles = (titles: string[]) => dispatch(setTitlesRecommendSearch(titles))
+    const setTitles = (titles: titlesRecommend[]) =>  dispatch(setTitlesRecommendSearch(titles));
 
     return setTitles
 }
