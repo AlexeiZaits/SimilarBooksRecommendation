@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "app/store/store";
-import { selectDebounceSearch } from "features/search/model/searct-selectors";
+import { selectDebounceSearch } from "features/search/model/search-selectors";
 import { titlesRecommend } from "./recommend-search-slice";
 
 export const selectStatus = (state: RootState) => state.recommendSearch
