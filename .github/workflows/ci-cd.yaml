@@ -7,7 +7,7 @@ on:
 
 jobs:
   create-file:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -21,6 +21,7 @@ jobs:
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
+          eval $(ssh-agent -s)  # Запуск SSH-агента
           echo "${{ secrets.SSH_PASSPHRASE }}" | ssh-add private_key.pem
 
       - name: Create file on remote machine
