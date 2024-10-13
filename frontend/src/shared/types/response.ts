@@ -5,6 +5,7 @@ export interface AuthResponse {
     access_token: string,
     refresh_token: string,
     user: IUser,
+    login: string,
 }
 
 export interface RegResponse {
@@ -21,6 +22,7 @@ export interface BooksResponse {
 export interface TitlesResponse{
     data: {
         titles: string[],
+        type: "search",
         status: number,
     }
 }
