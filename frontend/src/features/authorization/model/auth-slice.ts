@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {IUser} from "shared/types";
 import { ErrorType, Status } from "shared/types/status";
 import { authUser, logoutUser, refreshUser, regUser } from "./auth-actions";
-import { updateObject } from "widjets/authForm/lib/updateObjetc";
+import { updateObject } from "widjets/authForm/lib/updateObject";
 
 export interface IAuthSlice{
   status: Status,
