@@ -6,7 +6,8 @@ describe("createInitialState", () => {
     test("Создание стейта со списком тоглеров для виджетов на основе обьекта со списком виджетов", () => {
 
         const excpectedResult = {
-            "sidebar": false
+            "sidebar": false,
+            "settings": false
         }
 
         const res = createInitialState(listWidgets)
