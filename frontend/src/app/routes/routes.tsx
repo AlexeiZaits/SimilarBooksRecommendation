@@ -4,8 +4,7 @@ import {
 } from "react-router-dom";
 import App from "../ui/App";
 import { AuthPage, BookPage, ErrorPage, LikePage, RecommendPage } from "pages/index";
-
-
+import * as Sentry from "@sentry/react";
 
 export const router = createBrowserRouter([
   {
@@ -14,27 +13,39 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <RecommendPage/>,
+        element: <Sentry.ErrorBoundary fallback={<ErrorPage/>}>
+            <RecommendPage/>
+        </Sentry.ErrorBoundary>,
       },
       {
         path: "authorization",
-        element: <AuthPage/>,
+        element: <Sentry.ErrorBoundary fallback={<ErrorPage/>}>
+          <AuthPage/>
+        </Sentry.ErrorBoundary>,
       },
       {
         path: "registration",
-        element: <AuthPage/>,
+        element: <Sentry.ErrorBoundary fallback={<ErrorPage/>}>
+          <AuthPage/>
+        </Sentry.ErrorBoundary>,
       },
       {
-        path: "likes",
-        element: <LikePage/>,
+        path: "favorites",
+        element: <Sentry.ErrorBoundary fallback={<ErrorPage/>}>
+          <LikePage/>
+        </Sentry.ErrorBoundary>,
       },
       {
         path: "book/:title",
-        element: <BookPage/>
+        element: <Sentry.ErrorBoundary fallback={<ErrorPage/>}>
+        <BookPage/>
+      </Sentry.ErrorBoundary>,
       },
       {
         path: "books/:category",
-        element: <RecommendPage/>,
+        element: <Sentry.ErrorBoundary fallback={<ErrorPage/>}>
+          <RecommendPage/>
+        </Sentry.ErrorBoundary>,
       },
     ]
   },

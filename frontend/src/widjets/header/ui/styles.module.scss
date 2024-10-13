@@ -57,12 +57,34 @@
     margin-left: 0.5rem;
 
     @media (min-width: $tablet) {
-        width: 12rem;
+        width: 6rem;
     }
 }
 
 .theme{
-    margin-top: 0.5rem;
+    position: relative;
+    margin-top: 0.7rem;
+    z-index: 1;
+    &:hover{
+        &::before{
+            display: block;
+        }
+    }
+
+    &::before{
+        z-index: -1;
+        content: "";
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        display: none;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 1.5rem;
+        background-color: $inverse-main-back;
+        opacity: 0.4;
+    }
 }
 
 .like{
@@ -75,4 +97,19 @@
     top: -0.4rem;
     right: 0.2rem;
     position: absolute;
+}
+
+.settings{
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 24px;
+    background-color: $main-back;
+    border: 2px solid $border-main;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.profile{
+    @include t-main();
 }

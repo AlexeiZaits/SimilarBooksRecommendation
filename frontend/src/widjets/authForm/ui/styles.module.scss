@@ -23,16 +23,24 @@
     left: 0;
     margin: auto;
     display: flex;
-    padding: 3rem 4rem;
     flex-direction: column;
-    justify-content: space-between;
     color: white;
+    justify-content: space-between;
+    padding: 3rem 2rem;
     align-items: center;
     @media (min-width: "550px") {
+        padding: 3rem 4rem;
         height: 30rem;
         max-width: 25rem;
     }
     transition: all 0.4s;
+
+}
+
+.question{
+    position: absolute;
+    right: -1.4rem;
+    top: 0.9rem;
 
 }
 
@@ -67,9 +75,21 @@
     text-decoration: none;
     border-bottom: 2px solid  transparent;
     transition: all 0.3s;
+    color: #f1f1f1;
 
     &:hover{
         border-bottom: 2px solid #2fbd59;
+    }
+}
+
+.close{
+    position: absolute;
+    right: 0;
+    top: -3rem;
+
+    @media (min-width: $tablet) {
+        top: -5rem;
+
     }
 }
 
@@ -97,39 +117,58 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 0 1rem;
+
+    @media (min-width: $tablet) {
+        padding: 0;
+    }
 }
 
-.errorText{
+.messageText{
     @include t-main();
     height: 1rem;
-    color: red;
     font-size: 0.8rem !important;
     width: 100%;
     text-align: center;
 }
 
 .modal{
-    width: 23rem;
+    width: 100%;
     position: absolute;
-    top: 0;
-    right: -25rem;
+    top: -4.5rem;
     z-index: 1001;
+    @media (min-width: $tablet) {
+        top: 0;
+        right: -26rem;
+    }
 }
 
 .formTips{
     @include t-main();
     background-color: white;
     border-radius: $main-radius;
-    padding: 1rem;
+    padding: 0.5rem;
+    @media (min-width: $tablet) {
+        padding: 1rem;
+    }
 }
 
 .title{
+    @include t-title();
     color: black;
-    font-size: 1.3rem;
     text-align: center;
     margin-bottom: 0.5rem;
 }
 
 .input{
     position: relative;
+}
+
+.exit{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    @media (min-width: 550px) {
+        width: 20rem;
+    }
 }

@@ -1,4 +1,3 @@
-import { useContext, useEffect } from "react";
 import {
   ButtonBack,
   ButtonNext,
@@ -7,18 +6,19 @@ import {
   Slider
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import { CarouselContext } from "pure-react-carousel";
 import useWindowSize from "../hooks/useWindowSize";
 import styled from "styled-components";
 import { BooksResponse } from "shared/types";
-import { useGetData } from "pages/BookPage/hook/useGetBook";
+import { useGetData } from "pages/BookPage/hook/useGetData";
 import { Book } from "entities/index";
 import * as API from "../../../config"
 import { FaArrowRight } from "react-icons/fa";
 import { Preloader } from "shared/ui";
 import { useParams } from "react-router-dom";
+import { useCarusel } from "../hooks/useCarusel";
+import { decodeLink } from "features/recommendList/hooks/use-category-books";
 
-interface ICarouselSlider {
+export interface ICarouselSlider {
   setSlideCount: (count: number) => void,
   setCurrentSlide: (count: number) => void
 }
@@ -26,39 +26,12 @@ interface ICarouselSlider {
 const CarouselSlider = ({ setSlideCount, setCurrentSlide }: ICarouselSlider) => {
   const screenWidth = useWindowSize();
   const {title} = useParams()
-  const {currentSlide, totalSlides, visibleSlides} = useContext(CarouselContext).state;
-  const {data, loading, error} = useGetData<BooksResponse, string>(API.searchBooks(title? title: "", 12, 0), title ? title: "")
+  useCarusel({ setSlideCount, setCurrentSlide, screenWidth })
+  const {data, loading, error} = useGetData<BooksResponse, string>(API.searchBooks(title? decodeLink(title): "", 12, 0), title ? title: "")
 
-  useEffect(() => {
-    const updateCarouselSlide = (slideToBeVisible: number) => {
-
-      setSlideCount(slideToBeVisible);
-
-      if (
-        currentSlide >= totalSlides - visibleSlides ||
-        currentSlide >= totalSlides - slideToBeVisible
-      ) {
-        setCurrentSlide(totalSlides - slideToBeVisible);
-      }
-    };
-
-    if (screenWidth < 500) {
-      updateCarouselSlide(1);
-    } else if (screenWidth < 730) {
-      updateCarouselSlide(2);
-    } else if (screenWidth < 1350){
-      updateCarouselSlide(3);
-    }
-    //>= 1088
-      else {
-        updateCarouselSlide(4);
-    }
-
-  }, [screenWidth, setSlideCount, setCurrentSlide, currentSlide, totalSlides, visibleSlides]);
 
   return (
     <>
-
     {loading && <Preloader/>}
     {error && <span>Error</span>}
     {data && <Wrapper>

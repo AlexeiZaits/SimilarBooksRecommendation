@@ -1,0 +1,28 @@
+@import "../../../shared/utils/index.scss";
+
+.container{
+    position: fixed;
+    top: 7rem;
+    right: 1rem;
+    width: 18rem;
+    height: 20rem;
+    background-color: $main-back;
+    border: 2px solid $border-main;
+    border-radius: $main-radius;
+    padding: 1rem;
+    display: flex;
+    z-index: 2;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.text{
+    @include t-main();
+    text-align: center;
+    text-decoration: none;
+}
+
+.links{
+    text-align: center;
+}

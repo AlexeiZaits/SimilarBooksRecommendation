@@ -2,23 +2,24 @@ import { useParams } from "react-router-dom"
 import { fixLink } from "entities/book/lib/fixLink";
 import { ImgWithSkeleton, withModal, Preloader } from "shared/ui";
 import styles from "./styles.module.scss"
-import { useGetData } from "../hook/useGetBook";
+import { useGetData } from "../hook/useGetData";
 import { Like } from "features/index";
 import { Carusel } from "widjets/carusel";
 import { BookResponse } from "shared/types";
 import { fixInfo } from "../lib/fixInfo";
 import * as API from "../../../config"
+import { decodeLink } from "features/recommendList/hooks/use-category-books";
 // import Rating from "@mui/material/Rating";
 
-const PreloaderWithModal = withModal(Preloader)
 
+const PreloaderWithModal = withModal(Preloader)
 export type BodyRequest = string
 
 
 export const BookPage = () => {
     const {title} = useParams();
     const titleRequest = title ? title : ""
-    const {data, loading, error} = useGetData<BookResponse, BodyRequest>(API.get_book(titleRequest), titleRequest)
+    const {data, loading, error} = useGetData<BookResponse, BodyRequest>(API.get_book(decodeLink(titleRequest)), titleRequest)
 
 
     return <>
@@ -30,7 +31,7 @@ export const BookPage = () => {
                     <ImgWithSkeleton errorLink={"https://www.podpisnie.ru/upload/no-image.png"} height={590} width={410} link={"https://www.podpisnie.ru/" + fixLink(data.metadata.image)} title={title ? title : "книга"}/>
                 </div>
                 <div className={styles.info}>
-                    <h1 className={styles.mainTitle}>{title}</h1>
+                    <h1 className={styles.mainTitle}>{decodeLink(titleRequest)}</h1>
                     {/* <Rating name="half-rating" defaultValue={2.5} precision={0.5} /> */}
                     <h2 className={styles.secondaryTitle}>О книге</h2>
                     <p className={styles.text}>Категория {data.metadata.category}</p>

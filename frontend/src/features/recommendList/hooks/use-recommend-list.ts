@@ -16,7 +16,6 @@ export const useRecommendList = (): [
     const booksInfo = useAppSelector(selectRecommendList)
 
     const searchBooks = (searchRequest: BooksRequest, searchOrGet: SearchOrGet) => {
-        console.log(searchOrGet)
         if (searchOrGet === "search"){
             setSearchParams({search: searchRequest.query})
             dispatch(actionSearchBooks(searchRequest))
