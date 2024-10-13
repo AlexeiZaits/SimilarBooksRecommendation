@@ -28,21 +28,8 @@ export const recommendSearchSlice = createSlice({
     name: "@recommendSearchSlice",
     initialState: initialState,
     reducers: {
-        incrementFocusElement: (state) => {
-            if (state.focusElement === null || state.focusElement + 1 === state.titles.length){
-                state.focusElement = 0
-            }
-            else{
-                state.focusElement = state.focusElement + 1
-            }
-        },
-        decrementFocusElement: (state) => {
-            if (state.focusElement !== null && state.focusElement - 1 < 0){
-                state.focusElement = state.titles.length-1
-            }
-            else if (state.focusElement){
-                state.focusElement = state.focusElement - 1
-            }
+        setFocusElement: (state, action) => {
+            state.focusElement = action.payload
         },
         setTitlesRecommendSearch: (state, action) => {
             state.titles = [...action.payload, ...state.titles]
@@ -96,8 +83,9 @@ export const recommendSearchSlice = createSlice({
 })
 
 export const {
-    clearRecommendSearch, incrementFocusElement,
+    clearRecommendSearch,
+    setFocusElement,
     deleteTitleLocalRecommend,
-    decrementFocusElement, setViewRecommendSearch,
+    setViewRecommendSearch,
     clearFocusElementRecommendSearch, setTitlesRecommendSearch,
     } = recommendSearchSlice.actions
