@@ -15,6 +15,8 @@ import { useActionsAuthorization } from "features/authorization/hooks/use-action
 import useWindowSize from "widjets/carusel/hooks/useWindowSize"
 import dataJson from "../../../../data.json"
 import styles from "./styles.module.scss"
+import Snackbar from "@mui/material/Snackbar"
+import Alert from "@mui/material/Alert"
 
 const PreloaderWithModal = withModal(Preloader)
 
@@ -45,13 +47,21 @@ const newInitialState = () => initialState
 
 export const AuthForm = () => {
     const [user, setUser] = useState<IUserForm>(newInitialState)
+    const [notification, setNotification] = useState(false)
+    const refFormTips = useRef<HTMLDivElement>(null)
     const {pathname} = useLocation()
     const navigate = useNavigate()
-    const refFormTips = useRef<HTMLDivElement>(null)
     const [setAuthorization, {error, status, isAuth, message}] = useAuthorization()
     const handleActions = useActionsAuthorization()
     const windowSize = useWindowSize()
+    const checkPathname = pathname === navList[0].link
+    const validateForm = !validateFullForm([String(user.password), String(user.passwordWithCheck)], String(user.login)) && !checkPathname
 
+    useEffect(() => {
+        if (status === "idle" && !checkPathname){
+            setNotification(true)
+        }
+    }, [status])
 
     const handleSubmit = (user: IUserForm) => {
         if (pathname === "/authorization"){
@@ -131,6 +141,10 @@ export const AuthForm = () => {
         navigate("/")
     }
 
+    const handleCloseNotif = () => {
+        setNotification(false)
+    }
+
     const handleExit = () => {
         handleActions("logout")
     }
@@ -139,11 +153,12 @@ export const AuthForm = () => {
         updateUser("toggleTips", false)
     }
 
-
-    const checkPathname = pathname === navList[0].link
-    const validateForm = !validateFullForm([String(user.password), String(user.passwordWithCheck)], String(user.login)) && !checkPathname
-
     return <div className={styles.container}>
+        {!checkPathname && <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={notification} autoHideDuration={3000} onClose={handleCloseNotif}>
+            <Alert onClose={handleCloseNotif} severity="success">
+                Вы успешно зарегистрированны
+            </Alert>
+        </Snackbar>}
         {status === "loading" && <PreloaderWithModal/>}
         {<form className={styles.form}>
             <nav className={styles.navForm}>
