@@ -22,7 +22,7 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
           eval $(ssh-agent -s)  # Запуск SSH-агента
-          echo "${{ secrets.SSH_PASSPHRASE }}" | ssh-add private_key.pem
+          echo "${{ secrets.SSH_PASSPHRASE }}" | ssh-add private_key.pem  # Добавляем passphrase для зашифрованного ключа
 
       - name: Create file on remote machine
         run: |
