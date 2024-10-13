@@ -1,3 +1,6 @@
 export * from "./header"
 export * from "./carusel"
 export * from "./sidebar"
+export * from "./autoCompleteSearch"
+export * from "./authForm"
+export * from "./settings"

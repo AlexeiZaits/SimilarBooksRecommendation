@@ -1,19 +1,10 @@
 version: '3.8'
 
 services:
-  app:
+  frontend:
     build:
       context: frontend
       dockerfile: Dockerfile
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development
-    networks:
-      - ml_network
 
   backend:
     build:

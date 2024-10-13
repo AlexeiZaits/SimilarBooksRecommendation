@@ -3,6 +3,7 @@
 //text
 
 $text-primary: var(--colors-text);
+$text-inverse-primary: var(--inverse-colors-text);
 $text-secondary: #323A47;
 $text-treinary-light_theme: #818387;
 $text-link: green;
@@ -19,7 +20,7 @@ $bg-transparant: var(--transparent-bg);
 
 
 //border
-$border-main: var(--colors-border);
+$border-main: #2fbd59;
 
 // fonts
 $main-font: "Montserrat", sans-serif;

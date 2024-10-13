@@ -1,0 +1,33 @@
+{
+    "menu": {
+        "all": "Все книги",
+        "comics": "Графические романы / Комиксы",
+        "srednevekovye": "Книги о средневековье",
+        "khudozhetsvennye": "Художественная литература"
+    },
+    "formList": [
+            {"type": "login", "text": "Логин", "id": 1},
+            {"type": "password", "text": "Пароль", "id": 2},
+            {"type": "passwordWithCheck", "text": "Подтвердите пароль", "id": 3},
+            {"type": "message", "text": "", "id": 4},
+            {"type": "submit", "text": ["Вход", "Регистрация"], "id": 5}
+    ],
+    "navList": [
+        {"link": "/authorization", "name": "Авторизация"},
+        {"link": "/registration", "name": "Регистрация"}
+    ],
+    "loginValidate": {
+        "length": {"check": false, "text": "6 символов и начинаться с буквы"},
+        "letterCount": {"check": false, "text": "Минимум 3 буквы"},
+        "regex": {"check": false, "text": "Только буквы и цифры"}
+    },
+    "passwordValidate": {
+        "length": {"check": false, "text": "Минимум 6 символов"},
+        "digit": {"check": false, "text": "Одна цифра"},
+        "specialChar": {"check": false, "text": "Один сивмвол из !@#$%^&*"},
+        "lowerCase": {"check": false, "text": "Одна мальнекая буква"},
+        "upperCase": {"check": false, "text": "Одна большая буква"},
+        "passwordCheck": {"check": false, "text": "Пароли совпадают"}
+    }
+
+}

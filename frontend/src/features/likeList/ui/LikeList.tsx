@@ -10,7 +10,7 @@ export const LikeList = () => {
     return <div className={styles.container}>
         <div className={styles.books}>
             {books.length !== 0 && books.map((item) => {
-                return <Book style={{marginLeft: "3rem"}} key={item.uid} {...item}  children={<Like {...item}/>}/>
+                return <Book style={{marginLeft: "3rem"}} key={item.uid} {...item} ><Like {...item}/></Book>
             })}
         </div>
     </div>

@@ -11,10 +11,6 @@ export const Authorization = ({children}:IAuth) => {
     // const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
-    // useEffect(()=> {
-    //     status === "rejected" && navigate("/authorization")
-    // }, [navigate, status])
-
     useEffect(() => {
         if (localStorage.getItem("token")){
             dispatch(refreshUser())
