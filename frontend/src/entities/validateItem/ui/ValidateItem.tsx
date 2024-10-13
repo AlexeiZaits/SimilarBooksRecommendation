@@ -1,8 +1,7 @@
 import { FcCheckmark } from "react-icons/fc"
 import { IoClose } from "react-icons/io5"
 import styles from "./styles.module.scss"
-import { IValidateItem } from "widjets/authForm/ui/FormTips"
-
+import { IValidateItem } from "shared/types/formTips"
 
 export const ValidateItem = ({check, text} :IValidateItem) => {
     return <div className={styles.container}>
