@@ -1,11 +1,10 @@
 import { ReactNode } from 'react';
-import './App.scss'
-import { store } from '../store/store';
 import { Provider } from 'react-redux';
-import { Header } from 'widjets/header';
-import { AutoCompleteSearch } from 'widjets/autoCompleteSearch';
+import { store } from '../store/store';
 import { Authorization, ScrollTop } from 'features/index';
-import { Sidebar } from 'widjets/index';
+import { Header, Settings, AutoCompleteSearch, Sidebar } from 'widjets/index';
+import * as Sentry from "@sentry/react";
+import './App.scss';
 
 interface IAPP {
   children: ReactNode
@@ -17,9 +16,14 @@ const App = ({children}: IAPP) => {
     <Provider store={store}>
       <Authorization>
         <Header>
-          <AutoCompleteSearch/>
+          <Sentry.ErrorBoundary fallback={<span>Произошла ошибка</span>}>
+            <AutoCompleteSearch/>
+          </Sentry.ErrorBoundary>
           {false && <ScrollTop/>}
-          <Sidebar/>
+          <Sentry.ErrorBoundary fallback={<span>Произошла ошибка</span>}>
+            <Sidebar/>
+          </Sentry.ErrorBoundary>
+          <Settings/>
         </Header>
       </Authorization>
       <main className='main'>{children}</main>
