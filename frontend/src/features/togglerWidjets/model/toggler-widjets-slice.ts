@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { INewInitialState, createInitialState } from "../lib/createInitialState";
+import { listWidgets } from "../lib/listWidgets";
 
-export const initialState: INewInitialState = createInitialState()
+export const initialState: INewInitialState = createInitialState(listWidgets)
 
 export const togglerWidjetsSlice = createSlice({
     name: "@togglerWidjetsSlice",
