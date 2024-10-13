@@ -1,75 +1,22 @@
-name: Simple CI Pipeline
-
+name: Test Pipeline
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build:
+  create-file:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
         with:
-          python-version: '3.9'
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Print message for dependencies
-        run: echo "Installing dependencies..."
-
-      - name: Install dependencies
+      - name: Create file on remote machine
         run: |
-          echo "Upgrading pip..."
-          echo "Installing requirements..."
-
-
-      - name: Print message for tests
-        run: echo "Running tests..."
-
-      - name: Run tests
-        run: |
-          echo "Executing pytest..."
-
-      - name: Finish message
-        run: echo "CI Pipeline completed!"
-
-  frontend:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-
-      - name: Install frontend dependencies
-        run: |
-          cd frontend
-          echo "Installing frontend dependencies..."
-          npm ci
-
-      - name: Run frontend lint
-        run: |
-          cd frontend
-          echo "Running frontend linting..."
-          npm run lint
-
-      - name: Run frontend tests
-        run: |
-          cd frontend
-          echo "Running frontend tests..."
-          npm run test
-
-      - name: Finish message
-        run: echo "Frontend pipeline completed!"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'абоба' > aboba.txt"
