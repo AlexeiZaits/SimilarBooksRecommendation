@@ -29,6 +29,8 @@ services:
       - ${BACKEND_RECSYS_PORT}:8003
     env_file:
       - ./.env
+    environment:
+      - BACKEND_SEARCH_HOST=search_service
     networks:
       - ml_network
 
