@@ -36,6 +36,7 @@ passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 alembic = "^1.13.2"
 asyncpg = "^0.29.0"
 prometheus-fastapi-instrumentator = "^7.0.0"
+scikit-learn = "^1.5.2"
 
 
 [tool.poetry.group.dev.dependencies] # Зависимости для DEV версии
