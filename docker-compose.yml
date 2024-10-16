@@ -8,7 +8,7 @@ services:
 
   auth_service:
     build:
-      context: backend.auth_service
+      context: backend/auth_service
       dockerfile: Dockerfile
     # volumes:
     #   - ./backend:/app/backend
@@ -21,7 +21,7 @@ services:
 
   recsys_service:
     build:
-      context: backend.recsys_service
+      context: backend/recsys_service
       dockerfile: Dockerfile
     # volumes:
     #   - ./backend:/app/backend
@@ -34,7 +34,7 @@ services:
 
   search_service:
     build:
-      context: backend.search_service
+      context: backend/search_service
       dockerfile: Dockerfile
     # volumes:
     #   - ./backend:/app/backend
