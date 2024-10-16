@@ -8,4 +8,5 @@ redis==5.0.7
 python-dotenv==1.0.1
 sqlalchemy==2.0.33
 asyncpg==0.29.0
+scikit-learn==1.5.2
 prometheus-fastapi-instrumentator==7.0.0
