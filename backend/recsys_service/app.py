@@ -22,7 +22,7 @@ async def lifespan(App: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
-instrumentator = Instrumentator().instrument(app)
+instrumentator = Instrumentator().instrument(app, metric_namespace="backend", metric_subsystem="recsys_service")
 
 app.add_middleware(
     CORSMiddleware,
