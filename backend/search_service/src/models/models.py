@@ -6,7 +6,7 @@ import redis
 from dotenv import load_dotenv
 from sqlalchemy.engine import Engine
 
-from backend.auth_service.config.database import async_session_maker
+from backend.search_service.config.database import async_session_maker
 from backend.search_service.src.models.trie import Trie
 
 load_dotenv()
