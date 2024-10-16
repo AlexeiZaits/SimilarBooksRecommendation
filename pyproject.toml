@@ -102,6 +102,7 @@ disable = [
     "W0603",  # Using the global statement
     "W0511",  # TODO
     "R0402",  # consider-using-from-import
+    "R0917",  # Too many positional arguments
 ]
 
 [tool.pylint.FORMAT]

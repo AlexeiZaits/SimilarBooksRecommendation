@@ -6,14 +6,40 @@ services:
       context: frontend
       dockerfile: Dockerfile
 
-  backend:
+  auth_service:
     build:
-      context: backend
+      context: backend.auth_service
       dockerfile: Dockerfile
     # volumes:
     #   - ./backend:/app/backend
     ports:
-      - ${BACKEND_PORT}:8000
+      - ${BACKEND_AUTH_PORT}:8001
+    env_file:
+      - ./.env
+    networks:
+      - ml_network
+
+  recsys_service:
+    build:
+      context: backend.recsys_service
+      dockerfile: Dockerfile
+    # volumes:
+    #   - ./backend:/app/backend
+    ports:
+      - ${BACKEND_RECSYS_PORT}:8003
+    env_file:
+      - ./.env
+    networks:
+      - ml_network
+
+  search_service:
+    build:
+      context: backend.search_service
+      dockerfile: Dockerfile
+    # volumes:
+    #   - ./backend:/app/backend
+    ports:
+      - ${BACKEND_SEARCH_PORT}:8002
     env_file:
       - ./.env
     networks:
