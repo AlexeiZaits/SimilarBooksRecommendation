@@ -13,7 +13,7 @@ celery_test1.py
 
 k8s/backend-manifests/configmap.yaml
 k8s/backend-manifests/secrets.yaml
-Dockerfile
+k8s/
 poetry.lock
 # Distribution / packaging
 .Python

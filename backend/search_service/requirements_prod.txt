@@ -1,0 +1,11 @@
+pandas==2.2.2
+joblib==1.4.2
+pydantic==2.7.1
+pydantic-settings==2.2.1
+uvicorn==0.30.1
+fastapi==0.111.0
+redis==5.0.7
+python-dotenv==1.0.1
+sqlalchemy==2.0.33
+asyncpg==0.29.0
+prometheus-fastapi-instrumentator==7.0.0
