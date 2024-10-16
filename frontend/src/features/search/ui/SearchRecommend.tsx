@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { getThemeColor } from "shared/lib/getThemeColor";
 import { IoClose } from "react-icons/io5";
 import { usePlaceholder } from "../hooks/use-placeholder";
+import useWindowSize from "widjets/carusel/hooks/useWindowSize";
 
 export const SearchRecommend = () => {
     const [viewHint, setViewHint] = useState(false)
@@ -35,6 +36,7 @@ export const SearchRecommend = () => {
     const [{error}, searchBooks] = useRecommendList()
     const navigate = useNavigate();
     const [placeholder, ] = usePlaceholder(clearSearch, error)
+    const windowSize = useWindowSize()
 
     const handleClick = () => {
         navigate("")
@@ -112,7 +114,7 @@ export const SearchRecommend = () => {
     return <div ref={formRef} tabIndex={0} onKeyDown={handleKeyDown} className={styles.container}>
         <div  className={styles.search}>
             {viewLupa && <i className={styles.icon}>
-                <LupaImg color={getThemeColor()} size="18px"/>
+                <LupaImg color={getThemeColor()} size={windowSize > 1024 ? "18px": "15px"}/>
             </i>}
             <Input error={error === null ? false: true} secondary={true} onBlur={handleOnBlur} placeholder={placeholder} value={search} onChange={handleChange} onFocus={handleFocus}/>
             {search.length !== 0 && viewLupa && <div onMouseDown={handleClear} className={styles.clear}>
@@ -120,7 +122,7 @@ export const SearchRecommend = () => {
             </div>}
         </div>
         <div style={{position: "relative"}}>
-            <Button onMouseLeave={() => setViewHint(false)} onMouseEnter={() => setViewHint(true)} onClick={handleClick} svg={<LupaImg/>} secondary={true}/>
+            <Button onMouseLeave={() => setViewHint(false)} onMouseEnter={() => setViewHint(true)} onClick={handleClick} svg={<LupaImg size={windowSize > 1024 ? "24px": "20px"}/>} secondary={true}/>
             {viewHint && <div className={styles.hint}>
                 <p>Введите запрос</p>
             </div>}

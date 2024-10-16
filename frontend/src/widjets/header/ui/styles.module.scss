@@ -2,17 +2,18 @@
 
 .header{
     width: 100%;
-    height: 6rem;
     background-color: $main-back;
     position: sticky;
     top: 0;
+    height: 4.5rem;
     z-index: 999;
-    padding: 2rem 0.5rem;
+    padding: 1rem 0.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 
     @media (min-width: $tablet) {
+        height: 7rem;
         padding: 2rem 1rem;
     }
 }
@@ -29,7 +30,6 @@
     display: flex;
     text-align: center;
     flex-direction: row;
-    height: 3rem;
     width: 3rem;
     @media (min-width: $tablet) {
         width: 20rem;
@@ -38,9 +38,12 @@
 }
 
 .icon{
-    width: 2rem;
-    height: 2rem;
-    margin-top: 0.5rem;
+    width: 1.7rem;
+    margin-top: 0.4rem;
+    @media (min-width: $tablet) {
+        width: 2rem;
+
+    }
 }
 
 .text{
@@ -55,15 +58,13 @@
     flex-direction: row;
     justify-content: space-between;
     margin-left: 0.5rem;
-
-    @media (min-width: $tablet) {
-        width: 6rem;
-    }
+    width: 6rem;
 }
 
 .theme{
     position: relative;
-    margin-top: 0.7rem;
+    margin-top: 0.5rem;
+    margin-right: 0.3rem;
     z-index: 1;
     &:hover{
         &::before{
@@ -74,7 +75,7 @@
     &::before{
         z-index: -1;
         content: "";
-        top: 50%;
+        top: 40%;
         left: 50%;
         transform: translate(-50%, -50%);
         position: absolute;
@@ -85,18 +86,6 @@
         background-color: $inverse-main-back;
         opacity: 0.4;
     }
-}
-
-.like{
-    position: relative;
-}
-
-.like_text{
-    @include t-main();
-    font-size: 1rem !important;
-    top: -0.4rem;
-    right: 0.2rem;
-    position: absolute;
 }
 
 .settings{

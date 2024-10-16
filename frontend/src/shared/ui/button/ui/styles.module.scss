@@ -18,7 +18,8 @@
 
 .secondary{
     width: 3.5rem;
-    height: 2.5rem;
+    max-height: 3rem;
+    height: 100%;
     border-bottom-left-radius:0rem;
     border-top-left-radius:0rem;
     border: 2px solid #2fbd59 !important;
@@ -26,6 +27,5 @@
 
     @media (min-width: 1024px) {
         width: 5rem;
-        height: 3rem;
     }
 }

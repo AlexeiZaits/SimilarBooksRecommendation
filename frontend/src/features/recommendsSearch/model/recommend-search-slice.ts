@@ -23,7 +23,7 @@ const initialState: IRecommendSearch = {
     focusElement: null,
     view: false,
 }
-//TODO: разделить локальные
+
 export const recommendSearchSlice = createSlice({
     name: "@recommendSearchSlice",
     initialState: initialState,
@@ -35,7 +35,6 @@ export const recommendSearchSlice = createSlice({
             state.titles = [...action.payload, ...state.titles]
         },
         deleteTitleLocalRecommend: (state, action) => {
-            console.log("delete")
             const filterTitles = state.titles.filter((item) => item.text !== action.payload.text || item.type !== "local" )
             const filterLocalTitles = filterTitles.filter((item) => item.type === "local")
             setLocal<titlesRecommend[]>("recommends",filterLocalTitles);

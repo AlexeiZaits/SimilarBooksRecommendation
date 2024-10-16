@@ -42,10 +42,6 @@ export const Header = ({children}:IHeader) => {
             {children}
         </div>
         <div className={styles.rigth}>
-            {/* {/* <Link to={"likes"} className={styles.like}>
-                <LikeImg like={true}/>
-                <span className={styles.like_text}>{qtyLikes}</span>
-            </Link>  */}
             {<div className={styles.theme}><ThemeSwitcher/></div>}
             <button onMouseDown={handleMouseDown} className={styles.settings}>
                 {
