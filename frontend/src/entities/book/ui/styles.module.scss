@@ -9,7 +9,7 @@
     width: 10rem;
     height: 20rem;
     margin-bottom: 1rem;
-    text-decoration: none;
+    z-index: 1;
     @media (min-width: $tablet) {
         margin: 10px;
         flex: 0 0 15rem;
@@ -69,6 +69,7 @@
 }
 
 .info{
+    text-decoration: none;
     font-size: 0.7rem !important;
     display: flex;
     justify-content: space-between;
