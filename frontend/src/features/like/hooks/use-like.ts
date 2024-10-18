@@ -13,7 +13,7 @@ export const useLike = (item: IBook): [() => void, boolean] => {
 
     useEffect(() => {
         const books = JSON.parse(localStorage.getItem("likesBook") || "[]" )
-        const isLike = books.findIndex((item: IBook) => item.uid === item.uid)
+        const isLike = books.findIndex((itemBook: IBook) => itemBook.uid === item.uid)
 
         if (isLike !==-1 && !like){
             setLike(true)
