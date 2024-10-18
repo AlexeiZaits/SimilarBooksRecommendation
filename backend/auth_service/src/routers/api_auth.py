@@ -32,7 +32,7 @@ async def register_user(
 
     raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Пользователь не был зарегистрирован")
 
-
+# TODO: почему не выдаются cookie от ВМ в браузер ?
 @router.post("/login")
 async def auth_user(
     response: Response,

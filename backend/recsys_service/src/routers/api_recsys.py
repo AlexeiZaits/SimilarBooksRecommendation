@@ -54,6 +54,6 @@ def get_book_recommendations(
     )
 
     # Формируем результат
-    result = [dict(element.payload, score=element.score, uid=element.id) for element in content]
+    result = [dict(element.payload, score=element.score, uid=element.uid) for element in content]
 
     return RecomendationResponse(status=HTTPStatus.OK, data=result)
