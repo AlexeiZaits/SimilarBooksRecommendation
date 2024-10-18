@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AuthResponse, Extra, IUserForm, RegResponse } from "shared/types";
 import $client from "shared/api";
+import { AxiosError } from "axios";
 
 export const authUser = createAsyncThunk<
 { data: AuthResponse },
@@ -87,10 +88,13 @@ IUserForm,
     { extra: {api}, rejectWithValue,
     }) => {
       try {
-        return $client.post(api.regUser, user);
+        const response = await $client.post(api.regUser, user);
+        console.log(response)
+        return response
       } catch (error) {
-        if (error instanceof Error)
-          return rejectWithValue(error.message);
+        if (error instanceof AxiosError){
+          return rejectWithValue(error.response?.data.detail);
+        }
         return rejectWithValue('Unknown error');
       }
     },

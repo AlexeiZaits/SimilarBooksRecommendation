@@ -1,6 +1,7 @@
 export const listWidgets = {
     sidebar: "sidebar",
-    settings: "settings"
+    settings: "settings",
+    authForm: "authForm",
 };
 
 export type ListWidgetsType = typeof listWidgets;

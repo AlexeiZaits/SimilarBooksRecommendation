@@ -3,12 +3,12 @@ import { listWidgets } from "features/togglerWidjets/lib/listWidgets"
 import { createPortal } from "react-dom"
 import styles from "./styles.module.scss"
 import { useAuthorization } from "features/authorization/hooks/use-authorization"
-import { NavLink } from "react-router-dom"
 import { useEffect, useRef } from "react"
 import { useActionsAuthorization } from "features/authorization/hooks/use-actions-authorization"
 
 export const Settings = () => {
     const [open, toggleOpen] = useToggleWidjet(listWidgets.settings)
+    const [, toggleOpenAuth] = useToggleWidjet(listWidgets.authForm)
     const [, user] = useAuthorization()
     const settingRef = useRef<HTMLDivElement>(null)
     const handleLogout = useActionsAuthorization()
@@ -37,7 +37,7 @@ export const Settings = () => {
         {user.isAuth ?
         <p onClick={() => handleLogout("logout")} className={styles.text}>Выйти</p> :
         <div className={styles.links}>
-            <NavLink className={styles.text} to="/authorization">Войти</NavLink>
+            <div className={styles.text} onClick={toggleOpenAuth}>Войти</div>
         </div>
         }
     </div> }

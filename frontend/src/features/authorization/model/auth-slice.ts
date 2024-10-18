@@ -42,7 +42,7 @@ export const authSlice = createSlice({
     reducers: {
       setAuthSlice: (state, action: PayloadAction<ActionAuthSlice>) => {
         const {key, data} = action.payload
-        state = updateObject<IAuthSlice, IData>(state, key, data)
+        return updateObject<IAuthSlice, IData>(state, key, data)
       },
       clearErrorAuth: (state) => {
         state.error = null
@@ -59,8 +59,8 @@ export const authSlice = createSlice({
         })
         .addCase(authUser.rejected, (state, {payload}) => {
           state.status = 'rejected';
-          state.error = payload || 'Cannot load data';
-          state.message = String(payload)
+          state.error = payload || 'Неправильный логин или пароль';
+          state.message = String(payload || "Неправильный логин или пароль")
         })
         .addCase(authUser.fulfilled, (state, {payload}) => {
           localStorage.setItem("token", payload.data.access_token)
@@ -82,6 +82,7 @@ export const authSlice = createSlice({
           // state.user = payload.data.user;
           state.name = payload.data.login;
           state.isAuth = true;
+          state.error = null;
         })
         .addCase(logoutUser.fulfilled, (state,) => {
           localStorage.removeItem("token")
@@ -101,6 +102,7 @@ export const authSlice = createSlice({
         .addCase(regUser.fulfilled, (state, {payload}) => {
           state.message = payload.data.message;
           state.status = 'received';
+          state.error = null;
         })
     }
 })

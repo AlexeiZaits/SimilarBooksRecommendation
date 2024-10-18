@@ -3,7 +3,7 @@ import {
   Outlet,
 } from "react-router-dom";
 import App from "../ui/App";
-import { AuthPage, BookPage, ErrorPage, LikePage, RecommendPage } from "pages/index";
+import { BookPage, ErrorPage, LikePage, RecommendPage } from "pages/index";
 import * as Sentry from "@sentry/react";
 
 export const router = createBrowserRouter([
@@ -15,18 +15,6 @@ export const router = createBrowserRouter([
         path: "",
         element: <Sentry.ErrorBoundary fallback={<ErrorPage/>}>
             <RecommendPage/>
-        </Sentry.ErrorBoundary>,
-      },
-      {
-        path: "authorization",
-        element: <Sentry.ErrorBoundary fallback={<ErrorPage/>}>
-          <AuthPage/>
-        </Sentry.ErrorBoundary>,
-      },
-      {
-        path: "registration",
-        element: <Sentry.ErrorBoundary fallback={<ErrorPage/>}>
-          <AuthPage/>
         </Sentry.ErrorBoundary>,
       },
       {

@@ -1,10 +1,17 @@
 @import "../../../shared/utils/index.scss";
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+     box-shadow: 0 0 0 30px rgba(48, 192, 19, 0.3) inset !important;
+}
+
 .container{
     width: 100%;
     height: 100%;
     position: absolute;
-    background-color: rgb(224, 224, 224, 0.8);
+    backdrop-filter: blur(3px);
     top: 0;
     left: 0;
     overflow: auto;
@@ -45,7 +52,7 @@
 }
 
 .authForm{
-    height: 16rem;
+    height: 18rem;
     width: 100%;
     margin-top: 1rem;
     display: flex;
@@ -76,6 +83,7 @@
     border-bottom: 2px solid  transparent;
     transition: all 0.3s;
     color: #f1f1f1;
+    cursor: pointer;
 
     &:hover{
         border-bottom: 2px solid #2fbd59;
@@ -129,6 +137,7 @@
     height: 1rem;
     font-size: 0.8rem !important;
     width: 100%;
+    margin-bottom: 1rem;
     text-align: center;
 }
 

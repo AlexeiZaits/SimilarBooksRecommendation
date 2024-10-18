@@ -1,5 +1,4 @@
 import { TouchEvent, useEffect, useState, MouseEvent, useRef } from "react"
-import { NavLink, useLocation, useNavigate } from "react-router-dom"
 import classNames from "classnames"
 import { Button, Preloader, ViewEye, withModal } from "shared/ui"
 import { FormTips } from "./FormTips"
@@ -17,6 +16,8 @@ import dataJson from "../../../../data.json"
 import styles from "./styles.module.scss"
 import Snackbar from "@mui/material/Snackbar"
 import Alert from "@mui/material/Alert"
+import { useToggleWidjet } from "features/togglerWidjets/hooks/use-toggle-widget"
+import { listWidgets } from "features/togglerWidjets/lib/listWidgets"
 
 const PreloaderWithModal = withModal(Preloader)
 
@@ -42,31 +43,27 @@ const initialState: IUserForm = {
 const navList = dataJson.navList
 
 const formList: IFormItem[] = dataJson.formList as IFormItem[]
+type TPathname = "Авторизация" | "Регистрация"
 
 const newInitialState = () => initialState
 
 export const AuthForm = () => {
+    //TODO: рефактор
     const [user, setUser] = useState<IUserForm>(newInitialState)
     const [notification, setNotification] = useState(false)
+    const [pathname, setPathname] = useState<TPathname>()
     const refFormTips = useRef<HTMLDivElement>(null)
-    const {pathname} = useLocation()
-    const navigate = useNavigate()
+    const [open, toggleOpen] = useToggleWidjet(listWidgets.authForm)
     const [setAuthorization, {error, status, isAuth, message}] = useAuthorization()
     const handleActions = useActionsAuthorization()
     const windowSize = useWindowSize()
-    const checkPathname = pathname === navList[0].link
+    const checkPathname = pathname === "Авторизация"
     const validateForm = !validateFullForm([String(user.password), String(user.passwordWithCheck)], String(user.login)) && !checkPathname
 
-    useEffect(() => {
-        if (status === "idle" && !checkPathname){
-            setNotification(true)
-        }
-    }, [status])
-
     const handleSubmit = (user: IUserForm) => {
-        if (pathname === "/authorization"){
+        if (checkPathname){
             handleActions("login", user)
-        } else if (pathname === "/registration" && !validateForm){
+        } else if (!checkPathname && !validateForm){
             handleActions("register", user)
         }
     }
@@ -96,32 +93,29 @@ export const AuthForm = () => {
         }
     }
 
-    useEffect(() => {
-        updateUser("error", validatePassword(String(user.password)))
+    const handleView = (key: TType) => {
+        setUser((prevState) => {
+            const newObj = updateObject(prevState, "toggleTips", true);
+            return updateObject(newObj, "toggleTipsValidate", key === "login");
+        })
+    }
 
-    }, [user.password])
+    const handleCloseNotif = () => {
+        setNotification(false)
+    }
+
+    const handleBlur = () => {
+        updateUser("toggleTips", false)
+    }
 
     useEffect(() => {
-        setAuthorization("status", "idle")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    useEffect(() => {
-        if (status === "rejected"){
+        if (status === "received" && !checkPathname){
+            setNotification(true)
+            setPathname("Авторизация")
+        } else if (status === "rejected") {
             updateUser("password", "");
         }
-    },  [status])
-
-    useEffect(() => {
-        setAuthorization("error", null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pathname])
-
-    useEffect(() => {
-        if (isAuth && status === "received"){
-            navigate('/')
-        }
-    }, [isAuth, status, navigate])
+    }, [status])
 
     useEffect(() => {
         if (windowSize < 1024){
@@ -130,31 +124,36 @@ export const AuthForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user.toggleTips])
 
-    const handleView = (key: TType) => {
-        setUser((prevState) => {
-            const newObj = updateObject(prevState, "toggleTips", true);
-            return updateObject(newObj, "toggleTipsValidate", key === "login");
-        })
+    useEffect(() => {
+        //TODO: Улучшить
+        setAuthorization("error", null)
+        setAuthorization("message", "")
+        setAuthorization("status", "idle")
+
+        return () => setAuthorization("status", "idle")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pathname])
+
+    useEffect(() => {
+        if (isAuth && status === "received"){
+            toggleOpen()
+        }
+    }, [isAuth, status])
+
+    useEffect(() => {
+        updateUser("error", validatePassword(String(user.password)))
+    }, [user.password])
+
+    const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+        const target = e.target as HTMLDivElement;
+        if(target.id === "auth-widjet"){
+            toggleOpen()
+        }
     }
 
-    const handleClose = () => {
-        navigate("/")
-    }
-
-    const handleCloseNotif = () => {
-        setNotification(false)
-    }
-
-    const handleExit = () => {
-        handleActions("logout")
-    }
-
-    const handleBlur = () => {
-        updateUser("toggleTips", false)
-    }
-
-    return <div className={styles.container}>
-        {!checkPathname && <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={notification} autoHideDuration={3000} onClose={handleCloseNotif}>
+    return <>
+    {open && <div id="auth-widjet" onClick={handleClick} className={styles.container}>
+        {<Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={notification} autoHideDuration={3000} onClose={handleCloseNotif}>
             <Alert onClose={handleCloseNotif} severity="success">
                 Вы успешно зарегистрированны
             </Alert>
@@ -163,9 +162,14 @@ export const AuthForm = () => {
         {<form className={styles.form}>
             <nav className={styles.navForm}>
                 {navList.map((item, index) => {
-                    return <NavLink key={index} to={item.link} className={({isActive}) => classNames(styles.link, {
-                        [styles.activeLink]: isActive
-                    })}>{item.name}</NavLink>
+                    return <div
+                    key={index}
+                    onClick={() => setPathname(item as TPathname)}
+                    className={classNames(styles.link, {
+                        [styles.activeLink]: item === pathname
+                    })}>
+                    {item}
+                    </div>
                 })}
             </nav>
            {!isAuth && <div className={styles.authForm}>
@@ -227,7 +231,7 @@ export const AuthForm = () => {
                     } else if (item.type === "message") {
                         return <p
                         key={item.id}
-                        style={{color: `${error === null ? "none": "red"}`}}
+                        style={{color: `${error ? "none": "red"}`}}
                         className={styles.messageText}>
                         {message}
                         </p>
@@ -235,14 +239,19 @@ export const AuthForm = () => {
                 })}
             </div>}
             <div className={styles.close}>
-                <IoCloseCircleOutline color="black" onClick={handleClose} cursor={"pointer"} size={30}/>
+                <IoCloseCircleOutline color={getThemeColor()} onClick={() => toggleOpen()} cursor={"pointer"} size={30}/>
             </div>
-            {isAuth && <p>Вы уже авторизованы!</p>}
+            {isAuth && <>
+                <p>Вы уже авторизованы!</p>
+                <div className={styles.exit}>
+                    <Button onClick={() => handleActions("logout")} text="Выйти"/>
+                </div>
+            </>}
             {!isAuth  && <p className={styles.forgot}>Забыли пароль?</p>}
-            {isAuth && <div className={styles.exit}><Button onClick={handleExit} text="Выйти"/></div>}
             {user.toggleTips && !checkPathname && <div ref={refFormTips} onBlur={windowSize < 1024 ? handleBlur: () => {}} tabIndex={0} className={styles.modal}>
                 <FormTips value={user.toggleTipsValidate ? String(user.login): [String(user.password), String(user.passwordWithCheck)]} keyValidate={user.toggleTipsValidate ? "login": "password"}/>
             </div>}
         </form>}
-    </div>
+    </div>}
+    </>
 }
