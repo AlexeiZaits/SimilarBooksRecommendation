@@ -1,0 +1,25 @@
+@import "../../../shared/utils/index.scss";
+
+.eye{
+    font-size: 24px;
+    cursor: pointer;
+
+    @media (min-width: $tablet) {
+        font-size: 36px;
+    }
+}
+
+.viewed{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.viewedText{
+    display: none;
+
+    @media (min-width: $tablet) {
+        display: block;
+    }
+}

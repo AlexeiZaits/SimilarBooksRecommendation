@@ -4,20 +4,21 @@
     position: relative;
     display: flex;
     flex-direction: row;
+    flex-direction: column;
+    justify-content: space-between;
     width: 100%;
     padding: 0.2rem;
     padding-left: 1.8rem;
     border: none;
-    @include t-main();
-    display: flex;
     z-index: 1;
-    flex-direction: column;
-    justify-content: space-between;
     transition: all 0.3s;
     background-color: inherit;
     text-align: left;
     margin-top: 0.35rem;
+    @include t-main();
     height: 1.62rem;
+    @media (min-width: $tablet) {
+    }
 
     &:hover{
         cursor: pointer;

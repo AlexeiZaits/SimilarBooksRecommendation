@@ -16,7 +16,6 @@
 }
 
 .main {
+    min-height: calc(100vh - 9.2rem);
     background-color: $main-back;
-    min-height: calc(100vh - 5.5rem);
-    padding: 1rem 0rem;
 }

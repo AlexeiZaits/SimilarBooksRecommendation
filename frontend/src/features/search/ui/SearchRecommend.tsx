@@ -14,7 +14,7 @@ import { useFocusElement } from "features/recommendsSearch/hooks/use-focus-eleme
 import { useSetViewRecommendSearch } from "features/recommendsSearch/hooks/use-set-view-recommend-search";
 import { useClearFocusRecommends } from "features/recommendsSearch/hooks/use-clear-focus-recommend.ts";
 import { setLocalTitle } from "features/recommendsSearch/lib/setLocalTitle";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getThemeColor } from "shared/lib/getThemeColor";
 import { IoClose } from "react-icons/io5";
 import { usePlaceholder } from "../hooks/use-placeholder";
@@ -37,6 +37,16 @@ export const SearchRecommend = () => {
     const navigate = useNavigate();
     const [placeholder, ] = usePlaceholder(clearSearch, error)
     const windowSize = useWindowSize()
+    const loc = useLocation()
+    const refSearch = useRef<HTMLInputElement>(null)
+
+    console.log(loc)
+
+    useEffect(() => {
+        if (loc.pathname === "/search" && refSearch){
+            refSearch.current?.focus();
+        }
+    }, [loc])
 
     const handleClick = () => {
         navigate("")
@@ -113,10 +123,10 @@ export const SearchRecommend = () => {
 
     return <div ref={formRef} tabIndex={0} onKeyDown={handleKeyDown} className={styles.container}>
         <div  className={styles.search}>
-            {viewLupa && <i className={styles.icon}>
+            {viewLupa && windowSize > 1024 && <i className={styles.icon}>
                 <LupaImg color={getThemeColor()} size={windowSize > 1024 ? "18px": "15px"}/>
             </i>}
-            <Input error={error === null ? false: true} secondary={true} onBlur={handleOnBlur} placeholder={placeholder} value={search} onChange={handleChange} onFocus={handleFocus}/>
+            <Input ref={refSearch} error={error === null ? false: true} secondary={true} onBlur={handleOnBlur} placeholder={placeholder} value={search} onChange={handleChange} onFocus={handleFocus}/>
             {search.length !== 0 && viewLupa && <div onMouseDown={handleClear} className={styles.clear}>
                 <IoClose size={30} color={getThemeColor()}/>
             </div>}

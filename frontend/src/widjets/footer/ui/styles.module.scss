@@ -1,0 +1,51 @@
+@import "../../../shared/utils/index.scss";
+
+.footer{
+    width: 100%;
+    background-color: $main-back;
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
+    position: sticky;
+    bottom: 0;
+    height: max-content;
+    z-index: 999;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem 0.5rem;
+    border-top: 2px solid $border-main;
+    @media (min-width: 1024px) {
+        display: none;
+    }
+}
+
+.link{
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    width: 5rem;
+
+    @media (min-width: 1024px) {
+        width: 10rem;
+    }
+}
+
+.icon{
+    @include t-main();
+}
+
+.text{
+    @include t-title();
+    font-size: 0.7rem;
+}
+
+.active{
+
+    color: $text-link;
+    span,
+    i {
+    color: inherit; // Унаследовать цвет от родителя (.active)
+  }
+}

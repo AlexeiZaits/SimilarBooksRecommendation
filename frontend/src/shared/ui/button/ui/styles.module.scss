@@ -1,6 +1,8 @@
+@import "../../../utils/index.scss";
+
 .button{
     height: 3rem;
-    background-color: #2fbd59;
+    background-color: $second-back;
     border-radius: 2rem;
     border: none;
     font-size: 0.9rem;
@@ -22,7 +24,7 @@
     height: 100%;
     border-bottom-left-radius:0rem;
     border-top-left-radius:0rem;
-    border: 2px solid #2fbd59 !important;
+    border: 2px solid $border-main !important;
     font-size: 0;
 
     @media (min-width: 1024px) {

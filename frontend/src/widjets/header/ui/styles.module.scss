@@ -20,7 +20,7 @@
 
 .search{
     position: relative;
-    width: 25rem;
+    width: 100%;
     @media (min-width: $tablet) {
         width: 34rem;
     }
@@ -40,6 +40,7 @@
 .icon{
     width: 1.7rem;
     margin-top: 0.4rem;
+    cursor: pointer;
     @media (min-width: $tablet) {
         width: 2rem;
 
@@ -75,7 +76,7 @@
     &::before{
         z-index: -1;
         content: "";
-        top: 40%;
+        top: 35%;
         left: 50%;
         transform: translate(-50%, -50%);
         position: absolute;

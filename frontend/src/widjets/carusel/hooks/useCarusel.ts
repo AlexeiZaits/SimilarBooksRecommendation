@@ -22,11 +22,11 @@ export const useCarusel = ({ setSlideCount, setCurrentSlide, screenWidth }: IUse
         };
 
         if (screenWidth < 500) {
-          updateCarouselSlide(1);
-        } else if (screenWidth < 730) {
           updateCarouselSlide(2);
-        } else if (screenWidth < 1350){
+        } else if (screenWidth < 700) {
           updateCarouselSlide(3);
+        } else if (screenWidth < 1350){
+          updateCarouselSlide(5);
         }
         //>= 1350
           else {

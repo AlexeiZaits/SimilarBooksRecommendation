@@ -109,6 +109,14 @@ export const AuthForm = () => {
     }
 
     useEffect(() => {
+        if(open){
+            document.body.style.overflow = "hidden"
+        }
+
+        return () => {document.body.style.overflow = "auto"}
+    }, [open])
+
+    useEffect(() => {
         if (status === "received" && !checkPathname){
             setNotification(true)
             setPathname("Авторизация")
@@ -239,7 +247,7 @@ export const AuthForm = () => {
                 })}
             </div>}
             <div className={styles.close}>
-                <IoCloseCircleOutline color={getThemeColor()} onClick={() => toggleOpen()} cursor={"pointer"} size={30}/>
+                <IoCloseCircleOutline color={"green"} onClick={() => toggleOpen()} cursor={"pointer"} size={30}/>
             </div>
             {isAuth && <>
                 <p>Вы уже авторизованы!</p>

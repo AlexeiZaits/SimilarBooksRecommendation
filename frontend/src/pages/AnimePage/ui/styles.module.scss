@@ -1,0 +1,36 @@
+@import "../../../shared/utils/index.scss";
+
+.container{
+    padding: 0 0.5rem;
+
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 1rem;
+    align-items: center;
+}
+
+.settings{
+    font-size: 1.5rem;
+    color: $text-link;
+    cursor: pointer;
+
+}
+
+.title{
+    @include t-title();
+    font-size: 1rem;
+}
+
+.genres{
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+    padding-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 20px 10px;
+    justify-content: space-between;
+}

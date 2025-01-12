@@ -5,22 +5,24 @@
 $text-primary: var(--colors-text);
 $text-inverse-primary: var(--inverse-colors-text);
 $text-secondary: #323A47;
-$text-treinary-light_theme: #818387;
-$text-link: green;
+$text-treinary-light_theme: hsl(220, 2%, 52%);
+$text-link: yellow;
 $text-error: #D5393C;
+$text-gray: gray;
+$text-orange: rgb(255, 102, 0);
 
 //background
 
 $main-back: var(--colors-bg);
+$second-back: yellow;
 $inverse-main-back: var(--inverse-colors-bg);
 $bg-block-first: #FFFFFF;
 $bg-block-secodary: #EDEDED;
 $button-back: #F3FFF9;
 $bg-transparant: var(--transparent-bg);
 
-
 //border
-$border-main: #2fbd59;
+$border-main: yellow;
 
 // fonts
 $main-font: "Montserrat", sans-serif;

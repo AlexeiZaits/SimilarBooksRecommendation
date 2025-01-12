@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '../store/store';
 import { Authorization, ScrollTop } from 'features/index';
-import { Header, Settings, AutoCompleteSearch, Sidebar, AuthForm } from 'widjets/index';
+import { Header, Settings, AutoCompleteSearch, Sidebar, AuthForm, Footer } from 'widjets/index';
 import * as Sentry from "@sentry/react";
 import './App.scss';
 import { ErrorPage } from 'pages/index';
@@ -31,6 +31,7 @@ const App = ({children}: IAPP) => {
         <AuthForm/>
       </Sentry.ErrorBoundary>
       <main className='main'>{children}</main>
+      <Footer/>
     </Provider>
   );
 };
