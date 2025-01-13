@@ -15,11 +15,13 @@ export const selectRecommendSearch = createSelector([selectStatus, selectError,s
 (status, error, focusElement, titles, view, search) =>
 {
     let titlesFilter:titlesRecommend[] = [];
-
     if (search && search.length > 0) {
         titlesFilter = titles.filter((item) => {
             if (item.type === "search"){
-                return true
+                const check = titles.find((itemFind) => {
+                    return itemFind.type === "local" && itemFind.text === item.text
+                })
+                return check === undefined ? true: false
             } else {
                 return item.text.toLowerCase().includes(search.toLowerCase())
             }

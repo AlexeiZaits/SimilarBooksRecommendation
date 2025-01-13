@@ -1,0 +1,52 @@
+@import "../../../shared/utils/index.scss";
+
+.container {
+    padding: 0 0.5rem;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.genres {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.genre {
+    text-decoration: none;
+    width: 8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.genres::-webkit-scrollbar {
+    display: none;
+}
+
+.img {
+    width: 100%;
+}
+
+.title {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.text {
+    @include t-title();
+    font-size: 0.9rem;
+}

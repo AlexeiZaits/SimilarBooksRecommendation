@@ -1,0 +1,68 @@
+@import "../../../shared/utils/index.scss";
+
+.genre {
+    text-decoration: none;
+    width: 7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.img {
+    width: 100%;
+}
+
+.title {
+    @include t-title();
+    font-size: 1rem;
+    margin-bottom: 0.7rem;
+}
+
+.subtitle {
+    @include t-title();
+    font-size: 0.8rem;
+    // white-space: nowrap;
+    // text-overflow: ellipsis;
+    // overflow: hidden
+}
+
+.author{
+    @include t-title();
+    font-size: 0.7rem;
+    color: $text-gray;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden
+}
+
+.text {
+    @include t-title();
+    font-size: 0.9rem;
+}
+
+.descp{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+
+    @include t-title();
+    font-size: 0.7rem;
+    color: $text-gray;
+}
+
+.rating{
+    color: $text-orange;
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.linkHeader{
+    color: $text-link;
+    text-decoration: none;
+}

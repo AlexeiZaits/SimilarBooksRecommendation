@@ -2,7 +2,8 @@ import { useLikeList } from "features/likeList/hooks/use-like-list";
 import { useEffect, useState } from "react";
 import { IBook } from "shared/types";
 
-export const useLike = (item: IBook): [() => void, boolean] => {
+export const useLike = (item): [() => void, boolean] => {
+    //TODO: испрвить логику
     const [like, setLike] = useState(false)
     const [, toggleBook] = useLikeList()
 
@@ -13,7 +14,7 @@ export const useLike = (item: IBook): [() => void, boolean] => {
 
     useEffect(() => {
         const books = JSON.parse(localStorage.getItem("likesBook") || "[]" )
-        const isLike = books.findIndex((item: IBook) => item.uid === item.uid)
+        const isLike = books.findIndex((itemBook) => itemBook.uid === item.uid)
 
         if (isLike !==-1 && !like){
             setLike(true)

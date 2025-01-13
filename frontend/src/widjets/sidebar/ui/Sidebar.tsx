@@ -52,6 +52,13 @@ export const Sidebar = () => {
                     {menu[item]}
                     </NavLink>
                 })}
+                <NavLink
+                onClick={handleClick}
+                to={"/favorites"}
+                className={({ isActive, isPending }) =>
+                    isPending ? styles.link : isActive ? styles.active : styles.link
+                }
+                >Избранное</NavLink>
             </nav>
         </div>
     </CustomDrawer>

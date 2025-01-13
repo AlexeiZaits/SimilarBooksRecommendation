@@ -10,7 +10,7 @@ import useWindowSize from "../hooks/useWindowSize";
 import styled from "styled-components";
 import { BooksResponse } from "shared/types";
 import { useGetData } from "pages/BookPage/hook/useGetData";
-import { Book } from "entities/index";
+import { Book, BooKProps } from "entities/index";
 import * as API from "../../../config"
 import { FaArrowRight } from "react-icons/fa";
 import { Preloader } from "shared/ui";
@@ -20,7 +20,12 @@ import { decodeLink } from "features/recommendList/hooks/use-category-books";
 
 export interface ICarouselSlider {
   setSlideCount: (count: number) => void,
-  setCurrentSlide: (count: number) => void
+  setCurrentSlide: (count: number) => void,
+}
+
+const components = {
+  Book: (props: BooKProps) => <Book {...props}/>,
+
 }
 
 const CarouselSlider = ({ setSlideCount, setCurrentSlide }: ICarouselSlider) => {
@@ -29,16 +34,17 @@ const CarouselSlider = ({ setSlideCount, setCurrentSlide }: ICarouselSlider) => 
   useCarusel({ setSlideCount, setCurrentSlide, screenWidth })
   const {data, loading, error} = useGetData<BooksResponse, string>(API.searchBooks(title? decodeLink(title): "", 12, 0), title ? title: "")
 
+  const Component = components["Book"]
 
   return (
     <>
     {loading && <Preloader/>}
     {error && <span>Error</span>}
     {data && <Wrapper>
-      <Slider style={{width: "115%"}}>
+      <Slider>
         {data?.data.map((item, index) => {
           return <Slide key={item.uid} index={index} className="slide">
-            <Book key={item.uid} {...item}/>
+            <Component key={item.uid} {...item}/>
           </Slide>
         })}
       </Slider>
@@ -57,7 +63,6 @@ const CarouselSlider = ({ setSlideCount, setCurrentSlide }: ICarouselSlider) => 
 };
 
 const Wrapper = styled.div`
-
   .controls {
     display: flex;
     align-items: center;

@@ -8,6 +8,8 @@ import { listWidgets } from "features/togglerWidjets/lib/listWidgets";
 import { FaQuestion } from "react-icons/fa";
 import { useAuthorization } from "features/authorization/hooks/use-authorization";
 import { ThemeSwitcher } from "features/index";
+import useWindowSize from "widjets/carusel/hooks/useWindowSize";
+import { useLocation } from "react-router-dom";
 
 interface IHeader{
     children: ReactNode,
@@ -19,6 +21,10 @@ export const Header = ({children}:IHeader) => {
     const [, toggleWidjet] = useToggleWidjet(listWidgets.sidebar)
     const [, {name}] = useAuthorization()
     const [setting, toggleOpen] = useToggleWidjet(listWidgets.settings)
+    const windowSize = useWindowSize();
+    const location = useLocation();
+
+    const headerView = location.pathname.includes("watch")
 
     useEffect(() => {
         const localBooks = JSON.parse(localStorage.getItem("likesBook") || "[]" );
@@ -34,26 +40,24 @@ export const Header = ({children}:IHeader) => {
         }, 0)
     }
 
-    return <header className={styles.header}>
-        <div className={styles.logo}>
-            <div onClick={toggleWidjet} className={styles.icon}><MenuIcon/></div>
-        </div>
-        <div className={styles.search}>
-            {children}
-        </div>
-        <div className={styles.rigth}>
-            {/* {/* <Link to={"likes"} className={styles.like}>
-                <LikeImg like={true}/>
-                <span className={styles.like_text}>{qtyLikes}</span>
-            </Link>  */}
-            {<div className={styles.theme}><ThemeSwitcher/></div>}
-            <button onMouseDown={handleMouseDown} className={styles.settings}>
-                {
-                    name ?
-                    <span>{name.slice(0,1)}</span>
-                    :<FaQuestion className={styles.profile} size={19} />
-                }
-            </button>
-        </div>
-    </header>
+    return  <>
+        {!headerView && <header className={styles.header}>
+                {windowSize > 1024 && <div className={styles.logo}>
+                    <div onClick={toggleWidjet} className={styles.icon}><MenuIcon/></div>
+                </div>}
+                <div className={styles.search}>
+                    {children}
+                </div>
+                {windowSize > 1024 && <div className={styles.rigth}>
+                    {<div className={styles.theme}><ThemeSwitcher/></div>}
+                    <button onMouseDown={handleMouseDown} className={styles.settings}>
+                        {
+                            name ?
+                            <span>{name.slice(0,1)}</span>
+                            :<FaQuestion className={styles.profile} size={19} />
+                        }
+                    </button>
+                </div>}
+        </header>}
+    </>
 }

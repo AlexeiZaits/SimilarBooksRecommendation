@@ -1,0 +1,41 @@
+@import "../../../shared/utils/index.scss";
+
+.description{
+    @include t-title();
+    font-size: 0.7rem;
+    position: relative;
+
+    @media (min-width: $tablet) {
+        font-size: 1rem;
+    }
+}
+
+.button{
+    border: none;
+    text-align: left;
+    background-color: inherit;
+    width: max-content;
+    color: $text-link;
+    cursor: pointer;
+    margin-top: 0.2rem;
+}
+
+
+.accordionBody {
+    display: grid;
+    grid-template-rows: 0.2fr;
+    transition: 500ms grid-template-rows ease;
+
+    @media (min-width: $tablet) {
+        grid-template-rows: 0.3fr;
+
+    }
+}
+
+.accordion.hidden .accordionBody {
+    grid-template-rows: 1fr;
+}
+
+.accordionBody > div {
+    overflow: hidden;
+}

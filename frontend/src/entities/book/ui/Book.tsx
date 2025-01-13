@@ -13,18 +13,19 @@ export interface BooKProps extends Pick<IBook, "author" | "title" | "image_link"
 
 
 export const Book = ({author, title, image_link, children, ...otherProps}: BooKProps ) => {
+    const link = `/book/${fixNavigateLink(title)}`;
 
-    return <Link to={`/book/${fixNavigateLink(title)}`} {...otherProps} className={styles.book}>
+    return <div {...otherProps} className={styles.book}>
         {children}
-        <div className={styles.container}>
+        <Link to={link} className={styles.container}>
             <ImgWithSkeleton errorLink={"https://www.podpisnie.ru/upload/no-image.png"}
             link={"https://www.podpisnie.ru/" + fixLink(image_link)}
             width={240} height={448}
             title={title}/>
-        </div>
-        <div className={styles.info}>
+        </Link>
+        <Link to={link} className={styles.info}>
             <span className={styles.title}>{title.length > 19 ? title.slice(0,20) + "...": title}</span>
             <span className={styles.author}>{author}</span>
-        </div>
-    </Link>
+        </Link>
+    </div>
 }

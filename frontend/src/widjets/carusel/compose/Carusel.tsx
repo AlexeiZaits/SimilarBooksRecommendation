@@ -1,18 +1,31 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { CarouselProvider } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import styled from "styled-components";
 import CarouselSlider from "../ui/CaruselSlider";
+import { ErrorType } from "shared/types";
+import React from "react";
 
-export const Carusel = () => {
+interface ICarusel {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any[] | null,
+  loading: boolean,
+  error: ErrorType,
+  children: ReactNode
+}
+
+// Передавать конкретный компонент в children shared/entities для карусели
+export const Carusel = ({data, children}: ICarusel) => {
     const [slideCount, setSlideCount] = useState(2);
     const [currentSlide, setCurrentSlide] = useState(0);
+    const childCount = React.Children.count(children);
 
   return (
-    <CarouselWrapper className="carousel-container">
+    <>
+    {data && childCount && <CarouselWrapper className="carousel-container">
       <CarouselProvider
         visibleSlides={slideCount}
-        totalSlides={12}
+        totalSlides={data.length}
         step={1}
         currentSlide={currentSlide}
         naturalSlideWidth={100}
@@ -23,43 +36,20 @@ export const Carusel = () => {
         <CarouselSlider
           setSlideCount={setSlideCount}
           setCurrentSlide={setCurrentSlide}
-        />
+        >
+        </CarouselSlider>
       </CarouselProvider>
-    </CarouselWrapper>
+    </CarouselWrapper>}
+  </>
   );
 }
 
 const CarouselWrapper = styled.div`
   &.carousel-container {
-    margin: 12px auto;
-    max-width: 170px;
     filter: drop-shadow(0px 12px 30px rgba(50, 50, 50, 0.2));
-
-    /* Total-width (including margin) + 1 additional margin */
-
-    @media (min-width: 500px) {
-      max-width: 450px;
-    }
-
-    @media (min-width: 832px) {
-      max-width: 900px;
-    }
-
-    @media (min-width: 1024px) {
-      max-width: 900px;
-    }
-
-    @media (min-width: 1080px) {
-      max-width: 1152px;
-    }
-
-    @media (min-width: 1504px) {
-      max-width: 1300px;
-    }
+    width: 100%;
+    position: relative
   }
-
-  /* This class is found in Slide from pure-react-carousel */
-  /* We need to override it to add space between slides */
   .carousel__inner-slide {
     /* width: 100% - margin */
     width: calc(100% - 16px);

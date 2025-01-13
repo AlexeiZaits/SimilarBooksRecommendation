@@ -3,6 +3,7 @@
 .mainTitle{
     @include t-title();
     margin: 0;
+    margin-top: 0.5rem;
 }
 
 .secondaryTitle{
@@ -27,7 +28,6 @@
     padding: 1rem 1rem;
     max-width: 70rem;
     margin: 0 auto;
-
 }
 
 .book{
@@ -44,13 +44,14 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    height: 28rem;
     margin-top: 1rem;
+    padding: 1.5rem;
+    border: 2px solid $border-main;
+    border-radius: $main-radius;
 
     @media (min-width: 600px) {
         margin-left: 0.5rem;
         margin-top: 0;
-        text-align: right;
     }
 
     @media (min-width: $tablet) {
@@ -61,25 +62,57 @@
 
 .description{
     margin-top: 2rem;
+    padding: 1.5rem;
+    border: 2px solid $border-main;
+    border-radius: $main-radius;
 }
 
 .img{
     border-radius: $main-radius;
-    border: 3px solid;
-    border-color: green;
     position: relative;
     overflow: hidden;
     height: 25rem;
     width: 15rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    @media (min-width: $mobile) {
+        height: 460px;
+        width: 300px;
+    }
 
     @media (min-width: $tablet) {
+        transform: translate(-50%, -50%);
         height: 590px;
         width: 410px;
+    }
+}
+
+.imgContainer{
+    position: relative;
+    height: 550px;
+    background-color: rgb(64, 218, 44, 0.1);
+    border-radius: 1rem;
+
+    @media (min-width: 600px) {
+        width: 70%;
+    }
+
+    @media (min-width: $tablet) {
+        background-color: inherit;
+        height: 590px;
+        width: 50%;
     }
 }
 
 .like{
     position: relative;
     height: 3rem;
+
+}
+
+.slider{
+    margin-top: 2rem;
 
 }

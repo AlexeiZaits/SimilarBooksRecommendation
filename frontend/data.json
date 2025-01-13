@@ -13,8 +13,8 @@
             {"type": "submit", "text": ["Вход", "Регистрация"], "id": 5}
     ],
     "navList": [
-        {"link": "/authorization", "name": "Авторизация"},
-        {"link": "/registration", "name": "Регистрация"}
+        "Авторизация",
+        "Регистрация"
     ],
     "loginValidate": {
         "length": {"check": false, "text": "6 символов и начинаться с буквы"},

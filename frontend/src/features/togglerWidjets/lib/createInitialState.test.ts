@@ -7,7 +7,8 @@ describe("createInitialState", () => {
 
         const excpectedResult = {
             "sidebar": false,
-            "settings": false
+            "settings": false,
+            "authForm": false,
         }
 
         const res = createInitialState(listWidgets)

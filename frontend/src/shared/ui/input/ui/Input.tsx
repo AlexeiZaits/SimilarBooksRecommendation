@@ -1,4 +1,4 @@
-import { CSSProperties, RefObject } from "react";
+import { CSSProperties, forwardRef } from "react";
 import styles from "./styles.module.scss"
 import classNames from "classnames";
 
@@ -10,7 +10,6 @@ export interface IInput {
     type?: TypeInput,
     placeholder?: string,
     style?: CSSProperties,
-    ref?: RefObject<HTMLInputElement>,
     tabIndex?: number,
     error?: boolean,
     secondary?: boolean,
@@ -20,16 +19,20 @@ export interface IInput {
     onFocus?: () => void,
 }
 
-export const Input = ({value, error=false, secondary, ...otherProps}:IInput) => {
-
-    return <input
-    className={classNames(
-        styles.input,
-        {
-        [styles.secondary]: secondary,
-        [styles.error] : error,
-        }
-    )}
-    value={String(value)}
-    {...otherProps}  />
-}
+// eslint-disable-next-line react/display-name
+export const Input = forwardRef<HTMLInputElement, IInput>(({ value, error = false, secondary, ...otherProps }, ref?) => {
+    return (
+        <input
+            className={classNames(
+                styles.input,
+                {
+                    [styles.secondary]: secondary,
+                    [styles.error]: error,
+                }
+            )}
+            value={String(value)}
+            {...otherProps}
+            ref={ref}
+        />
+    );
+});

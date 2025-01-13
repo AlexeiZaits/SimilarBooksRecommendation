@@ -1,9 +1,8 @@
 import { LikeImg } from "shared/assets/icons/LikeImg";
-import { IBook } from "shared/types/book";
 import styles from "./styles.module.scss";
 import { useLike } from "../hooks/use-like";
 
-export const Like = (props: IBook) => {
+export const Like = (props) => {
     const [handleClick, like] = useLike(props)
 
 

@@ -30,6 +30,7 @@ body[data-theme='dark'] {
   --colors-text: #f1f1f1;
   --inverse-colors-text: hsl(0, 0%, 0%);
   --colors-bg: #0f0f0f;
+  --color-bg-transparent: rgb(15,15,15, 0.5);
   --inverse-colors-bg: #f1f1f1;
   --colors-border: #f1f1f1;
   --transparent-bg: rgba(255, 255, 255, 0.57);

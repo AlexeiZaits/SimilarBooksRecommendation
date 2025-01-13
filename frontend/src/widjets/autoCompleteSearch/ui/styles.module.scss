@@ -4,14 +4,15 @@
     position: absolute;
     width: 100%;
     height: 20rem;
+    left: 0rem;
     top: 3.5rem;
-    left: 0.2rem;
     border-radius: 1rem;
     border: 2px solid $border-main;
     background-color: $main-back;
     padding: 1rem 0;
 
     @media (min-width: $tablet) {
+        left: 0.2rem;
         width: 30rem;
     }
 }
