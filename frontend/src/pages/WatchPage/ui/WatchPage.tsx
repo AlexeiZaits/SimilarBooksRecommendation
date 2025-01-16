@@ -10,6 +10,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { CollabsibleDescription, Like, Viewed } from "features/index";
 import { FaStar } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 // const item = {link: "one-piece", text: "One piece qweqeqewqeq",
 //     author: "Эйитиро Ода", rating: 4.8,
@@ -26,7 +27,7 @@ export const WatchPage = () => {
     const [open, setOpen] = useState(false);
     const anchorRef = useRef<HTMLDivElement>(null);
     const [selectedIndex, setSelectedIndex] = useState(0);
-
+    const naviagate = useNavigate();
 
     useEffect(() => {
         axios.get(link+`getTitle?id=8693`)
@@ -50,7 +51,7 @@ export const WatchPage = () => {
     const handleToggle = () => {
         setOpen((prevOpen) => !prevOpen);
     };
-
+    
     const handleClose = (event: Event) => {
         if (
             anchorRef.current &&
@@ -64,22 +65,23 @@ export const WatchPage = () => {
 
     return <section>
         <div className={styles.header}>
-            <IoChevronBackOutline cursor="pointer" size={24}/>
+            <IoChevronBackOutline onClick={() => naviagate(-1)} cursor="pointer" size={24}/>
             <div className={styles.icons}>
-                <AiOutlineEllipsis cursor="pointer" size={24}/>
-                <Like />
+                <Like/>
             </div>
         </div>
         <img className={styles.blurImg} src={image}/>
         <div className={styles.mainTop}>
             <img className={styles.img} src={image}/>
-            <h2>One piece</h2>
+            <div className={styles.mainTopTitle}>
+                <h2>One piece</h2>
+                <p className={styles.mainTopLimit}>18+</p>
+            </div>
             <h3>Эйитиро Ода</h3>
         </div>
         <div className={styles.main}>
-            <div>
-            <span className={styles.reviews}><span className={styles.reviewsRait}><FaStar /> 4.5</span> 80</span>
-
+            <div className={styles.mainReviews}>
+                <span className={styles.reviews}><span className={styles.reviewsRait}><FaStar size={13}/> 4.5</span> 5/15 серий</span>
             </div>
             <h2 className={styles.title}>Название серии</h2>
             <h3 className={styles.nameSeria}>One piece что-то там</h3>
@@ -169,7 +171,7 @@ export const WatchPage = () => {
                 precision={0.5}
                 sx={{
                     "& .MuiRating-iconEmpty": {
-                        color: "white", // Пустые звёзды белого цвета
+                        color: "white",
                     },
                     width: "15rem",
                     display: "flex",
