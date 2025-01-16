@@ -22,9 +22,6 @@
 .subtitle {
     @include t-title();
     font-size: 0.8rem;
-    // white-space: nowrap;
-    // text-overflow: ellipsis;
-    // overflow: hidden
 }
 
 .author{
